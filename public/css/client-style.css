@@ -1,0 +1,958 @@
+@import url("https://fonts.googleapis.com/css2?family=Playfair+Display&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Playfair+Display&family=Source+Sans+Pro&display=swap");
+
+* {
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+  color: #070707;
+}
+body {
+  position: relative;
+  padding-bottom: 320px;
+  min-height: 70vw;
+}
+
+#signin-page,
+#signup-page {
+  padding-bottom: 0;
+  min-height: 20vw;
+}
+::selection {
+  background: gray;
+}
+li {
+  list-style: none;
+}
+
+a {
+  text-decoration: none;
+}
+
+.div-container {
+  margin: 0px 50px;
+}
+
+/*----------header----------*/
+
+header {
+  height: 110px;
+  top: 0;
+  width: 100%;
+  position: fixed;
+  z-index: 2;
+  background-color: white;
+}
+.logo img {
+  width: 180px;
+  margin-top: 15px;
+}
+
+header nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+header ul {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+header ul li a {
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  font-weight: 500;
+  margin-top: 30px;
+  font-size: 1rem;
+  font-family: "Source Sans Pro", sans-serif;
+  color: #070707;
+}
+
+header ul li i {
+  padding: 0.5rem 0.7rem;
+  font-size: 1.3rem;
+  font-weight: normal;
+}
+
+#cart {
+  padding: 0.5rem 0.5rem 0.5rem 1rem;
+}
+
+header ul li a:hover {
+  font-weight: bold;
+  transition: 0.5s;
+  color: #070707;
+}
+
+header ul li .badge {
+  margin-left: -16px;
+  border-radius: 50%;
+  background-color: #070707;
+  color: white;
+  font-family: "Source Sans Pro", sans-serif;
+  font-weight: 0;
+  font-size: 12px;
+}
+
+nav ul ul {
+  position: absolute;
+  right: 20px;
+  z-index: 3;
+  top: 90px;
+  opacity: 0;
+  visibility: hidden;
+  transition: 0.3s ease-in;
+  display: block;
+  border-radius: 2px;
+  background: #070707;
+  box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.3);
+  border: 1px solid #070707;
+}
+
+nav ul ul:hover {
+  visibility: visible;
+  opacity: 100;
+}
+
+nav ul ul li {
+  width: 100%;
+  display: list-item;
+  border: 1px solid rgba(0, 0, 0, 0.3);
+}
+
+nav ul ul li a {
+  padding-left: 5px;
+  font-size: 13px;
+  line-height: 40px;
+  color: white;
+  text-decoration: none !important;
+}
+
+nav ul ul li:hover {
+  background-color: gray;
+}
+nav ul ul.user-log li {
+  width: 120px;
+}
+
+nav ul li:hover + ul {
+  opacity: 100;
+  visibility: visible;
+}
+
+#signin-txt {
+  background-color: #070707;
+  color: white;
+  padding: 5px 30px;
+}
+#signup-txt:hover {
+  background-color: white;
+  color: #070707;
+  font-weight: bold;
+  border: 1px solid black;
+}
+
+.hamburger {
+  display: none;
+}
+.bar {
+  display: block;
+  width: 25px;
+  height: 25px;
+  margin: 5px auto;
+  transition: all 0.3s ease-in-out;
+  background-color: #070707;
+}
+
+@media only screen and (max-width: 768px) {
+  header ul {
+    display: block;
+    position: fixed;
+    left: -100%;
+    top: 5rem;
+    flex-direction: column;
+    background-color: white;
+    width: 100%;
+    border-radius: 10px;
+    text-align: center;
+    transition: 0.5px;
+    box-shadow: 0 10px 27px rgba(0, 0, 0, 0);
+    z-index: 20;
+  }
+
+  header ul.active {
+    left: 0%;
+  }
+
+  header ul li {
+    margin: 2.5rem 0;
+  }
+
+  header ul li a {
+    color: black;
+  }
+
+  .hamburger {
+    display: block;
+    cursor: pointer;
+  }
+
+  .hamburger.active .bar:nth-child(2) {
+    opacity: 0;
+  }
+
+  .hamburger.active .bar:nth-child(1) {
+    transform: translateY(8px) rotate(-45deg);
+  }
+}
+
+/*----------landing----------*/
+.carousel-item img {
+  position: relative;
+  padding-top: 40px;
+  left: 0;
+  right: 0;
+  z-index: -1;
+  width: 100%;
+  max-height: 755px;
+}
+.landing-box {
+  margin: 150px 0 0 70px;
+  display: inline-block;
+  position: absolute;
+  z-index: 1;
+}
+.home .text {
+  max-width: 39%;
+  color: #070707;
+  margin: 2% 0 0 2%;
+}
+
+.home h1 {
+  font-family: "Playfair Display", sans-serif;
+  margin-top: 100px;
+  font-size: 55px;
+  font-weight: 400;
+}
+
+p {
+  font-weight: 400;
+  line-height: 28px;
+  font-family: "Source Sans Pro", sans-serif;
+  font-size: 16px;
+  margin: 25px 0 0 0px;
+}
+
+.book-btn {
+  letter-spacing: 2px;
+  font-weight: 500;
+  margin-top: 30px;
+  font-size: 1.2rem;
+  font-family: "Source Sans Pro", sans-serif;
+  color: white;
+  outline: none;
+  box-shadow: none;
+  background-color: #070707;
+  padding: 5px 35px;
+  border: 0px;
+}
+.book-btn:hover,
+.book-now .btn:hover,
+.modal-footer .btn-continue:hover,
+.account-form .btn:hover,
+#cart-btn .btn:hover,
+#reserve-btn .btn:hover,
+#payment-method .btn-checkout:hover {
+  background-color: transparent;
+  background-repeat: no-repeat;
+  cursor: pointer;
+  overflow: hidden;
+  outline: none;
+  box-shadow: none;
+  color: #070707;
+  border: 1px solid #070707;
+}
+
+.solid {
+  border-top: 2px solid #070707;
+}
+
+.carousel-indicators {
+  bottom: 80px;
+}
+/*----------search for booking----------*/
+
+.container .flex {
+  display: flex;
+}
+
+.input.grid {
+  display: grid;
+  grid-gap: 10px;
+  grid-template-columns: 22% 22% 9% 15% 35%;
+}
+
+.book {
+  margin-top: -70px;
+  position: absolute;
+  z-index: 1;
+  width: 100%;
+  height: 20vh;
+  color: black;
+  margin-bottom: 10px;
+  font-family: "Source Sans Pro", sans-serif;
+  font-size: 1rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  font-weight: 500;
+}
+
+.box input,
+.box select {
+  width: 70%;
+  padding: 5px 10px;
+  border: 1px solid black;
+  outline: none;
+  background: white;
+  margin-top: 0px;
+  color: #070707;
+}
+.box select {
+  width: auto;
+  padding: 6px 10px;
+}
+.box select .acco-option:hover {
+  background: red;
+}
+input[type="date"] {
+  width: 80%;
+}
+.book .input {
+  background: white;
+  box-shadow: 0 8px 8px -4px grey;
+  padding: 30px 40px;
+}
+
+.book .search {
+  margin: 32px 0 0 60px;
+}
+
+.book .search input {
+  outline: none;
+  border: none;
+  background-color: #070707;
+  color: white;
+  padding: 7px 80px;
+  letter-spacing: 1px;
+}
+
+/*----------search for booking & offers----------*/
+.welcome {
+  margin: 120px 0px 80px 0px;
+  text-align: center;
+  color: #070707;
+}
+
+.welcome h1,
+.main-image h1,
+.intro h1,
+.about-us h1,
+.contact-us h1,
+.acco h1,
+.account h1,
+.booking-cart h1,
+.reservation-history h1,
+.booking-submission h1 {
+  font-family: "Playfair Display", sans-serif;
+  font-weight: 500;
+  letter-spacing: 0.15rem;
+  margin-bottom: 20px;
+}
+
+/*----------display image----------*/
+.main-image {
+  color: #070707;
+}
+
+.image-text {
+  width: 55%;
+  float: left;
+  padding: 0px 30px 0px 10px;
+  margin-top: 10px;
+  z-index: 1;
+}
+
+.disp-image {
+  float: right;
+  position: absolute;
+  padding-top: 20px;
+  width: 730px;
+  height: auto;
+  margin-right: 100px;
+}
+
+.text-bg {
+  z-index: -1;
+  background-color: whitesmoke;
+  width: 700px;
+  padding: 20px;
+  height: 450px;
+}
+
+/*----------offers----------*/
+.card-group {
+  margin-bottom: 30px;
+  color: #070707;
+}
+
+.intro {
+  color: #070707;
+  margin: 80px 0px 50px 0px;
+  text-align: center;
+}
+
+.offers .card-body {
+  padding: 15px 0;
+}
+
+.card-img-top {
+  width: 100%;
+  height: 15vw;
+  object-fit: cover;
+}
+
+.offers .card {
+  border: 0px;
+  padding: 0 20px;
+}
+
+.card-title {
+  font-family: "Playfair Display", sans-serif;
+  font-weight: 500;
+  letter-spacing: 0.15rem;
+  margin-bottom: 5px;
+}
+
+.card-text {
+  margin: 0;
+}
+
+.card a {
+  font-family: "Source Sans Pro", sans-serif;
+  outline: 0cm;
+  padding: 10px 0;
+  font-weight: bold;
+}
+
+/*----------promotions----------*/
+
+.promotions .card {
+  padding: 0;
+  box-shadow: 0 8px 8px -4px grey;
+}
+.card-horizontal {
+  display: flex;
+}
+
+.card-img-left {
+  width: 50%;
+  object-fit: cover;
+  height: 50vh;
+}
+
+.promotions .card-body {
+  width: 50%;
+}
+
+/*----------footer----------*/
+
+.footer {
+  background-color: #070707;
+  padding: 45px 0 20px;
+  font-size: 15px;
+  line-height: 24px;
+  color: white;
+  margin-top: 200px;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 320px;
+}
+.footer hr {
+  border-top-color: #bbb;
+  opacity: 0.5;
+}
+.footer hr.small {
+  margin: 20px 0;
+}
+.footer h6 {
+  font-family: "Playfair Display", sans-serif;
+  color: #fff;
+  font-size: 16px;
+  text-transform: uppercase;
+  margin-top: 5px;
+  letter-spacing: 2px;
+}
+.footer a {
+  font-family: "Source Sans Pro", sans-serif;
+  color: #737373;
+}
+.footer a:hover {
+  color: #3366cc;
+  text-decoration: none;
+}
+.footer-links {
+  padding-left: 0;
+  list-style: none;
+}
+.footer-links li {
+  display: block;
+}
+.footer-links a {
+  color: #737373;
+}
+.footer-links a:active,
+.footer-links a:focus,
+.footer-links a:hover {
+  color: #3366cc;
+  text-decoration: none;
+}
+.footer-links.inline li {
+  display: inline-block;
+}
+.footer .social-icons {
+  text-align: right;
+}
+.footer .social-icons a {
+  width: 40px;
+  height: 40px;
+  line-height: 40px;
+  margin-left: 6px;
+  margin-right: 0;
+  border-radius: 100%;
+  background-color: #33353d;
+}
+.copyright-text {
+  margin: 0;
+}
+@media (max-width: 991px) {
+  .footer [class^="col-"] {
+    margin-bottom: 30px;
+  }
+}
+@media (max-width: 767px) {
+  .footer {
+    padding-bottom: 0;
+  }
+  .footer .copyright-text,
+  .footer .social-icons {
+    text-align: center;
+  }
+}
+.social-icons {
+  padding-left: 0;
+  margin-bottom: 0;
+  list-style: none;
+}
+.social-icons li {
+  display: inline-block;
+  margin-bottom: 4px;
+}
+.social-icons li.title {
+  margin-right: 15px;
+  text-transform: uppercase;
+  color: #96a2b2;
+  font-weight: 700;
+  font-size: 13px;
+}
+.social-icons a {
+  background-color: #eceeef;
+  color: #818a91;
+  font-size: 16px;
+  display: inline-block;
+  line-height: 44px;
+  width: 44px;
+  height: 44px;
+  text-align: center;
+  margin-right: 8px;
+  border-radius: 100%;
+  -webkit-transition: all 0.2s linear;
+  -o-transition: all 0.2s linear;
+  transition: all 0.2s linear;
+}
+.social-icons a:active,
+.social-icons a:focus,
+.social-icons a:hover {
+  color: #fff;
+  background-color: #29aafe;
+}
+.social-icons.size-sm a {
+  line-height: 34px;
+  height: 34px;
+  width: 34px;
+  font-size: 14px;
+}
+.social-icons a.facebook:hover {
+  background-color: #3b5998;
+}
+.social-icons a.twitter:hover {
+  background-color: #00aced;
+}
+.social-icons a.linkedin:hover {
+  background-color: #007bb6;
+}
+.social-icons a.dribbble:hover {
+  background-color: #ea4c89;
+}
+@media (max-width: 767px) {
+  .social-icons li.title {
+    display: block;
+    margin-right: 0;
+    font-weight: 600;
+  }
+}
+
+/*----------signgup & signin----------*/
+.signup,
+.signin {
+  margin-top: 110px;
+  background-image: url(../images/signup_bg.jpg);
+  background-repeat: no-repeat center center fixed;
+  background-size: cover;
+  overflow: hidden;
+  height: 100%;
+  color: #070707;
+  position: relative;
+  font-family: "Source Sans Pro", sans-serif;
+}
+
+.signin {
+  background-image: url(../images/signin_bg.jfif);
+  height: 643px;
+}
+
+.signup input:focus,
+.signup input:valid,
+.signin input:focus,
+.signin input:valid,
+.send-message input:focus,
+.send-message input:valid,
+.send-message textarea:focus,
+.send-message textarea:valid,
+.modal-body input:focus,
+.modal-body input:valid,
+.account-form input:focus,
+.account-form input:valid,
+#method-input:focus,
+#method-input:valid,
+.booking-form input:focus,
+.booking-form input:valid {
+  border: 1px solid #070707;
+  box-shadow: 0 0 3px #070707;
+  color: #070707;
+  outline-offset: 0px;
+  outline: none;
+}
+
+.signup input,
+.signin input,
+.send-message input,
+.send-message textarea,
+.modal-body input,
+#method-input {
+  border: 0.5px solid #3a3a3a;
+  color: #070707;
+}
+
+.signup input[type="date"] {
+  width: 280px;
+}
+
+.signup h3,
+.signin h3 {
+  font-weight: 600;
+  text-align: center;
+  letter-spacing: 0.15rem;
+}
+
+.signup input[type="submit"] {
+  /***width: 48%;
+  margin-left: 52%; ***/
+  width: 100%;
+  color: white;
+  background-color: #070707;
+  letter-spacing: 0.15rem;
+}
+.signin input[type="submit"],
+.send-message input[type="submit"] {
+  width: 100%;
+  color: white;
+  background-color: #070707;
+  letter-spacing: 0.15rem;
+}
+
+.signin .container {
+  width: 52%;
+  height: 500px;
+}
+
+.signup a,
+.signin a {
+  text-decoration: none;
+  color: #070707;
+}
+
+/*----------about us----------*/
+.about-us,
+.contact-us,
+.acco,
+.account,
+.booking-cart,
+.reservation-history,
+.booking-submission {
+  margin-top: 110px;
+}
+.about-us #title-header,
+.contact-us #title-header,
+.acco #title-header {
+  background-image: url(../images/abouttitle_bg.jfif);
+  background-repeat: no-repeat;
+  background-size: cover;
+  color: white;
+  height: 250px;
+}
+
+.about-us .container-fluid h1,
+.contact-us .container-fluid h1,
+.acco .container-fluid h1 {
+  margin-top: 3%;
+  margin-bottom: 0;
+}
+
+.about-us .image-text {
+  width: 70%;
+}
+
+.about-us .disp-image {
+  height: 600px;
+  width: auto;
+}
+
+.about-us .text-bg {
+  z-index: -1;
+  background-color: whitesmoke;
+  width: 800px;
+  padding: 20px;
+  height: 600px;
+}
+
+#about-text {
+  text-indent: 30px;
+  margin-bottom: 0;
+}
+
+.about-us .text-bg {
+  margin-top: 100px;
+}
+
+/*----------contact us----------*/
+.contact-us #title-header {
+  background-image: url(../images/contacttitle_bg.jfif);
+}
+
+.contact-us .container,
+.send-message .container h1 {
+  color: #070707;
+  text-align: center;
+  justify-content: center;
+  font-family: "Source Sans Pro", sans-serif;
+  font-weight: 500;
+  letter-spacing: 0.15rem;
+}
+
+.contact-us .container h1,
+.send-message .container h1 {
+  font-family: "Playfair Display", sans-serif;
+}
+
+/*----------accomodation----------*/
+.acco #title-header {
+  background-image: url(../images/accotitle.jfif);
+}
+
+.card-deck .card-img-top {
+  height: 22vw;
+}
+
+.card-deck .card {
+  min-width: 30vw;
+}
+
+.room-types p {
+  font-family: "Source Sans Pro", sans-serif;
+  font-weight: 500;
+  letter-spacing: 1px;
+}
+
+.book-now {
+  display: flex;
+  justify-content: space-between;
+}
+
+.book-now .btn,
+.modal-footer .btn,
+.account-form .btn,
+#cart-btn .btn,
+#reserve-btn .btn,
+#payment-method .btn-checkout,
+#payment-method .btn {
+  background-color: #070707;
+  color: white;
+  padding: 5px 20px;
+  font-weight: normal;
+  text-decoration: none;
+  font-family: "Source Sans Pro", sans-serif;
+  outline: none;
+  box-shadow: none;
+}
+
+.modal-footer .btn-cancel,
+.account-form .btn-cancel {
+  background-color: gray;
+}
+.modal-body input[type="date"] {
+  width: 365px;
+}
+
+.modal-footer .btn-cancel:hover,
+.account-form .btn-cancel:hover {
+  background-color: rgb(72, 72, 72);
+  color: white;
+  border: 1px solid rgb(72, 72, 72);
+}
+
+.modal-header .close {
+  outline: none;
+}
+
+/*----------account----------*/
+
+#account-header h1,
+#cart-header h1,
+#submission-header h1 {
+  margin-top: 1.5%;
+}
+.account,
+.booking-cart,
+.booking-submission {
+  background-color: whitesmoke;
+  height: 100%;
+}
+#account-header,
+#cart-header,
+#submission-header {
+  margin-top: 1.5%;
+}
+.account input[type="date"] {
+  width: 440px;
+}
+
+.account-form .btn,
+#cart-card .btn {
+  float: right;
+  margin: 0 10px;
+}
+
+.account-form .btn-cancel {
+  display: none;
+}
+
+/*----------cart----------*/
+
+.booking-cart .solid {
+  margin-bottom: 0;
+}
+
+.booking-cart .card-body {
+  padding-bottom: 0;
+}
+
+.card-body i {
+  color: #070707;
+}
+
+.card-body i:hover {
+  color: gray;
+}
+
+#cart-page,
+#profile-page,
+#reservation-page {
+  background-color: whitesmoke;
+}
+
+/*----------reservation----------*/
+
+.thin {
+  border-top: 0.5px solid #070707;
+}
+
+/*----------booking submission----------*/
+.booking-form input[type="date"] {
+  width: 305px;
+}
+
+.check-out {
+  border-top: 1px solid rgba(128, 128, 128, 0.39);
+  background-color: WHITE;
+}
+
+.check-out h3 {
+  font-family: "Source Sans Pro", sans-serif;
+  font-weight: bold;
+}
+
+.os-total {
+  border-bottom: 3px dashed #070707;
+}
+.os-total p,
+.top-os p,
+.top-os h4,
+#gcash-method p,
+#master-method p {
+  font-family: "Source Sans Pro", sans-serif;
+  color: #070707;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  text-align: center;
+}
+
+.top-os {
+  border-bottom: 2px solid #070707;
+}
+
+#gcash-form,
+#master-form {
+  display: none;
+}
+
+#payment-method {
+  float: right;
+}
+#payment-method .btn-payment {
+  border-radius: 8px;
+  background-color: whitesmoke;
+  border: 1px solid rgb(211, 211, 211);
+}
+
+#payment-method .btn-payment:hover {
+  border: white;
+  box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.4);
+}

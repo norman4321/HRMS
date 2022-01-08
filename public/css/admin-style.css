@@ -1,0 +1,1081 @@
+@import url("https://fonts.googleapis.com/css2?family=Playfair+Display&family=Source+Sans+Pro&display=swap");
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Source Sans Pro", sans-serif;
+}
+:root {
+  --blue: #070707;
+  --white: #fff;
+  --whitegrey: #d4d9dd;
+  --grey: #f5f5f5;
+  --black1: #222;
+  --black2: #999;
+}
+body {
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+.admin-container {
+  position: relative;
+  width: 100%;
+}
+a {
+  text-decoration: none;
+}
+.admin-navigation {
+  position: fixed;
+  width: 300px;
+  height: 100%;
+  background: var(--blue);
+  border-left: 10px solid var(--blue);
+  transition: 0.5s;
+  overflow: hidden;
+}
+.admin-navigation.active {
+  width: 80px;
+}
+.admin-navigation ul {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+}
+.admin-navigation ul li {
+  position: relative;
+  width: 100%;
+  list-style: none;
+  border-top-left-radius: 30px;
+  border-bottom-left-radius: 30px;
+}
+.admin-navigation ul li:hover,
+.admin-navigation ul li.hovered {
+  background: var(--white);
+}
+.admin-navigation ul li.active {
+  background: var(--white);
+}
+.admin-navigation ul li.active a {
+  color: var(--blue);
+}
+
+.admin-navigation ul li:nth-child(1) {
+  margin-bottom: 40px;
+  pointer-events: none;
+}
+
+.admin-navigation ul li a {
+  position: relative;
+  display: block;
+  width: 100%;
+  display: flex;
+  text-decoration: none;
+  color: var(--white);
+}
+.admin-navigation ul li:hover a,
+.admin-navigation ul li.hovered a {
+  color: var(--blue);
+}
+.admin-navigation ul li a .icon {
+  position: relative;
+  display: block;
+  min-width: 60px;
+  height: 60px;
+  line-height: 70px;
+  text-align: center;
+}
+.admin-navigation ul li a .icon-brand {
+  position: relative;
+  display: block;
+  min-width: 60px;
+
+  height: 60px;
+  line-height: 70px;
+  text-align: center;
+}
+.admin-navigation ul li a .icon ion-icon {
+  font-size: 1.75em;
+}
+.admin-navigation ul li a .title {
+  position: relative;
+  display: block;
+  padding: 0 10px;
+  height: 60px;
+  line-height: 60px;
+  text-align: start;
+  white-space: nowrap;
+}
+.admin-navigation ul li a .title-name {
+  margin-top: 25px;
+  margin-left: 10px;
+}
+/* Border curve on outside */
+
+.admin-navigation ul li:hover a::before,
+.admin-navigation ul li.hovered a::before {
+  content: "";
+  position: absolute;
+  right: 0;
+  top: -50px;
+  width: 50px;
+  height: 50px;
+  background: transparent;
+  border-radius: 50%;
+  box-shadow: 35px 35px 0 10px var(--white);
+}
+.admin-navigation ul li:hover a::before,
+.admin-navigation ul li.active a::before {
+  content: "";
+  position: absolute;
+  right: 0;
+  top: -50px;
+  width: 50px;
+  height: 50px;
+  background: transparent;
+  border-radius: 50%;
+  box-shadow: 35px 35px 0 10px var(--white);
+}
+
+.admin-navigation ul li:hover a::after,
+.admin-navigation ul li.active a::after {
+  content: "";
+  position: absolute;
+  right: 0;
+  bottom: -50px;
+  width: 50px;
+  height: 50px;
+  background: transparent;
+  border-radius: 50%;
+  box-shadow: 35px -35px 0 10px var(--white);
+}
+.admin-navigation ul li:hover a::after,
+.admin-navigation ul li.hovered a::after {
+  content: "";
+  position: absolute;
+  right: 0;
+  bottom: -50px;
+  width: 50px;
+  height: 50px;
+  background: transparent;
+  border-radius: 50%;
+  box-shadow: 35px -35px 0 10px var(--white);
+}
+
+/* admin main*/
+.admin-main {
+  position: absolute;
+  width: calc(100% - 300px);
+  left: 300px;
+  min-height: 100vh;
+  background: var(--white);
+  transition: 0.5s;
+}
+.admin-main.active {
+  width: calc(100% -80px);
+  left: 80px;
+}
+.topbar {
+  width: 100%;
+  height: 60px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 10px;
+}
+.toggle {
+  position: relative;
+  width: 60px;
+  height: 60px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 2em;
+  cursor: pointer;
+}
+/* Card */
+.card-box {
+  position: relative;
+  width: 100%;
+  /*Indention of Card*/
+  padding: 20px;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-gap: 40px;
+}
+
+.card-box .card {
+  position: relative;
+  background: var(--white);
+  padding: 25px;
+  border-radius: 20px;
+  display: flex;
+  justify-content: space-between;
+  cursor: pointer;
+  box-shadow: 0 7px 25px rgba(0, 0, 0, 0.08);
+}
+.card-box .card .card-numbers {
+  position: relative;
+  font-family: 600;
+  font-size: 2.5em;
+  color: var(--blue);
+}
+.card-box .card .card-name {
+  color: var(--black2);
+  font-size: 1.1em;
+  margin-top: 5px;
+}
+.card-box .card .iconBx {
+  font-size: 3em;
+  color: var(--black2);
+}
+.card-box .card:hover {
+  background: var(--blue);
+}
+.card-box .card:hover .card-numbers,
+.card-box .card:hover .card-name,
+.card-box .card:hover .iconBx {
+  color: var(--white);
+}
+/* Room Details*/
+.details {
+  position: relative;
+  width: 100%;
+  /*Indention of Room Details*/
+  padding: 20px;
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-gap: 30px;
+  margin-top: 10px;
+}
+.details .recent-update {
+  position: relative;
+  display: grid;
+  min-height: 200px;
+  background: var(--white);
+  padding: 20px;
+  box-shadow: 0 7px 25px rgba(0, 0, 0, 0.08);
+  border-radius: 20px;
+}
+.card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+.card-header h2 {
+  font-weight: 600;
+  color: var(--blue);
+}
+.btn {
+  position: relative;
+  padding: 5px 10px;
+  text-decoration: none;
+  color: var(--white);
+  border-radius: 5px;
+}
+.details table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 10px;
+}
+.details table thead td {
+  font-weight: 600;
+}
+.details .recent-update table tr {
+  color: var(--black1);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+}
+.details .recent-update table tr:last-child {
+  border-bottom: none;
+}
+.details .recent-update table tr td {
+  padding: 10px;
+}
+
+.details .recent-update table tr td:last-child {
+  text-align: center;
+}
+.details .recent-update table tr td:nth-child(2) {
+  text-align: center;
+}
+.details .recent-update table tr td:nth-child(3) {
+  text-align: center;
+}
+.details .recent-update table tr td:first-child {
+  text-align: center;
+}
+.details .recent-update nav {
+  margin-top: 10px;
+}
+.status.Vacant {
+  padding: 5px 10px;
+  background: #1795ce;
+  color: var(--white);
+  border-radius: 4px;
+  font-size: 14px;
+  font-weight: 600;
+}
+.status.Occupied {
+  padding: 5px 10px;
+  background: red;
+  color: var(--white);
+  border-radius: 4px;
+  font-size: 14px;
+  font-weight: 600;
+}
+.status.Booked {
+  padding: 5px 10px;
+  background: #228b22;
+  color: var(--white);
+  border-radius: 4px;
+  font-size: 14px;
+  font-weight: 600;
+}
+/* Room Management*/
+.details {
+  position: relative;
+  width: 100%;
+  /*Indention of Room Details*/
+  padding: 20px;
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-gap: 30px;
+  margin-top: 10px;
+}
+.details .room-manage {
+  position: relative;
+  display: grid;
+  min-height: 500px;
+  background: var(--white);
+  padding: 20px;
+  box-shadow: 0 7px 25px rgba(0, 0, 0, 0.08);
+  border-radius: 20px;
+}
+.card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  background: var(--white);
+}
+.card-header h2 {
+  font-weight: 600;
+  color: var(--blue);
+}
+.card-header .btn {
+  margin-top: 5px;
+}
+.details .table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 10px;
+}
+.details .table thead td {
+  font-weight: 600;
+}
+.details .room-manage .table tr {
+  color: var(--black1);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+}
+.details .room-manage .table tr:last-child {
+  border-bottom: none;
+}
+.details .room-manage .table tr td {
+  padding: 10px;
+}
+.details .room-manage .table tr td:first-child {
+  font-weight: 600;
+}
+.details .room-manage .table tr td .btn {
+  margin: 5px;
+  text-decoration: none;
+}
+
+.details .room-manage .table tbody tr td {
+  padding: 10px;
+}
+.details .room-manage .table tbody tr td img {
+  width: 200px;
+  height: 120px;
+}
+
+/* Add Room*/
+.details {
+  position: relative;
+  width: 100%;
+  /*Indention of Room Details*/
+  padding: 20px;
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-gap: 30px;
+  margin-top: 10px;
+}
+.details .add-room {
+  position: relative;
+  display: grid;
+  min-height: 100px;
+  background: var(--white);
+  padding: 20px;
+  box-shadow: 0 7px 25px rgba(0, 0, 0, 0.08);
+  border-radius: 20px;
+}
+.card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  background: var(--white);
+}
+.card-header h2 {
+  font-weight: 600;
+  color: var(--blue);
+}
+
+.details form {
+  width: 100%;
+  border-collapse: collapse;
+  padding: 20px;
+}
+.add-predetails {
+  margin-top: 20px;
+}
+
+#img-preview img {
+  height: 150px;
+  width: 150px;
+  border-radius: 10px;
+}
+.input-box [type="file"] {
+  margin-top: 10px;
+}
+.add-room form .add-details {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+form .add-details .input-box,
+form .add-details .input-box-area {
+  margin: 20px 0 12px 0;
+  width: calc(100% / 2 - 20px);
+}
+
+.add-details .input-box input {
+  height: 40px;
+  width: 100%;
+}
+.add-details .input-box-area input {
+  height: 40px;
+  width: 100%;
+}
+.add-details .input-box-area textarea {
+  height: 60px;
+  width: 100%;
+  resize: none;
+  border-radius: 10px;
+}
+.add-details .input-box-area .description {
+  height: 100px;
+  border-radius: 10px;
+}
+.add-details .input-box [type="text"] {
+  border-radius: 10px;
+}
+.add-button {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  margin-right: 20px;
+}
+.add-button .btn {
+  margin: 5px;
+  padding: 10px;
+  font-weight: 500;
+}
+#CreateRoom {
+  text-align: center;
+  font-weight: 500;
+  width: 120px;
+}
+#EditRoom {
+  text-align: center;
+  font-weight: 500;
+  width: 120px;
+}
+#RoomNumber {
+  width: 120px;
+  text-align: center;
+  border-radius: 5px;
+}
+/* admin user management*/
+.details {
+  position: relative;
+  width: 100%;
+  /*Indention of Room Details*/
+  padding: 20px;
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-gap: 30px;
+  margin-top: 10px;
+}
+.details .user-manage {
+  position: relative;
+  display: grid;
+  min-height: 200px;
+  background: var(--white);
+  padding: 20px;
+  box-shadow: 0 7px 25px rgba(0, 0, 0, 0.08);
+  border-radius: 20px;
+}
+.card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  background: var(--white);
+}
+.card-header h2 {
+  font-weight: 600;
+  color: var(--blue);
+}
+.card-header .btn {
+  margin-top: 5px;
+}
+.details .table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 10px;
+}
+.details .table thead td {
+  font-weight: 600;
+}
+.details .user-manage .table tr {
+  color: var(--black1);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+}
+.details .user-manage .table tr:last-child {
+  border-bottom: none;
+}
+.details .user-manage .table tr td:first-child {
+  font-weight: 600;
+}
+.details .user-manage .table tr td {
+  padding: 10px;
+}
+.details .user-manage .table tr td:last-child {
+  text-align: center;
+}
+
+.details .user-manage .table tr td .btn {
+  text-decoration: none;
+}
+#CreateUserStatus {
+  text-align: center;
+  font-weight: 500;
+  width: 90px;
+}
+#CreateUserRole {
+  text-align: center;
+  font-weight: 500;
+  width: 120px;
+}
+#EditUserStatus {
+  text-align: center;
+  font-weight: 500;
+  width: 90px;
+}
+#EditUserRole {
+  text-align: center;
+  font-weight: 500;
+  width: 120px;
+}
+#userStatus option {
+  background-color: #fff;
+  font-weight: 500;
+}
+.status.Active {
+  padding: 5px 10px;
+  background: #1795ce;
+  color: var(--white);
+  border-radius: 4px;
+  font-size: 15px;
+  font-weight: 500;
+}
+.status.Inactive {
+  padding: 5px 10px;
+  background: #696969;
+  color: var(--white);
+  border-radius: 4px;
+  font-size: 15px;
+  font-weight: 500;
+}
+/* Create User */
+.details {
+  position: relative;
+  width: 100%;
+  /*Indention of Room Details*/
+  padding: 20px;
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-gap: 30px;
+  margin-top: 10px;
+}
+.details .create-user {
+  position: relative;
+  display: grid;
+  min-height: 100px;
+  background: var(--white);
+  padding: 20px;
+  box-shadow: 0 7px 25px rgba(0, 0, 0, 0.08);
+  border-radius: 20px;
+}
+.card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  background: var(--white);
+}
+.card-header h2 {
+  font-weight: 600;
+  color: var(--blue);
+}
+
+.details form {
+  width: 100%;
+  border-collapse: collapse;
+  padding: 20px;
+}
+.add-predetails {
+  margin-top: 20px;
+}
+
+.input-box [type="file"] {
+  margin-top: 10px;
+}
+.create-user form .user-details {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+form .user-details .input-box,
+form .user-details .input-box-area {
+  margin: 20px 0 12px 0;
+  width: calc(100% / 2 - 20px);
+}
+
+.user-details .input-box input {
+  height: 40px;
+  width: 100%;
+  margin-top: 10px;
+  border-radius: 10px;
+}
+.input-box select {
+  margin-top: 10px;
+}
+
+.add-button {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  margin-right: 20px;
+}
+.add-button .btn {
+  margin: 5px;
+  padding: 10px;
+  font-weight: 500;
+}
+/* edit user */
+.details {
+  position: relative;
+  width: 100%;
+  /*Indention of Room Details*/
+  padding: 20px;
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-gap: 30px;
+  margin-top: 10px;
+}
+.details .create-user {
+  position: relative;
+  display: grid;
+  min-height: 100px;
+  background: var(--white);
+  padding: 20px;
+  box-shadow: 0 7px 25px rgba(0, 0, 0, 0.08);
+  border-radius: 20px;
+}
+.card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  background: var(--white);
+}
+.card-header h2 {
+  font-weight: 600;
+  color: var(--blue);
+}
+
+.details form {
+  width: 100%;
+  border-collapse: collapse;
+  padding: 20px;
+}
+.add-predetails {
+  margin-top: 20px;
+}
+
+.input-box [type="file"] {
+  margin-top: 10px;
+}
+.create-user form .user-details {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+form .user-details .input-box,
+form .user-details .input-box-area {
+  margin: 20px 0 12px 0;
+  width: calc(100% / 2 - 20px);
+}
+
+.user-details .input-box input {
+  height: 40px;
+  width: 100%;
+  margin-top: 10px;
+  border-radius: 10px;
+}
+.input-box select {
+  margin-top: 10px;
+}
+
+.add-button {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  margin-right: 20px;
+}
+.add-button .btn {
+  margin: 5px;
+  padding: 10px;
+  font-weight: 500;
+}
+/* Room type */
+.details {
+  position: relative;
+  width: 100%;
+  /*Indention of Room Details*/
+  padding: 20px;
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-gap: 30px;
+  margin-top: 10px;
+}
+.details .room-type-manage {
+  position: relative;
+  display: grid;
+  min-height: 200px;
+  background: var(--white);
+  padding: 20px;
+  box-shadow: 0 7px 25px rgba(0, 0, 0, 0.08);
+  border-radius: 20px;
+}
+.card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  background: var(--white);
+}
+.card-header h2 {
+  font-weight: 600;
+  color: var(--blue);
+}
+.card-header .btn {
+  margin-top: 5px;
+}
+.details .table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 10px;
+}
+.details .table thead td {
+  font-weight: 600;
+}
+.details .room-type-manage .table tr {
+  color: var(--black1);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+}
+.details .room-type-manage .table tr:last-child {
+  border-bottom: none;
+}
+.details .room-type-manage .table tr td:first-child {
+  font-weight: 600;
+}
+.details .room-type-manage .table tr td {
+  padding: 10px;
+}
+.details .room-type-manage .table tr td .btn {
+  margin-right: 5px;
+  text-decoration: none;
+}
+
+.details .room-type-manage .table tbody tr td {
+  padding: 20px;
+}
+/* Reservation */
+.details {
+  position: relative;
+  width: 100%;
+  /*Indention of Room Details*/
+  padding: 20px;
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-gap: 30px;
+  margin-top: 10px;
+}
+.details .reservation-manage {
+  position: relative;
+  display: grid;
+  min-height: 200px;
+  background: var(--white);
+  padding: 20px;
+  box-shadow: 0 7px 25px rgba(0, 0, 0, 0.08);
+  border-radius: 20px;
+}
+.card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  background: var(--white);
+}
+.card-header h2 {
+  font-weight: 600;
+  color: var(--blue);
+}
+.card-header .btn {
+  margin-top: 5px;
+}
+.details .table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 10px;
+}
+.details .table thead td {
+  font-weight: 600;
+}
+.details .reservation-manage .table tr {
+  color: var(--black1);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+}
+.details .reservation-manage .table tr:last-child {
+  border-bottom: none;
+}
+
+.details .reservation-manage .table tr td:first-child {
+  font-weight: 600;
+}
+.details .reservation-manage .table tr td {
+  padding: 10px;
+}
+.details .reservation-manage .table tr td .btn {
+  margin-right: 5px;
+  margin-top: 5px;
+  text-decoration: none;
+  font-size: 15px;
+}
+.status.Confirmed {
+  background: #1795ce;
+  color: var(--white);
+  border-radius: 4px;
+  font-size: 13px;
+  font-weight: 600;
+}
+.status.Cancelled {
+  padding: 5px 10px;
+  background: red;
+  color: var(--white);
+  border-radius: 4px;
+  font-size: 14px;
+  font-weight: 600;
+}
+.status.Check-In {
+  padding: 5px 10px;
+  background: #077e8c;
+  color: var(--white);
+  border-radius: 4px;
+  font-size: 13px;
+  font-weight: 600;
+}
+.status.Check-Out {
+  padding: 5px 10px;
+  background: #d9512c;
+  color: var(--white);
+  border-radius: 4px;
+  font-size: 13px;
+  font-weight: 600;
+}
+.status.Pending {
+  padding: 5px 10px;
+  background: #f7cb73;
+  color: var(--white);
+  border-radius: 4px;
+  font-size: 14px;
+  font-weight: 600;
+}
+.details .reservation-manage .table tbody tr td {
+  padding: 20px;
+}
+/*Modals */
+.modal .modal-body table tbody tr td img {
+  height: 120px;
+  width: 200px;
+}
+.modal .modal-body table tbody tr td .reserve-btn {
+  padding: 5px;
+  border-radius: 10px;
+}
+.modal .modal-header select {
+  margin-left: 30px;
+  padding: 5px;
+  border-radius: 10px;
+}
+/* Report Details */
+.details {
+  position: relative;
+  width: 100%;
+  /*Indention of Room Details*/
+  padding: 20px;
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-gap: 30px;
+  margin-top: 10px;
+}
+.details .report-manage {
+  position: relative;
+  display: grid;
+  min-height: 200px;
+  background: var(--white);
+  padding: 20px;
+  box-shadow: 0 7px 25px rgba(0, 0, 0, 0.08);
+  border-radius: 20px;
+}
+.card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  background: var(--white);
+}
+.card-header h2 {
+  font-weight: 600;
+  color: var(--blue);
+}
+.card-header .btn {
+  margin-top: 5px;
+}
+.details .table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 10px;
+}
+.details .table thead td {
+  font-weight: 600;
+}
+.details .report-manage .table tr {
+  color: var(--black1);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+}
+.details .report-manage .table tr:last-child {
+  border-bottom: none;
+}
+
+.details .report-manage .table tr td:first-child {
+  font-weight: 600;
+}
+.details .report-manage .table tr td {
+  padding: 10px;
+}
+.details .report-manage .table tr td .btn {
+  margin-right: 5px;
+  margin-top: 5px;
+  text-decoration: none;
+  font-size: 15px;
+}
+.details .report-manage .table tbody tr td {
+  padding: 20px;
+}
+.details .report-manage .card-header .card-header-sort input {
+  padding: 5px;
+  border: 2px solid black;
+  border-radius: 5px;
+  margin-top: 7px;
+  margin-right: 5px;
+}
+.details .report-manage .card-header .card-header-sort select {
+  padding: 7px;
+  border: 2px solid black;
+  border-radius: 5px;
+  margin-top: 7px;
+  margin-right: 5px;
+}
+.details .report-manage .card-header .card-header-sort select:disabled {
+  color: #fff;
+}
+
+.card-footer h4 {
+  font-weight: 600;
+}
+.details .report-manage .card-header .card-header-sort .sortText {
+  font-weight: 600;
+  margin-right: 10px;
+}
+.details .report-manage .card-btn {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 20px;
+  justify-content: flex-end;
+}
+.details .report-manage .card-btn .gen-btn {
+  padding: 10px;
+  border-radius: 10px;
+}
+
+/*.details .user-manage .table tbody tr td
+{
+    padding: 20px;
+}*/
+
+/* responsive menu 
+@media (max-width: 991px)
+{
+    .admin-navigation
+    {
+        left: -300px;
+    }
+    .admin-navigation.active
+    {
+        width: 300px;
+        left: 0;
+    }
+    .admin-main
+    {
+        width: 100%;
+        left: 0;
+    }
+    .admin-main.active
+    {
+        left: 300px;
+    }
+    .card-box
+    {
+        grid-template-columns: repeat(2,1fr);
+    }
+}
+@media (max-width: 768px)
+{
+    .details
+    {
+        grid-template-columns: repeat(1,1fr);
+    }
+    .recent-update
+    {
+        overflow-x: auto;
+    }
+
+}
+*/

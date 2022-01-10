@@ -10,6 +10,14 @@
   <!-----header----->
   <?php include "./partials/header.php" ?>
 
+  <!----- PHP -----> 
+  <?php 
+    // Alert message
+    if (isset($_SESSION['message'])) 
+      echo '<script type="text/javascript"> alert('.$_SESSION['message'].'); </script>';
+    unset($_SESSION['message']);
+  ?>
+
   <!-----landing----->
   <section class="home" id="home">
     <div class="landing-container">
@@ -19,7 +27,7 @@
           <hr class="solid">
           <p>Cozy Home brings you to a home away from home where you can allow yourself to feel most like you.
             Giving you a safe and comfortable place to enjoy.</p>
-          <button type="button" class="book-btn">BOOK NOW</button>
+          <button type="button" class="book-btn" onclick="location.href='accomodation_page.php'">BOOK NOW</button>
         </div>
       </div>
       <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
@@ -54,15 +62,15 @@
 
             <div class="box">
               <label>Check-in:</label> <br>
-              <input type="date" name="input-datein" required placeholder="Check-in-Date">
+              <input type="date" name="datein" id="datein" required placeholder="Check-in-Date">
             </div>
             <div class="box">
               <label>Check-out:</label> <br>
-              <input type="date" name="input-dateout" required placeholder="Check-out-Date">
+              <input type="date" name="dateout" required placeholder="Check-out-Date">
             </div>
             <div class="box">
               <label>Persons:</label> <br>
-              <input type="number" name="input-persons" required placeholder="1">
+              <input type="number" name="numpersons" required min="1" placeholder="1">
             </div>
             <div class="box">
               <label>Room Type:</label> <br>
@@ -252,6 +260,19 @@
   <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+  <script type="text/javascript">
+        // When document ready... Set age limit by setting max birthdate
+        $(function() {
+            var today = new Date();
+            var mm = today.getMonth()+1;
+            mm = mm<10 ? '0'+mm : mm;
+            var dd = today.getDate();
+            dd = dd<10 ? '0'+dd : dd;
+            var yyyy = today.getFullYear();
+            var date = yyyy+'-'+mm+'-'+dd;
+            var input = document.getElementById("datein").min = date;
+        });
+    </script>
 </body>
 
 </html>

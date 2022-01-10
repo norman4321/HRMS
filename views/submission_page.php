@@ -191,10 +191,10 @@
                                             <h4 class="col-12  p-0 mb-3 text-start">Reservation For</h4>
                                         </div>
                                         <fieldset>
-                                            <input type="radio" class="radio" name="guest" value="user" id="user-btn" />
-                                            <label for="user">Myself</label>
+                                            <input type="radio" class="radio" name="guest" value="user" id="user-btn" checked />
+                                            <label class="mr-4 ml-1" for="user">Myself</label>
                                             <input type="radio" class="radio" name="guest" value="guest" id="guest-btn" />
-                                            <label for=" guest">Someone Else</label>
+                                            <label class="ml-1" for="guest">Someone Else</label>
                                         </fieldset>
                                     </div>
                                 </form>

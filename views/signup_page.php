@@ -63,8 +63,10 @@
                                 if ($conn->query($sql)) { 
                                     #echo '<br>  Data Inserted in in user_account table <br>';
                                     $_SESSION['user_id'] = $profile_id;
+                                    $_SESSION['user_type'] = $type;
+                                    $_SESSION['message'] = 'Success! Your account has been created.';
                                     header("Location: home_page.php");
-                                    alert("Success: Account created successfully!");
+                                    die;
                                 } else {
                                     echo $conn->error;  // display error for inserting data into database
                                 }
@@ -83,10 +85,6 @@
             } else {
                 echo $conn->error;  // display error for selecting data into database
             }
-        }
-
-        function alert($message) {
-            echo "<script type='text/javascript'>alert('$message')</script>";
         }
     ?>
 

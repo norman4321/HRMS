@@ -20,7 +20,7 @@
 
     $error_message = '';
     $success_message = '';
-    $form='';
+    $form = '';
 
     $firstname = '';
     $lastname = '';
@@ -146,7 +146,7 @@
         }
     
     }
-    var_dump($_SESSION);
+    #var_dump($_SESSION);
     ?>
 
     <section class="account">

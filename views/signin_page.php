@@ -20,7 +20,7 @@
         $email = '';
         $password = '';
         $error_message = '';
-        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+        if (isset($_POST['submit'])) {
             #var_dump($_POST);
             $email = trim($_POST['email']);
             $password = $_POST['password'];
@@ -96,7 +96,7 @@
                                 </div>
                                 <div class="row">
                                     <div class="col-md-12 mb-4 align-items-end">
-                                        <input class="btn btn-md" type="submit" value="SUBMIT" />
+                                        <input class="btn btn-md" name="submit" type="submit" value="SUBMIT" />
                                     </div>
                                 </div>
                                 <div class="text-center mb-2">

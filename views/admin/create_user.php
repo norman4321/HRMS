@@ -151,14 +151,14 @@ function LastId(){
 
                             <div class="input-box">
                                 <span class="form-details">Role: </span>
-                                <select id="CreateUserRole" class="form-control">
+                                <select name="CreateUserRole" id="CreateUserRole" class="form-control">
                                     <option value="Admin">Admin</option>
                                     <option value="Receptionist">Receptionist</option>
                                 </select>
                             </div>
                             <div class="input-box">
                                 <span class="form-details">Status: </span>
-                                <select id="CreateUserStatus" class="form-control" style="width: 90px;">
+                                <select name="CreateUserStatus" id="CreateUserStatus" class="form-control" style="width: 90px;">
                                     <option value="Active">Active</option>
                                     <option value="Inactive">Inactive</option>
                                 </select>

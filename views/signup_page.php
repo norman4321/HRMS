@@ -20,7 +20,7 @@
         $email = '';
         $password = '';
         $error_message = '';
-        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+        if (isset($_POST['submit'])) {
             #var_dump($_POST);
             $firstname = trim($_POST['firstname']);
             $lastname = trim($_POST['lastname']);

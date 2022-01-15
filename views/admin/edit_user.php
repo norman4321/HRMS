@@ -2,7 +2,17 @@
 <html lang="en">
 
 <head>
-    <?php include "../partials/admin-head.html" ?>
+    <?php include "../partials/admin-head.html";
+
+
+    require "../../config/database.php";
+
+    $id = $_GET["id"];
+    echo $id;
+
+
+   ?>
+
 
 
 </head>

@@ -108,35 +108,7 @@
                           <?php include "../../config/room_type_view.php";
                               RoomTypeList();
                           ?>
-                            <tr>
-                                <td>1</td>
-                                <td>
-                                    <img src="../../public/images/cozy_suite.jpg" width="200px" height="120px">
-                                </td>
-                                <td>Cozy Home Suite</td>
-                                <td>12pax</td>
-                                <td>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries</td>
-                                <td>₱11,000.00</td>
-                                <td>
-                                    <button class="btn btn-success"><a href="edit_room_type.php" class="text-light">Edit</a></button>
-                                    <button class="btn btn-danger"><a href="#" class="text-light">Delete</a></button>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>1</td>
-                                <td>
-                                    <img src="../../public/images/cozy_room.jpg" width="200px" height="120px">
-                                </td>
-                                <td>Cozy Room</td>
-                                <td>12pax</td>
-                                <td>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries</td>
-                                <td>₱11,000.00</td>
-                                <td>
-                                    <button class="btn btn-success"><a href="edit_room_type.php" class="text-light">Edit</a></button>
-                                    <button class="btn btn-danger"><a href="#" class="text-light">Delete</a></button>
-                                </td>
-                            </tr>
-
+                          
                         </tbody>
                     </table>
                     <nav aria-label="Page navigation example">

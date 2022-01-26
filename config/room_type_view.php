@@ -20,7 +20,7 @@ function RoomTypeList(){
     echo "<td>". $row['room_description'] ."</td> ";
     echo "<td>". $row['room_price'] ."</td> ";
 
-    echo "<td>". "<button class='btn btn-success'><a href='edit_room.php?id=$row[type_id]' class='text-light'>Edit</a></button>" ."</td>";
+    echo "<td>". "<button class='btn btn-success'><a href='edit_room_type.php?id=$row[type_id]' class='text-light'>Edit</a></button>" ."</td>";
     echo "</tr>";
     }
 

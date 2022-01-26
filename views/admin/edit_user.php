@@ -8,7 +8,59 @@
     require "../../config/database.php";
 
     $id = $_GET["id"];
-    echo $id;
+
+
+function GetID(){
+
+      $id = $_GET["id"];
+      return $id;
+}
+
+
+function FetchUserData($id){
+    include "../../config/database.php";
+
+        $error_message = '';
+        $success_message = '';
+        $form = '';
+
+        $firstname = '';
+        $lastname = '';
+        $address = '';
+        $birthdate = '';
+        $nationality = '';
+        $contact = '';
+        $email = '';
+
+        $oldpassword = '';
+        $newpassword = '';
+        $repassword = '';
+
+
+  $sql = "SELECT P.profile_firstname, P.profile_lastname, P.profile_address, P.profile_birthdate, P.profile_nationality, P.profile_contact, A.user_email, A.user_password , A.user_type, A.user_status FROM HRMS_user_profile P INNER JOIN HRMS_user_account A ON P.profile_id=A.user_id WHERE P.profile_id=" . $id;
+    if ($rs = $conn->query($sql)) {
+        if ($rs->num_rows > 0) {
+            $profile_data = $rs->fetch_assoc();
+        /*    $firstname = $profile_data['profile_firstname'];
+            $lastname = $profile_data['profile_lastname'];
+            $address = $profile_data['profile_address'];
+            $birthdate = $profile_data['profile_birthdate'];
+            $nationality = $profile_data['profile_nationality'];
+            $contact = $profile_data['profile_contact'];
+            $email = $profile_data['user_email']; */
+        } else {
+            echo 'No user found!';
+        }
+    } else {
+        echo $conn->error;  // display error for selecting data into database
+    }
+
+
+
+      return $profile_data;
+  }
+
+
 
 
    ?>
@@ -101,23 +153,26 @@
                     <div class="card-header">
                         <h2>EDIT USER</h2>
                     </div>
-                    <form action="#">
+                    <form action="../../config/update_user.php" method="post">
                         <div class="input-box">
                             <h5>USER ID:</h5>
-                            <label>sample</label>
+                            <label><?php echo GetID() ?></label>
                         </div>
                         <div class="user-details">
-                            <div class="input-box">
+
+                          <?php if (isset($_GET['id'])): $profile_data=FetchUserData($_GET['id'])?>
+                          <div class="input-box">
                                 <span class="form-details">First Name: </span>
-                                <input type="text" name="profile_firstname" placeholder="First Name" maxlength="50" required>
-                            </div>
+                                <input type="text" name="profile_firstname" placeholder="<?php echo $profile_data['profile_firstname'] ?>" maxlength="50" required="true">
+                          </div>
+
                             <div class="input-box">
                                 <span class="form-details">Last Name: </span>
-                                <input type="text" name="profile_lastname" placeholder="Last Name" maxlength="50" required>
+                                <input type="text" name="profile_lastname" placeholder="<?php echo $profile_data['profile_lastname'] ?>" maxlength="50" required>
                             </div>
                             <div class="input-box">
                                 <span class="form-details">Password: </span>
-                                <input type="password" name="profile_password" placeholder="Password" maxlength="20" required>
+                                <input type="password" name="profile_password" type="password" placeholder="<?php echo $profile_data['user_password'] ?>" maxlength="20" required>
                             </div>
                             <div class="input-box">
                                 <span class="form-details">Verify Password: </span>
@@ -125,42 +180,46 @@
                             </div>
                             <div class="input-box">
                                 <span class="form-details">Email: </span>
-                                <input type="text" name="profile_email" placeholder="Email" maxlength="50" required>
+                                <input type="text" name="profile_email" placeholder="<?php echo $profile_data['user_email'] ?>" maxlength="50" required>
                             </div>
                             <div class="input-box">
                                 <span class="form-details">Address: </span>
-                                <input type="text" name="profile_address" placeholder="Address" maxlength="100" required>
+                                <input type="text" name="profile_address" placeholder="<?php echo $profile_data['profile_address'] ?>" maxlength="100" required>
                             </div>
                             <div class="input-box">
                                 <span class="form-details">Birthdate: </span>
-                                <input type="date" name="profile_birthdate" required>
+                                <input type="date" name="profile_birthdate" value="<?php echo $profile_data['profile_birthdate'] ?>"required>
                             </div>
                             <div class="input-box">
                                 <span class="form-details">Nationality: </span>
-                                <input type="text" name="profile_nationality" placeholder="Nationality" maxlength="20" required>
+                                <input type="text" name="profile_nationality" placeholder="<?php echo $profile_data['profile_nationality'] ?>" maxlength="20" required>
                             </div>
                             <div class="input-box">
                                 <span class="form-details">Contact No.: </span>
-                                <input type="text" name="profile_contact" placeholder="Contact No." maxlength="15" required>
+                                <input type="text" name="profile_contact" placeholder="<?php echo $profile_data['profile_contact'] ?>" maxlength="15" required>
                             </div>
+
+
+
                             <div class="input-box">
                                 <span class="form-details">Role: </span>
-                                <select id="CreateUserRole" class="form-control">
-                                    <option value="Admin">Admin</option>
-                                    <option value="Receptionist">Receptionist</option>
+                                <select id="CreateUserRole" class="form-control" >
+                                    <option value="Admin" <?php if ($profile_data['user_type']==1) echo "selected"; ?> >Admin</option>
+                                    <option value="Receptionist" <?php if ($profile_data['user_type']==2) echo "selected";?>>Receptionist</option>
                                 </select>
                             </div>
                             <div class="input-box">
                                 <span class="form-details">Status: </span>
                                 <select id="CreateUserStatus" class="form-control" style="width: 90px;">
-                                    <option value="Active">Active</option>
-                                    <option value="Inactive">Inactive</option>
+                                    <option value="Active" <?php if ($profile_data['user_status']==1) echo "selected"; ?>>Active</option>
+                                    <option value="Inactive" <?php if ($profile_data['user_status']==2) echo "selected"; ?>>Inactive</option>
                                 </select>
                             </div>
                         </div>
+          <?php endif; ?>
                     </form>
                     <div class="add-button">
-                        <button class="btn btn-primary">Confirm</button>
+                        <button type="submit" class="btn btn-primary">Confirm</button>
                         <button class="btn btn-danger">Cancel</button>
                     </div>
                 </div>

@@ -2,9 +2,43 @@
 <html lang="en">
 
 <head>
-    <?php include "../partials/admin-head.html" ?>
+    <?php include "../partials/admin-head.html";
+    require "../../config/database.php";
+
+    function GetID(){
+
+          $id = $_GET["id"];
+          return $id;
+    }
 
 
+    function FetchRoomTypeData($id){
+        include "../../config/database.php";
+
+
+
+
+      $sql = "SELECT type_id, type_name, room_description, room_capacity, room_price, room_image FROM HRMS_room_type WHERE type_id =" . $id;
+        if ($rs = $conn->query($sql)) {
+            if ($rs->num_rows > 0) {
+                $room_type_data = $rs->fetch_assoc();
+
+            } else {
+                echo 'No room found!';
+            }
+        } else {
+            echo $conn->error;  // display error for selecting data into database
+        }
+
+
+
+          return $room_type_data;
+      }
+
+
+
+
+       ?>
 </head>
 
 
@@ -89,23 +123,25 @@
                     <div class="card-header">
                         <h2>EDIT ROOM TYPE</h2>
                     </div>
+                      <?php if (isset($_GET['id'])): $room_type_data=FetchRoomTypeData($_GET['id'])?>
                     <form action="#">
                         <div class="add-room-type-details">
+
                             <div class="input-box">
                                 <span class="form-details">Room Name: </span>
-                                <input type="text" name="room_type_name" placeholder="Room Name" maxlength="50" required>
+                                <input type="text" name="room_type_name" placeholder="<?php echo $room_type_data['type_name'] ?>" maxlength="50" required>
                             </div>
                             <div class="input-box">
                                 <span class="form-details">Capacity: </span>
-                                <input type="text" name="room_capacity" placeholder="Capacity" required>
+                                <input type="text" name="room_capacity" placeholder="<?php echo $room_type_data['room_capacity'] ?>" required>
                             </div>
                             <div class="input-box">
                                 <span class="form-details">Price (per night): </span>
-                                <input type="text" name="room_price" placeholder="Price" required>
+                                <input type="text" name="room_price" placeholder="<?php echo $room_type_data['room_price'] ?>" required>
                             </div>
                             <div class="input-box-area">
                                 <span class="form-details">Description: </span>
-                                <textarea class="description" name="room_description" placeholder="Description" required maxlength="500"></textarea>
+                                <textarea class="description" name="room_description" placeholder="<?php echo $room_type_data['room_description'] ?>" required maxlength="500"></textarea>
                             </div>
                         </div>
                         <div class="add-predetails">
@@ -114,12 +150,13 @@
                                 <input type="file" accept="image/*" id="roomImage" name="room_image" onchange="displayImage(this)" required>
                             </div>
                         </div>
-
+                        <div class="add-button">
+                            <button class="btn btn-primary">Confirm</button>
+                            <button class="btn btn-danger">Cancel</button>
+                        </div>
                     </form>
-                    <div class="add-button">
-                        <button class="btn btn-primary">Confirm</button>
-                        <button class="btn btn-danger">Cancel</button>
-                    </div>
+
+                      <?php endif; ?>
                 </div>
             </div>
 

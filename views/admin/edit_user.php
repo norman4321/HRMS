@@ -20,21 +20,7 @@ function GetID(){
 function FetchUserData($id){
     include "../../config/database.php";
 
-        $error_message = '';
-        $success_message = '';
-        $form = '';
 
-        $firstname = '';
-        $lastname = '';
-        $address = '';
-        $birthdate = '';
-        $nationality = '';
-        $contact = '';
-        $email = '';
-
-        $oldpassword = '';
-        $newpassword = '';
-        $repassword = '';
 
 
   $sql = "SELECT P.profile_firstname, P.profile_lastname, P.profile_address, P.profile_birthdate, P.profile_nationality, P.profile_contact, A.user_email, A.user_password , A.user_type, A.user_status FROM HRMS_user_profile P INNER JOIN HRMS_user_account A ON P.profile_id=A.user_id WHERE P.profile_id=" . $id;

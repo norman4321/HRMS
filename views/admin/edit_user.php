@@ -172,7 +172,7 @@ function FetchUserData($id){
                             </div>
                             <div class="input-box">
                                 <span class="form-details">Password: </span>
-                                <input type="password" name="profile_password" type="password" placeholder="<?php echo $profile_data['user_password'] ?>" maxlength="20" required>
+                                <input type="password" name="profile_password" placeholder="<?php echo $profile_data['user_password'] ?>" maxlength="20" required>
                             </div>
                             <div class="input-box">
                                 <span class="form-details">Verify Password: </span>
@@ -216,12 +216,15 @@ function FetchUserData($id){
                                 </select>
                             </div>
                         </div>
-          <?php endif; ?>
-                    </form>
+
+
                     <div class="add-button">
                         <button type="submit" class="btn btn-primary">Confirm</button>
                         <button class="btn btn-danger">Cancel</button>
                     </div>
+                      </form>
+                        <?php endif; ?>
+
                 </div>
             </div>
 

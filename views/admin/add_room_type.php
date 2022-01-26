@@ -84,15 +84,34 @@
 
             <!--Room Management-->
             <div class="details">
-                <div class="add-room">
+                <div class="add-room-type">
                     <div class="card-header">
                         <h2>ADD ROOM TYPE</h2>
                     </div>
                     <form action="#">
-                        <div class="add-details">
+                        <div class="add-room-type-details">
                             <div class="input-box">
-                                <span class="form-details">Room Type: </span>
+                                <span class="form-details">Room Name: </span>
                                 <input type="text" name="room_type_name" placeholder="Room Name" maxlength="50" required>
+                            </div>
+                            <div class="input-box">
+                                <span class="form-details">Capacity: </span>
+                                <input type="text" name="room_capacity" placeholder="Capacity" required>
+                            </div>
+                            <div class="input-box">
+                                <span class="form-details">Price (per night): </span>
+                                <input type="text" name="room_price" placeholder="Price" required>
+                            </div>
+                            <div class="input-box-area">
+                                <span class="form-details">Description: </span>
+                                <textarea class="description" name="room_description" placeholder="Description" required maxlength="500"></textarea>
+                            </div>
+                            
+                        </div>
+                        <div class="add-predetails">
+                            <div class="input-box">
+                                <div id="img-preview"><img src="../../public/images/upload-logo.png" onclick="triggerClick()" id="roomDisplay"></div>
+                                <input type="file" accept="image/*" id="roomImage" name="room_image" onchange="displayImage(this)" required>
                             </div>
 
                         </div>
@@ -108,7 +127,21 @@
         </div>
 
     </div>
+    <script>
+        function triggerClick(e) {
+            document.querySelector('#roomImage').click();
+        }
 
+        function displayImage(e) {
+            if (e.files[0]) {
+                var reader = new FileReader();
+                reader.onload = function(e) {
+                    document.querySelector('#roomDisplay').setAttribute('src', e.target.result);
+                }
+                reader.readAsDataURL(e.files[0]);
+            }
+        }
+    </script>
 
 
 

@@ -5,6 +5,7 @@
   padding: 0;
   box-sizing: border-box;
   font-family: "Source Sans Pro", sans-serif;
+  
 }
 :root {
   --blue: #070707;
@@ -308,7 +309,7 @@ a {
 .details .recent-update nav {
   margin-top: 10px;
 }
-.status.Vacant {
+.status.Available {
   padding: 5px 10px;
   background: #1795ce;
   color: var(--white);
@@ -327,6 +328,14 @@ a {
 .status.Booked {
   padding: 5px 10px;
   background: #228b22;
+  color: var(--white);
+  border-radius: 4px;
+  font-size: 14px;
+  font-weight: 600;
+}
+.status.Maintenance {
+  padding: 5px 10px;
+  background: #FFAB76;
   color: var(--white);
   border-radius: 4px;
   font-size: 14px;
@@ -361,6 +370,17 @@ a {
 .card-header h2 {
   font-weight: 600;
   color: var(--blue);
+}
+.card-header .head{
+  position: relative;
+  display: flex;
+}
+.card-header input {
+  margin-top: 5px;
+  height: 35px;
+  margin-left: 20px;
+  font-size: 15px;
+  font-family: 'Playfair Display', serif;
 }
 .card-header .btn {
   margin-top: 5px;
@@ -448,14 +468,14 @@ a {
   margin-top: 10px;
 }
 .add-room form .add-details {
-  display: flex;
+  display: block;
   flex-wrap: wrap;
   justify-content: space-between;
 }
 form .add-details .input-box,
 form .add-details .input-box-area {
-  margin: 20px 0 12px 0;
-  width: calc(100% / 2 - 20px);
+  margin: 20px 0 12px 0px;
+  width: 30%;
 }
 
 .add-details .input-box input {
@@ -474,6 +494,7 @@ form .add-details .input-box-area {
 }
 .add-details .input-box-area .description {
   height: 100px;
+  justify-content: center;
   border-radius: 10px;
 }
 .add-details .input-box [type="text"] {
@@ -494,6 +515,11 @@ form .add-details .input-box-area {
   text-align: center;
   font-weight: 500;
   width: 120px;
+}
+#CreateRoomType {
+  text-align: center;
+  font-weight: 500;
+  width: 200px;
 }
 #EditRoom {
   text-align: center;
@@ -807,17 +833,129 @@ form .user-details .input-box-area {
 .details .room-type-manage .table tr td:first-child {
   font-weight: 600;
 }
+.details .room-type-manage .table tr td:nth-child(5) {
+  align-content: flex-start;
+}
 .details .room-type-manage .table tr td {
   padding: 10px;
 }
 .details .room-type-manage .table tr td .btn {
   margin-right: 5px;
+  margin-bottom: 5px;
   text-decoration: none;
 }
 
 .details .room-type-manage .table tbody tr td {
+  padding: 40px;
+}
+.details .room-type-manage .table tbody tr td:last-child {
+  text-align: center;
+}
+.details .room-type-manage .table tbody tr td:nth-child(3) {
+  text-align: center;
+}
+.details .room-type-manage .table tbody tr td:nth-child(2) {
+  text-align: center;
+}
+.details .room-type-manage .table tbody tr td:nth-child(4) {
+  text-align: center;
+}
+.details .room-type-manage .table tbody tr td:nth-child(6) {
+  text-align: center;
+}
+
+/* Add Room Type*/
+.details {
+  position: relative;
+  width: 100%;
+  /*Indention of Room Details*/
+  padding: 20px;
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-gap: 30px;
+  margin-top: 10px;
+}
+.details .add-room-type {
+  position: relative;
+  display: grid;
+  min-height: 100px;
+  background: var(--white);
+  padding: 20px;
+  box-shadow: 0 7px 25px rgba(0, 0, 0, 0.08);
+  border-radius: 20px;
+}
+.card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  background: var(--white);
+}
+.card-header h2 {
+  font-weight: 600;
+  color: var(--blue);
+}
+
+.details form {
+  width: 100%;
+  border-collapse: collapse;
   padding: 20px;
 }
+.add-predetails {
+  margin-top: 20px;
+}
+
+#img-preview img {
+  height: 150px;
+  width: 150px;
+  border-radius: 10px;
+}
+.input-box [type="file"] {
+  margin-top: 10px;
+}
+.add-room-type form .add-room-type-details {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+form .add-room-type-details .input-box,
+form .add-room-type-details .input-box-area {
+  margin: 20px 0 12px 0;
+  width: calc(100% / 2 - 20px);
+}
+
+.add-room-type-details .input-box input {
+  height: 40px;
+  width: 100%;
+}
+.add-room-type-details .input-box-area input {
+  height: 40px;
+  width: 100%;
+}
+.add-room-type-details .input-box-area textarea {
+  height: 100px;
+  width: 100%;
+  resize: none;
+  border-radius: 10px;
+}
+.add-room-type-details .input-box-area .description {
+  height: 100px;
+  border-radius: 10px;
+}
+.add-room-type-details .input-box [type="text"] {
+  border-radius: 10px;
+}
+.add-button {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  margin-right: 20px;
+}
+.add-button .btn {
+  margin: 5px;
+  padding: 10px;
+  font-weight: 500;
+}
+
 /* Reservation */
 .details {
   position: relative;

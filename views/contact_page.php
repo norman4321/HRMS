@@ -1,3 +1,10 @@
+<?php
+include "../config/database.php";
+include "../config/functions.php";
+session_start();
+$cart_count = countCartItems(); // Count cart item/s
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -9,8 +16,7 @@
     <!-- header -->
     <?php include "./partials/header.php" ?>
 
-
-    <!-----contact us----->
+    <!----- contact us ----->
     <section class="contact-us">
         <div class="container-fluid py-5 px-5 mb-5" id="title-header">
             <h1 class="ml-3 ">CONTACT US</h1>
@@ -80,6 +86,7 @@
             </div>
         </div>
     </section>
+
     <!-- footer -->
     <?php include "./partials/footer.html" ?>
 

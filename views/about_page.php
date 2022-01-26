@@ -1,3 +1,9 @@
+<?php
+include "../config/functions.php";
+session_start();
+$cart_count = countCartItems(); // Count cart item/s
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -9,8 +15,7 @@
     <!-- header -->
     <?php include "./partials/header.php" ?>
 
-
-    <!-----about us----->
+    <!----- about us ----->
     <section class="about-us">
         <div class="container-fluid py-5 px-5 mb-5" id="title-header">
             <h1 class="ml-3">ABOUT US</h1>
@@ -21,7 +26,6 @@
                 <div class="image-text">
                     <div class="box">
                         <h1>COZY HOME</h1>
-                        <p>
                         <p id="about-text">Celebrate the simple joys of living by experiencing a premier life in
                             the very heart of Bonifacio Global City. With a distinction synonymous to
                             upscale accommodation, Cozy Home Hotel Manila provides high-quality standards of services,
@@ -33,12 +37,12 @@
                             Hotel Manila has well-appointed rooms to serve as your haven in the bustling city jungle:
                             the Cozy Room, Junior Cozy Suite, and Cozy Suite. Continue the indulgence of your
                             stay as you dine in the hotel’s restaurant, Cozy All-Day Dining,
-                            which serves delightful meals from breakfast, lunch, and dinner. </p>
+                            which serves delightful meals from breakfast, lunch, and dinner. 
+                        </p>
                         <p id="about-text">
                             Be in the center of where the action is, as you enjoy your stay in BGC’s Home of Happy experiences.
                         </p>
                     </div>
-
                 </div>
                 <div class="image">
                     <div class="box">
@@ -49,7 +53,7 @@
         </div>
     </section>
 
-    <!-----cozy offers----->
+    <!----- cozy offers ----->
     <section class="offers mb-5 pb-5">
         <div class="container">
             <div class="intro">
@@ -81,13 +85,12 @@
                     </div>
                 </div>
             </div>
-
+        </div>
     </section>
+    
     <!-- footer -->
     <?php include "./partials/footer.html" ?>
 
-
 </body>
-
 
 </html>

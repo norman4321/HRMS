@@ -1,3 +1,88 @@
+<?php
+include "../config/database.php";
+include "../config/functions.php";
+session_start();
+$cart_count = countCartItems(); // Count cart item/s
+
+// Check if user is logged in, then redirect to home page
+if (isset($_SESSION['user_id'])) {
+    header('Location: home_page.php');
+    die;
+}
+
+$firstname = '';
+$lastname = '';
+$address = '';
+$birthdate = '';
+$nationality = '';
+$contact = '';
+$email = '';
+$password = '';
+$error_message = '';
+
+// When Sign Up Form is submitted - POST Method
+if (isset($_POST['submit'])) {
+    #var_dump($_POST);
+    $firstname = trim($_POST['firstname']);
+    $lastname = trim($_POST['lastname']);
+    $address = trim($_POST['address']);
+    $birthdate = $_POST['birthdate'];
+    $nationality = trim($_POST['nationality']);
+    $contact = trim($_POST['contact']);
+    $email = trim($_POST['email']);
+    $password = $_POST['password'];
+
+    // Set User Details
+    $type = 3; // role_id 3 = Registered User
+    $status = 1; // status_id 1 = Active
+    $date = date('Y-m-d H:i:s'); // mysql needed 2022-12-31 23:59:59
+    $hashed = password_hash($password, PASSWORD_DEFAULT); // encrypt password
+
+    // Validate if email already exists 
+    $sql = "SELECT user_email FROM HRMS_user_account WHERE user_email='$email'";
+    if ($rs=$conn->query($sql)) {
+        if ($rs->num_rows<1) { 
+
+            // Insert data to  user_profile table
+            $sql = "INSERT INTO HRMS_user_profile SET profile_firstname='$firstname', profile_lastname='$lastname', profile_address='$address', profile_birthdate='$birthdate', profile_nationality='$nationality', profile_contact='$contact', profile_email='$email'";
+            if ($conn->query($sql)) { 
+
+                // Get profile_id from user_profile table
+                $sql = "SELECT profile_id FROM HRMS_user_profile WHERE profile_email='$email' limit 1";
+                if ($rs=$conn->query($sql)) {
+                    if ($rs->num_rows>0) {
+                        $profile_data=$rs->fetch_assoc();
+                        $profile_id= $profile_data['profile_id'];
+                        
+                        // Insert data to user_account table
+                        $sql = "INSERT INTO HRMS_user_account SET user_id=".$profile_id.", user_email='$email', user_password='$hashed', user_type=".$type.", user_status=".$status.", user_signup_date='$date'";
+                        if ($conn->query($sql)) { 
+                            $_SESSION['user_id'] = $profile_id;
+                            $_SESSION['user_type'] = $type;
+                            $_SESSION['message'] = 'Success! Your account has been created.';
+                            header("Location: home_page.php");
+                            die;
+                        } else {
+                            echo $conn->error;  // display error for inserting data into database
+                        }
+                    } else {
+                        echo 'No user found!';
+                    }
+                } else {
+                    echo $conn->error;  // display error for getting profile_id from user_profile table
+                }
+            } else {
+                echo $conn->error;  // display error for inserting data into database
+            }
+        } else {
+            $error_message = 'This email already exists. Please use another one.'; // Error Message
+        }
+    } else {
+        echo $conn->error;  // display error for selecting data into database
+    }
+}
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -8,85 +93,6 @@
 <body id="signin-page">
     <!-- header -->
     <?php include "./partials/header.php"; ?>
-
-    <!-- PHP -->
-    <?php include "../config/database.php" ;
-        $firstname = '';
-        $lastname = '';
-        $address = '';
-        $birthdate = '';
-        $nationality = '';
-        $contact = '';
-        $email = '';
-        $password = '';
-        $error_message = '';
-        if (isset($_POST['submit'])) {
-            #var_dump($_POST);
-            $firstname = trim($_POST['firstname']);
-            $lastname = trim($_POST['lastname']);
-            $address = trim($_POST['address']);
-            $birthdate = $_POST['birthdate'];
-            $nationality = trim($_POST['nationality']);
-            $contact = trim($_POST['contact']);
-            $email = trim($_POST['email']);
-            $password = $_POST['password'];
-
-            // Set User Details
-            $type = 3; // role_id 3 = Registered User
-            $status = 1; // status_id 1 = Active
-            $date = date('Y-m-d H:i:s'); // mysql needed 2022-12-31 23:59:59
-            $hashed = password_hash($password, PASSWORD_DEFAULT); // encrypt password
-        
-            // Validate if email already exists 
-            $sql = "SELECT user_email FROM HRMS_user_account WHERE user_email='$email'";
-            if ($rs=$conn->query($sql)) {
-                if ($rs->num_rows<1) { 
-
-                    // Insert data to  user_profile table
-                    $sql = "INSERT INTO HRMS_user_profile SET profile_firstname='$firstname', profile_lastname='$lastname', profile_address='$address', profile_birthdate='$birthdate', profile_nationality='$nationality', profile_contact='$contact', profile_email='$email'";
-                    #echo $sql.'<br>';
-                    if ($conn->query($sql)) { 
-                        #echo '<br> Data Inserted in user_profile table <br>';
-
-                        // Get profile_id from user_profile table
-                        $sql = "SELECT profile_id FROM HRMS_user_profile WHERE profile_email='$email' limit 1";
-                        #echo $sql.'<br>';
-                        if ($rs=$conn->query($sql)) {
-                            if ($rs->num_rows>0) {
-                                $profile_data=$rs->fetch_assoc();
-                                $profile_id= $profile_data['profile_id'];
-                                #echo '<br> profile_id is Retrieved in user_profile table <br>';
-                                
-                                // Insert data to user_account table
-                                $sql = "INSERT INTO HRMS_user_account SET user_id=".$profile_id.", user_email='$email', user_password='$hashed', user_type=".$type.", user_status=".$status.", user_signup_date='$date'";
-                                #echo $sql.'<br>';
-                                if ($conn->query($sql)) { 
-                                    #echo '<br>  Data Inserted in in user_account table <br>';
-                                    $_SESSION['user_id'] = $profile_id;
-                                    $_SESSION['user_type'] = $type;
-                                    $_SESSION['message'] = 'Success! Your account has been created.';
-                                    header("Location: home_page.php");
-                                    die;
-                                } else {
-                                    echo $conn->error;  // display error for inserting data into database
-                                }
-                            } else {
-                                echo 'No user found!';
-                            }
-                        } else {
-                            echo $conn->error;  // display error for getting profile_id from user_profile table
-                        }
-                    } else {
-                        echo $conn->error;  // display error for inserting data into database
-                    }
-                } else {
-                    $error_message = 'This email already exists. Please use another one.'; // Error Message
-                }
-            } else {
-                echo $conn->error;  // display error for selecting data into database
-            }
-        }
-    ?>
 
     <!-- sign up form -->
     <section class="signup">
@@ -99,14 +105,13 @@
 
                             <form action="" method="POST">
 
-                                <!---- error message - start ---->
+                                <!---- error message ---->
                                 <?php if (!empty($error_message)): ?>
                                 <div class="alert alert-danger alert-dismissible mb-3">
                                     <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
                                     <strong>Sorry! </strong> <?php echo $error_message; ?>
                                 </div>
                                 <?php endif; ?>
-                                <!---- error message - end ---->
 
                                 <div class="row">
                                     <div class="col-md-6 mb-3">
@@ -185,7 +190,7 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <script type="text/javascript">
-        // When document ready... Set age limit by setting max birthdate
+        // When document ready... Set age limit to 18 by setting max birthdate
         $(function() {
             var today = new Date();
             var mm = today.getMonth()+1;

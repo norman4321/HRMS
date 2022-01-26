@@ -1,3 +1,139 @@
+<?php
+include "../config/database.php";
+include "../config/functions.php";
+session_start();
+$cart_count = countCartItems(); // Count cart item/s
+
+// Check if user is not logged in, then redirects to signin page
+if (!isset($_SESSION['user_id'])) {
+    header('Location: signin_page.php');
+}
+
+$error_message = '';
+$success_message = '';
+$form = '';
+
+$firstname = '';
+$lastname = '';
+$address = '';
+$birthdate = '';
+$nationality = '';
+$contact = '';
+$email = '';
+
+$oldpassword = '';
+$newpassword = '';
+$repassword = '';
+
+// Display User Profile
+$sql = "SELECT P.profile_firstname, P.profile_lastname, P.profile_address, P.profile_birthdate, P.profile_nationality, P.profile_contact, A.user_email FROM HRMS_user_profile P INNER JOIN HRMS_user_account A ON P.profile_id=A.user_id WHERE P.profile_id=" . $_SESSION['user_id'];
+if ($rs = $conn->query($sql)) {
+    if ($rs->num_rows > 0) {
+        $profile_data = $rs->fetch_assoc();
+        $firstname = $profile_data['profile_firstname'];
+        $lastname = $profile_data['profile_lastname'];
+        $address = $profile_data['profile_address'];
+        $birthdate = $profile_data['profile_birthdate'];
+        $nationality = $profile_data['profile_nationality'];
+        $contact = $profile_data['profile_contact'];
+        $email = $profile_data['user_email'];
+    } else {
+        echo 'No user found!';
+    }
+} else {
+    echo $conn->error;  // display error for selecting data into database
+}
+
+// Function for query execution
+function executeQuery($conn, $sql, $form) {
+    if ($conn->query($sql)) {
+        return "Your ".$form." is updated.";
+    } else {
+        echo $conn->error;  // display error for updating data into database
+        return '';
+    }
+}
+
+// Check what form is sumbmitted or set - if profile information form or password form
+if (isset($_POST['save-profile'])) { # && $_SERVER['REQUEST_METHOD'] === 'POST'
+    $firstname = trim($_POST['firstname']);
+    $lastname = trim($_POST['lastname']);
+    $address = trim($_POST['address']);
+    $birthdate = $_POST['birthdate'];
+    $nationality = trim($_POST['nationality']);
+    $contact = trim($_POST['contact']);
+    $email = trim($_POST['email']);
+
+    // Check if email already exists
+    $sql = "SELECT user_email FROM HRMS_user_account WHERE user_email='$email' AND user_id!=".$_SESSION['user_id'];
+    if ($rs = $conn->query($sql)) {
+        if ($rs->num_rows < 1) {
+
+            // Update data in user_profile & user_account tables
+            $sql = "UPDATE HRMS_user_profile P JOIN HRMS_user_account A ON P.profile_id=A.user_id SET P.profile_firstname='$firstname', P.profile_lastname='$lastname', P.profile_address='$address', P.profile_birthdate='$birthdate', P.profile_nationality='$nationality', P.profile_contact='$contact', P.profile_email='$email', A.user_email='$email' WHERE P.profile_id=".$_SESSION['user_id'];
+            $success_message = executeQuery($conn, $sql, "profile");
+            $_SESSION['form'] = 'profile';
+            $_SESSION['message'] = $success_message;
+            header("Location: profile_page.php");
+            die;
+
+        } else {
+            $error_message = 'This email already exists. Please use another one.'; // Error Message
+            $form = 'profile';
+        }
+    } else {
+        echo $conn->error;  // display error for getting matched emails from user_account table
+    }
+} elseif (isset($_POST['save-password'])) { # && $_SERVER['REQUEST_METHOD'] === 'POST' {
+    // If password form is set
+    $oldpassword = $_POST['oldpassword'];
+    $newpassword = $_POST['newpassword'];
+    $repassword = $_POST['repassword'];
+
+    // Check if new & re-type passwords are matched
+    if ($newpassword == $repassword) {
+        
+        // Get user password on database
+        $sql = "SELECT user_password FROM HRMS_user_account WHERE user_id=".$_SESSION['user_id'];
+        if ($rs = $conn->query($sql)) {
+            if ($rs->num_rows > 0) {
+                $data = $rs->fetch_assoc();
+
+                // Check if old password is valid (plain,hash)
+                if (password_verify($oldpassword, $data['user_password'])) {
+                    $hashed = password_hash($newpassword, PASSWORD_DEFAULT); // encrypt new password
+
+                    // Check if new & old passwords are not matched
+                    if ($newpassword != $oldpassword) {
+
+                        // Update user password in user_account table
+                        $sql = "UPDATE HRMS_user_account SET user_password='$hashed' WHERE user_id=".$_SESSION['user_id'];
+                        $success_message = executeQuery($conn, $sql, "password");
+                        $_SESSION['form'] = 'password';
+                        $_SESSION['message'] = $success_message;
+                        header("Location: profile_page.php");
+                        die;
+                    } else {
+                        $error_message = 'Your new password must not be your old password .'; // Error Message
+                        $form = 'password';
+                    }
+                } else {
+                    $error_message = 'Incorrect old password'; // Error Message
+                    $form = 'password';
+                }
+            } else {
+                echo 'No record found!';
+            }
+        } else {
+            echo $conn->error;  // display error for getting user_password from user_account table
+        }
+    } else {
+        $error_message = 'New and Re-type Passwords do not match.'; // Error Message
+        $form = 'password';
+    }
+}
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -9,145 +145,6 @@
 <body id="profile-page">
     <!-----header----->
     <?php include "./partials/header.php"; ?>
-
-    <!-- PHP -->
-    <?php include "../config/database.php";
-
-    // Check if user is not logged in
-    if (!isset($_SESSION['user_id'])) {
-        header('Location: signin_page.php');
-    }
-
-    $error_message = '';
-    $success_message = '';
-    $form = '';
-
-    $firstname = '';
-    $lastname = '';
-    $address = '';
-    $birthdate = '';
-    $nationality = '';
-    $contact = '';
-    $email = '';
-
-    $oldpassword = '';
-    $newpassword = '';
-    $repassword = '';
-
-    // Display User Profile
-    $sql = "SELECT P.profile_firstname, P.profile_lastname, P.profile_address, P.profile_birthdate, P.profile_nationality, P.profile_contact, A.user_email FROM HRMS_user_profile P INNER JOIN HRMS_user_account A ON P.profile_id=A.user_id WHERE P.profile_id=" . $_SESSION['user_id'];
-    if ($rs = $conn->query($sql)) {
-        if ($rs->num_rows > 0) {
-            $profile_data = $rs->fetch_assoc();
-            $firstname = $profile_data['profile_firstname'];
-            $lastname = $profile_data['profile_lastname'];
-            $address = $profile_data['profile_address'];
-            $birthdate = $profile_data['profile_birthdate'];
-            $nationality = $profile_data['profile_nationality'];
-            $contact = $profile_data['profile_contact'];
-            $email = $profile_data['user_email'];
-        } else {
-            echo 'No user found!';
-        }
-    } else {
-        echo $conn->error;  // display error for selecting data into database
-    }
-
-    // Function for query execution
-    function executeQuery($conn, $sql, $form) {
-        if ($conn->query($sql)) {
-            return "Your ".$form." is updated.";
-        } else {
-            echo $conn->error;  // display error for updating data into database
-            return '';
-        }
-    }
-
-    // Check what form is sumbmitted
-    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-
-        // Check if profile information form is set or password form
-        if (isset($_POST['save-profile'])) {
-            $firstname = trim($_POST['firstname']);
-            $lastname = trim($_POST['lastname']);
-            $address = trim($_POST['address']);
-            $birthdate = $_POST['birthdate'];
-            $nationality = trim($_POST['nationality']);
-            $contact = trim($_POST['contact']);
-            $email = trim($_POST['email']);
-
-            // Check if email already exists
-            $sql = "SELECT user_email FROM HRMS_user_account WHERE user_email='$email' AND user_id!=".$_SESSION['user_id'];
-            if ($rs = $conn->query($sql)) {
-                if ($rs->num_rows < 1) {
-
-                    // Update data in user_profile & user_account tables
-                    $sql = "UPDATE HRMS_user_profile P JOIN HRMS_user_account A ON P.profile_id=A.user_id SET P.profile_firstname='$firstname', P.profile_lastname='$lastname', P.profile_address='$address', P.profile_birthdate='$birthdate', P.profile_nationality='$nationality', P.profile_contact='$contact', P.profile_email='$email', A.user_email='$email' WHERE P.profile_id=".$_SESSION['user_id'];
-                    $success_message = executeQuery($conn, $sql, "profile");
-                    $_SESSION['form'] = 'profile';
-                    $_SESSION['message'] = $success_message;
-                    header("Location: profile_page.php");
-                    die;
-
-                } else {
-                    $error_message = 'This email already exists. Please use another one.'; // Error Message
-                    $form = 'profile';
-                }
-            } else {
-                echo $conn->error;  // display error for getting matched emails from user_account table
-            }
-        } else {
-
-            $oldpassword = $_POST['oldpassword'];
-            $newpassword = $_POST['newpassword'];
-            $repassword = $_POST['repassword'];
-
-            // Check if new & re-type passwords are matched
-            if ($newpassword == $repassword) {
-                
-                // Get user password on database
-                $sql = "SELECT user_password FROM HRMS_user_account WHERE user_id=".$_SESSION['user_id'];
-                if ($rs = $conn->query($sql)) {
-                    if ($rs->num_rows > 0) {
-                        $data = $rs->fetch_assoc();
-
-                        // Check if old password is valid (plain,hash)
-                        if (password_verify($oldpassword, $data['user_password'])) {
-                            $hashed = password_hash($newpassword, PASSWORD_DEFAULT); // encrypt new password
-
-                            // Check if new & old passwords are not matched
-                            if ($newpassword != $oldpassword) {
-
-                                // Update user password in user_account table
-                                $sql = "UPDATE HRMS_user_account SET user_password='$hashed' WHERE user_id=".$_SESSION['user_id'];
-                                $success_message = executeQuery($conn, $sql, "password");
-                                $_SESSION['form'] = 'password';
-                                $_SESSION['message'] = $success_message;
-                                header("Location: profile_page.php");
-                                die;
-                            } else {
-                                $error_message = 'Your new password must not be your old password .'; // Error Message
-                                $form = 'password';
-                            }
-                        } else {
-                            $error_message = 'Incorrect old password'; // Error Message
-                            $form = 'password';
-                        }
-                    } else {
-                        echo 'No record found!';
-                    }
-                } else {
-                    echo $conn->error;  // display error for getting user_password from user_account table
-                }
-            } else {
-                $error_message = 'New and Re-type Passwords do not match.'; // Error Message
-                $form = 'password';
-            }
-        }
-    
-    }
-    #var_dump($_SESSION);
-    ?>
 
     <section class="account">
         <div class="container-fluid py-2 px-5" id="account-header">
@@ -161,11 +158,8 @@
                         <div class="card-body py-4 p-md-4">
 
                             <!---- error message ---->
-                            <?php if ($form == 'password' && !empty($error_message)): ?>
-                                <div class="alert alert-danger alert-dismissible mb-3">
-                                    <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-                                    <strong>Error! </strong> <?php echo $error_message; ?>
-                                </div>
+                            <?php if ($form == 'profile') : ?>
+                                <?php include "./partials/error_message.php" ?>
                             <?php endif; ?>
 
                             <!---- success message ---->
@@ -177,8 +171,8 @@
                                 <?php unset($_SESSION['form']); unset($_SESSION['message']); ?>
                             <?php endif; ?>
                             
+                            <!---edit personal info--->
                             <?php if (isset($_GET['edit']) && $_GET['edit'] == 'profile-info') : ?>
-                                <!---edit personal info--->
                                 <form class="account-form" action="" method="POST">
                                     <h4 class="mb-4">Edit Personal Information</h4>
                                     <div class="row">
@@ -186,7 +180,6 @@
                                             <div class="form-outline">
                                                 <label class="form-label" for="firstname">First Name</label>
                                                 <input type="text" name="firstname" id="firstname" class="form-control form-control-md" placeholder="e.g. Juan" maxlength="50" required value="<?php echo $firstname ?>" />
-
                                             </div>
                                         </div>
                                         <div class="col-md-6 mb-3">
@@ -233,7 +226,7 @@
                                         </div>
                                     </div>
                                     <button class="btn btn-md mt-4" name="save-profile" type="submit"></i>SAVE</button>
-                                    <!--<a class="btn btn-md mt-4 btn-cancel" href="profile_page.php">CANCEL</a>-->
+                                    <?php // <!--<a class="btn btn-md mt-4 btn-cancel" href="profile_page.php">CANCEL</a>--> ?>
                                     <button class="btn btn-md mt-4 btn-cancel" type="button" onclick="location.href='profile_page.php'">CANCEL</button>
                                 </form>
                             <?php else : ?>
@@ -283,16 +276,13 @@
                         </div>
                     </div>
 
-                    <!---password--->
+                    <!--- password --->
                     <div class="card ml-5 mt-3" style="border-radius: 10px; width: 60rem; margin-bottom:200px">
                         <div class="card-body py-4 p-md-4">
 
                             <!---- error message ---->
-                            <?php if ($form == 'password' && !empty($error_message)): ?>
-                                <div class="alert alert-danger alert-dismissible mb-3">
-                                    <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-                                    <strong>Error! </strong> <?php echo $error_message; ?>
-                                </div>
+                            <?php if ($form == 'password') : ?>
+                                <?php include "./partials/error_message.php" ?>
                             <?php endif; ?>
 
                             <!---- success message ---->
@@ -304,8 +294,8 @@
                                 <?php unset($_SESSION['form']); unset($_SESSION['message']); ?>
                             <?php endif; ?>
 
+                            <!--- edit password --->
                             <?php if (isset($_GET['edit']) && $_GET['edit'] == 'password') : ?>
-                                <!---edit password--->
                                 <form class="account-form" action="" method="POST">
                                     <h4 class="mb-4">Change Password</h4>
                                     <div class="row">
@@ -333,12 +323,12 @@
                                         </div>
                                     </div>
                                     <button class="btn btn-md mt-4" name="save-password" id="save-password" type="submit">SAVE</button>
-                                    <!--<a class="btn btn-md mt-4 btn-cancel" href="profile_page.php">CANCEL</a>-->
+                                    <?php // <!--<a class="btn btn-md mt-4 btn-cancel" href="profile_page.php">CANCEL</a>--> ?>
                                     <button class="btn btn-md mt-4 btn-cancel" type="button" onclick="location.href='profile_page.php'">CANCEL</button>
 
                                 </form>
                             <?php else : ?>
-                                <!---display password--->
+                                <!--- display password --->
                                 <table class="table table-borderless mb-5">
                                     <thead>
                                         <th>

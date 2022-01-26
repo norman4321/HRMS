@@ -1,48 +1,52 @@
+<?php
+include "../config/database.php";
+include "../config/functions.php";
+session_start();
+$cart_count = countCartItems(); // Count cart item/s
+
+// Set options for room types 
+$options = '<option value="0" selected>All Room Types</option>';
+$sql = "SELECT type_id, type_name FROM HRMS_room_type";
+if ($rs = $conn->query($sql)) {
+    if ($rs->num_rows > 0) {
+        while ($rows = $rs->fetch_assoc()) {
+            $options .= '<option class="room-option" value=' . $rows["type_id"] . '>' . $rows["type_name"] . '</option>';
+        }
+    }
+} else {
+    echo $conn->error;  // display error for selecting data into database
+}
+
+// When 'Search' is clicked to check availability of rooms - Submitting Form using GET method
+if (isset($_GET['datein'])) {
+    $datein = $_GET['datein'];
+    $dateout = $_GET['dateout'];
+    $numpersons = $_GET['numpersons'];
+    $roomtype = $_GET['roomtype'];
+    header("Location: accomodation_page.php?datein=" . $datein . "&dateout=" . $dateout . "&numpersons=" . $numpersons . "&roomtype=" . $roomtype);
+}
+
+// Alert message
+if (isset($_SESSION['message'])) {
+    echo '<script type="text/javascript"> alert("' . $_SESSION['message'] . '"); </script>';
+    unset($_SESSION['message']);
+}
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
-    <!--Created on 12/10/2021-->
+    <!-- Created on 12/10/2021 -->
     <?php include "./partials/head.html" ?>
 </head>
 
 <body>
-    <!-----header----->
+    <!----- header ----->
     <?php include "./partials/header.php" ?>
 
-    <!----- PHP ----->
-    <?php include "../config/database.php";
-
-    // Alert message
-    if (isset($_SESSION['message'])) {
-        echo '<script type="text/javascript"> alert(' . $_SESSION['message'] . '); </script>';
-        unset($_SESSION['message']);
-    }
-
-    // Set options for room types 
-    $options = '<option value="0" selected>All Room Types</option>';
-    $sql = "SELECT type_id, type_name FROM HRMS_room_type";
-    if ($rs = $conn->query($sql)) {
-        if ($rs->num_rows > 0) {
-            while ($rows = $rs->fetch_assoc()) {
-                $options .= '<option class="room-option" value=' . $rows["type_id"] . '>' . $rows["type_name"] . '</option>';
-            }
-        }
-    } else {
-        echo $conn->error;  // display error for selecting data into database
-    }
-
-    // When Submitting form using GET method
-    if (isset($_GET['datein'])) {
-        $datein = $_GET['datein'];
-        $dateout = $_GET['dateout'];
-        $numpersons = $_GET['numpersons'];
-        $roomtype = $_GET['roomtype'];
-        header("Location: accomodation_page.php?datein=".$datein."&dateout=".$dateout."&numpersons=".$numpersons."&roomtype=".$roomtype);
-    }
-    ?>
-
-    <!-----landing----->
+    <!----- landing ----->
     <section class="home" id="home">
         <div class="landing-container">
             <div class="landing-box">
@@ -78,12 +82,11 @@
             </div>
         </div>
 
-        <!-----search for booking----->
+        <!----- search for booking ----->
         <section class="book">
             <div class="container flex">
                 <form action="" method="GET">
                     <div class="input grid">
-
                         <div class="box">
                             <label>Check-in:</label> <br>
                             <input type="date" name="datein" id="datein" required placeholder="Check-in-Date">
@@ -100,14 +103,6 @@
                             <label>Room Type:</label> <br>
                             <select class="form-select" name="roomtype" required>
                                 <?php echo $options; ?>
-                                <!--
-                                <option class="room-option" value="1">Cozy Room</option>
-                                <option class="room-option" value="2">Cozy Junior Suite</option>
-                                <option class="room-option" value="3">Cozy Executive Room</option>
-                                <option class="room-option" value="4">Cozy Fort Suite</option>
-                                <option class="room-option" value="5">Cozy Commerce Suite</option>
-                                <option class="room-option" value="6">Cozy Home Suite</option>
-                                -->
                             </select>
                         </div>
                         <div class="search">
@@ -119,7 +114,7 @@
         </section>
     </section>
 
-    <!-----welcome message----->
+    <!----- welcome message ----->
     <section class="welcome">
         <div class="container">
             <h1>HOME SWEET HOME</h1>
@@ -129,7 +124,7 @@
         </div>
     </section>
 
-    <!-----welcome image----->
+    <!----- welcome image ----->
     <section class="main-image">
         <div class="container flex">
             <div class="text-bg">
@@ -157,7 +152,7 @@
         </div>
     </section>
 
-    <!-----cozy offers----->
+    <!----- cozy offers ----->
     <section class="offers">
         <div class="container">
             <div class="intro">
@@ -210,7 +205,7 @@
             </div>
     </section>
 
-    <!-----cozy promotions----->
+    <!----- cozy promotions ----->
     <section class="promotions mb-2">
         <div class=" container">
             <div class="intro">
@@ -256,13 +251,8 @@
         </div>
     </section>
 
-
-
-
     <!-- footer -->
     <?php include "./partials/footer.html" ?>
-
-
 
     <script>
         const hamburger = document.querySelector('.hamburger');
@@ -287,7 +277,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
     <script type="text/javascript">
-        // When document ready... Set age limit by setting max birthdate
+        // When document ready... Set age limit to 18 by setting max birthdate
         $(function() {
             var today = new Date();
             var mm = today.getMonth() + 1;

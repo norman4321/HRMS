@@ -1,3 +1,26 @@
+<?php
+include "../config/database.php";
+include "../config/functions.php";
+session_start();
+$cart_count = countCartItems(); // Count cart item/s
+$count = countCartItemsAvailable();
+
+// Check if cart is not empty and there's available items, then can proceed to next
+if (isset($_SESSION['cart']) && !empty($_SESSION['cart'])) {
+    if ($count < 1) {
+        $_SESSION['message'] = "Sorry! You can\'t checkout unavailable rooms.";
+        header("Location: cart_page.php"); 
+        die;
+    }
+} else {
+    $_SESSION['message'] = "Sorry! You can\'t checkout while cart is empty.";
+    header("Location: cart_page.php");
+    die;
+}
+?>
+
+
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -30,8 +53,11 @@
                                         <div class="card-body pt-3" style="padding: 0 1rem">
                                             <card>
                                                 <div class="row text-end">
-                                                    <div class="col-3">
+                                                    <div class="col-2">
                                                         <h6>Room</h6>
+                                                    </div>
+                                                    <div class="col-1 text-center">
+                                                        <h6>Qty.</h6>
                                                     </div>
                                                     <div class="col-2 text-center">
                                                         <h6>Check-in Date</h6>
@@ -43,34 +69,45 @@
                                                         <h6>Nights</h6>
                                                     </div>
                                                     <div class="col-2 text-center">
-                                                        <h6>Amount</h6>
+                                                        <h6>Subtotal</h6>
                                                     </div>
                                                 </div>
                                             </card>
                                         </div>
+                                        <?php if ($count) { $total_price = 0; // If there's room to book ?>
+                                            <?php foreach ($_SESSION['cart'] as $item) { ?>
+                                                <div class="card-body" style="padding: 0 1rem">
+                                                    <div class="row text-start">
+                                                        <div class="col-2 ">
+                                                            <p class="py-0 "><?= $item['name'] ?></p>
+                                                        </div>
+                                                        <div class="col-1 text-center">
+                                                            <p class="py-0"><?= $item['quantity'] ?></p>
+                                                        </div>
+                                                        <div class="col-2  text-center">
+                                                            <p class="py-0 "><?= date_format(date_create($item['datein']),"m/d/Y"); ?></p>
+                                                        </div>
+                                                        <div class="col-3  text-center">
+                                                            <p class="py-0 "><?= date_format(date_create($item['dateout']),"m/d/Y"); ?></p>
+                                                        </div>
+                                                        <div class="col-2  text-center">
+                                                            <p class="py-0 "><?= $nights = date_create($item['datein'])->diff(date_create($item['dateout']))->format("%a") ?></p>
+                                                        </div>
+                                                        <div class="col-2  text-center">
+                                                            <p class="py-0 ">₱ <?php $total_price += $item['price'] * $item['quantity']; echo number_format($item['price'] * $item['quantity'],2) ?></p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            <?php } ?>
+                                        <?php } ?>
+                                        <!--
                                         <div class="card-body" style="padding: 0 1rem">
                                             <div class="row text-start">
-                                                <div class="col-3 ">
+                                                <div class="col-2 ">
                                                     <p class="py-0 ">Cozy Room</p>
                                                 </div>
-                                                <div class="col-2  text-center">
-                                                    <p class="py-0 ">12/25/2021</p>
-                                                </div>
-                                                <div class="col-3  text-center">
-                                                    <p class="py-0 ">12/28/2021</p>
-                                                </div>
-                                                <div class="col-2  text-center">
-                                                    <p class="py-0 ">2</p>
-                                                </div>
-                                                <div class="col-2  text-center">
-                                                    <p class="py-0 ">P 21500.00</p>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="card-body" style="padding: 0 1rem">
-                                            <div class="row text-start">
-                                                <div class="col-3 ">
-                                                    <p class="py-0 ">Cozy Room</p>
+                                                <div class="col-1 text-center">
+                                                    <p class="py-0">1</p>
                                                 </div>
                                                 <div class="col-2  text-center">
                                                     <p class="py-0 ">12/25/2021</p>
@@ -88,8 +125,11 @@
                                         </div>
                                         <div class="card-body pb-2" style="padding: 0 1rem">
                                             <div class="row text-start">
-                                                <div class="col-3 ">
-                                                    <p class="py-0 ">Cozy Fort Suite</p>
+                                                <div class="col-2 ">
+                                                    <p class="py-0 ">Cozy Room</p>
+                                                </div>
+                                                <div class="col-1 text-center">
+                                                    <p class="py-0">1</p>
                                                 </div>
                                                 <div class="col-2  text-center">
                                                     <p class="py-0 ">12/25/2021</p>
@@ -105,6 +145,7 @@
                                                 </div>
                                             </div>
                                         </div>
+                                        -->
                                     </div>
                                     <hr class="thin">
                                     <div class="card-body pt-3 pb-2 mr-2">
@@ -133,7 +174,6 @@
                                             <div class="form-outline">
                                                 <label class="form-label" for="firstname">First Name</label>
                                                 <input type="text" name="firstname" class="form-control form-control-md" placeholder="e.g. Juan" maxlength="50" required />
-
                                             </div>
                                         </div>
                                         <div class="col-md-6 mb-3">
@@ -219,11 +259,6 @@
                             </card>
                         </div>
                     </div>
-
-
-
-
-
                 </div>
 
                 <!--Payment Method-->
@@ -326,8 +361,6 @@
                 </div>
 
             </div>
-        </div>
-        </div>
         </div>
 
         <!-- footer -->

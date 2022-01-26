@@ -103,7 +103,11 @@
 
                             </tr>
                         </thead>
+
                         <tbody>
+                          <?php include "../../config/room_type_view.php";
+                              RoomTypeList();
+                          ?>
                             <tr>
                                 <td>1</td>
                                 <td>

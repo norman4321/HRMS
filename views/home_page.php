@@ -218,7 +218,7 @@ if (isset($_SESSION['message'])) {
     </section>
     <section class="room-types mb-5 pb-5">
         <div class="container">
-            <div class="card-deck mt-5">
+            <div class="promo card-deck mt-5">
                 <div class="card mb-5">
                     <img src="../public/images/promo1.jpg" class="card-img-top">
                     <div class="card-body">

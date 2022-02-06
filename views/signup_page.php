@@ -35,6 +35,7 @@ if (isset($_POST['submit'])) {
     // Set User Details
     $type = 3; // role_id 3 = Registered User
     $status = 1; // status_id 1 = Active
+    date_default_timezone_set('Asia/Manila'); // Set timezone for Philippines
     $date = date('Y-m-d H:i:s'); // mysql needed 2022-12-31 23:59:59
     $hashed = password_hash($password, PASSWORD_DEFAULT); // encrypt password
 
@@ -104,14 +105,8 @@ if (isset($_POST['submit'])) {
                             <h3 class="pb-md-0 mb-md-4">SIGN UP</h3>
 
                             <form action="" method="POST">
-
                                 <!---- error message ---->
-                                <?php if (!empty($error_message)): ?>
-                                <div class="alert alert-danger alert-dismissible mb-3">
-                                    <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-                                    <strong>Sorry! </strong> <?php echo $error_message; ?>
-                                </div>
-                                <?php endif; ?>
+                                <?php include "./partials/error_message.php" ?>
 
                                 <div class="row">
                                     <div class="col-md-6 mb-3">

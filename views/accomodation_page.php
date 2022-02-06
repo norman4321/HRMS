@@ -16,7 +16,7 @@ if (isset($_GET['check'])) {
 
 //  When 'Search' is clicked to check availability of rooms - Submitting Form GET
 if (isset($_GET['datein'])) {
-    
+
     $datein = $_GET['datein'];
     $dateout = $_GET['dateout'];
     $numpersons = $_GET['numpersons'];
@@ -26,7 +26,7 @@ if (isset($_GET['datein'])) {
     // Check if arrival date is >= current date   
     if ($datein > date('Y/m/d')) {
         $error_message = "Invalid arrival date! It must be present and future date."; // Error Message
-    // Check if departure date is <= arrival date   
+        // Check if departure date is <= arrival date   
     } elseif ($dateout <= $datein) {
         $error_message = "Invalid departure date! It must be later than arrival date."; // Error Message
     } else {
@@ -38,12 +38,12 @@ if (isset($_GET['datein'])) {
                 $sql = createRoomsAvailableView($datein, $dateout);
                 if ($conn->query($sql)) {
                     // SELECT type of available rooms
-                    $sql = "SELECT type_id, type_name, room_description, room_size, room_amenities, room_capacity, room_price, room_image FROM rooms_available LIMIT 1";
+                    $sql = "SELECT type_id, type_name, room_description, room_capacity, room_price, room_image FROM rooms_available LIMIT 1";
                     if ($rs = $conn->query($sql)) {
                         if ($rs->num_rows > 0) {
                             // Display available room type
                             while ($rows = $rs->fetch_assoc()) {
-                                $rooms_data .= createRoomsDataDisplay($rows,true,$datein,$dateout,$numpersons);
+                                $rooms_data .= createRoomsDataDisplay($rows, true, $datein, $dateout, $numpersons);
                             }
                         } else {
                             $error_message = "No rooms available"; // Error Message
@@ -65,17 +65,17 @@ if (isset($_GET['datein'])) {
                 $sql = createRoomsAvailableView($datein, $dateout);
                 if ($conn->query($sql)) {
                     // SELECT type(s) of available rooms
-                    $sql = "SELECT type_id, type_name, room_description, room_size, room_amenities, room_capacity, room_price, room_image FROM rooms_available ORDER BY type_id";
+                    $sql = "SELECT type_id, type_name, room_description, room_capacity, room_price, room_image FROM rooms_available ORDER BY type_id";
                     if ($rs = $conn->query($sql)) {
-                        if ($rs->num_rows > 0) {                                
+                        if ($rs->num_rows > 0) {
                             // Display available room types
                             $prev = 0;
                             while ($rows = $rs->fetch_assoc()) {
                                 if ($rows['type_id'] != $prev) {
                                     $prev = $rows['type_id'];
-                                    $rooms_data .= createRoomsDataDisplay($rows,true,$datein,$dateout,$numpersons);
+                                    $rooms_data .= createRoomsDataDisplay($rows, true, $datein, $dateout, $numpersons);
                                 }
-                            }                            
+                            }
                         } else {
                             $error_message = "No rooms available"; // Error Message
                         }
@@ -89,16 +89,16 @@ if (isset($_GET['datein'])) {
                 echo $conn->error;  // display error for creating view
             }
         }
-    } 
+    }
 } else {
     // If form is not submitted - $_GET is not set
     // Display all room types
-    $sql = "SELECT type_id, type_name, room_description, room_size, room_amenities, room_capacity, room_price, room_image FROM HRMS_room_type ORDER BY type_id";
+    $sql = "SELECT type_id, type_name, room_description, room_capacity, room_price, room_image FROM HRMS_room_type ORDER BY type_id";
     if ($rs = $conn->query($sql)) {
         if ($rs->num_rows > 0) {
             while ($rows = $rs->fetch_assoc()) {
-                $rooms_data .= createRoomsDataDisplay($rows,false,$datein,$dateout,$numpersons);
-            }                            
+                $rooms_data .= createRoomsDataDisplay($rows, false, $datein, $dateout, $numpersons);
+            }
         } else {
             $error_message = "No rooms available"; // Error Message
         }
@@ -109,15 +109,15 @@ if (isset($_GET['datein'])) {
 
 // Set options for room types 
 $options = '';
-($roomtype==0) ? $options .= '<option value="0" selected>All Room Types</option>': $options .= '<option value="0">All Room Types</option>';
+($roomtype == 0) ? $options .= '<option value="0" selected>All Room Types</option>' : $options .= '<option value="0">All Room Types</option>';
 $sql = "SELECT type_id, type_name FROM HRMS_room_type";
 if ($rs = $conn->query($sql)) {
     if ($rs->num_rows > 0) {
         while ($rows = $rs->fetch_assoc()) {
-            if ($roomtype==$rows["type_id"]) {
-                $options .= '<option class="room-option" value='.$rows["type_id"].' selected>'.$rows["type_name"].'</option>';
+            if ($roomtype == $rows["type_id"]) {
+                $options .= '<option class="room-option" value=' . $rows["type_id"] . ' selected>' . $rows["type_name"] . '</option>';
             } else {
-                $options .= '<option class="room-option" value='.$rows["type_id"].'>'.$rows["type_name"].'</option>';
+                $options .= '<option class="room-option" value=' . $rows["type_id"] . '>' . $rows["type_name"] . '</option>';
             }
         }
     }
@@ -165,7 +165,7 @@ if ($rs = $conn->query($sql)) {
                     </div>
                     <div class="box">
                         <label>Room Type:</label> <br>
-                        <select class="form-select" name="roomtype" required> 
+                        <select class="form-select" name="roomtype" required>
                             <?php echo $options; ?>
                         </select>
                     </div>
@@ -181,24 +181,15 @@ if ($rs = $conn->query($sql)) {
     <section class="room-types my-5 py-5">
         <div class="container">
 
-        <!---- error/info message ---->
-        <?php if (!empty($error_message)): ?>
-            <div class="alert alert-danger alert-dismissible mb-3">
-                <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-                <?php echo $error_message; ?>
-            </div>
-        <?php endif; ?>
-        <?php if (!empty($info_message)): ?>
-            <div class="alert alert-info alert-dismissible mb-3">
-                <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-                <?php echo $info_message; ?>
-            </div>
-        <?php endif; ?>
+            <!---- error message ---->
+            <?php include "./partials/error_message.php" ?>
+            <!---- info message ---->
+            <?php include "./partials/info_message.php" ?>
 
-            <?php if (isset($_GET['datein'])): ?>
-                <p>Available room <b>From: <?= date_format(date_create($datein),"m/d/Y") ?> To: <?=  date_format(date_create($dateout),"m/d/Y") ?></b> </p>
+            <?php if (isset($_GET['datein'])) : ?>
+                <p>Available room <b>From: <?= date_format(date_create($datein), "m/d/Y") ?> To: <?= date_format(date_create($dateout), "m/d/Y") ?></b> </p>
             <?php endif; ?>
-            <div class="card-deck mt-5">
+            <div class="card-deck mt-5 d-flex flex-wrap">
                 <?php echo $rooms_data; ?>
             </div>
         </div>
@@ -207,7 +198,8 @@ if ($rs = $conn->query($sql)) {
     <!-- footer -->
     <?php include "./partials/footer.html" ?>
 
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src=" https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous">
+    </script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
     <script type="text/javascript">
@@ -223,14 +215,16 @@ if ($rs = $conn->query($sql)) {
             var input = document.getElementById("datein").min = date;
             var input = document.getElementById("dateout").min = date;
 
+            // Set date out limit by setting min dateout to datein+1day 
             $('#datein').change(function(e) {
                 var datein = new Date(document.getElementById("datein").value);
+                datein.setDate(datein.getDate() + 1)
                 var mm = datein.getMonth() + 1;
                 mm = mm < 10 ? '0' + mm : mm;
                 var dd = datein.getDate();
                 dd = dd < 10 ? '0' + dd : dd;
                 var yyyy = datein.getFullYear();
-                var dateout = yyyy + '-' + mm + '-' + (dd + 1);
+                var dateout = yyyy + '-' + mm + '-' + dd;
                 var input = document.getElementById("dateout").min = dateout;
             });
 

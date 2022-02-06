@@ -1,3 +1,84 @@
+<?php
+include "../config/database.php";
+include "../config/functions.php";
+session_start();
+$cart_count = countCartItems(); // Count cart item/s
+
+// Check if user is not logged in, then redirects to signin page
+if (!isset($_SESSION['user_id'])) {
+    header('Location: signin_page.php');
+}
+
+// Alert message if Booking is Successful from submission_page
+if (isset($_SESSION['message'])) {
+    echo '<script type="text/javascript"> alert("' . $_SESSION['message'] . '"); </script>';
+    unset($_SESSION['message']);
+}
+
+// Display Record
+$user_id = $_SESSION['user_id'];
+$sql = "SELECT ts.transaction_id, ts.total_amount, ts.client_id, rs.reservation_id, rs.confirm_code, rs.arrival_date, rs.departure_date, rs.arrival_time, rsst.status_description, rr.room_id, r.room_number, rt.type_name
+    FROM HRMS_transaction ts 
+    JOIN HRMS_reservation rs 
+    ON ts.transaction_id=rs.transaction_id
+    JOIN HRMS_reservation_status rsst
+    ON rs.reservation_status=rsst.status_id
+    JOIN HRMS_rooms_reserved rr
+    ON rs.reservation_id=rr.reservation_id
+    JOIN HRMS_room r
+    ON rr.room_id=r.room_id
+    JOIN HRMS_room_type rt
+    ON r.room_type=rt.type_id
+    WHERE ts.client_id = $user_id";
+#echo $sql.'<br>';
+if ($rs = $conn->query($sql)) {
+    if ($rs->num_rows > 0) {
+        $reservation_data = '';
+        while ($rows = $rs->fetch_assoc()) {
+            $reservation_data .= 
+            '<div class="row text-center">
+                <div class="col-1 my-auto">
+                    <p>'.$rows['transaction_id'].'</p>
+                </div>
+                <div class="col-2 my-auto text-center">
+                    <p>'.$rows['type_name'].'<br>RN-'.$rows['room_number'].'</p>
+                </div>
+                <div class="col-2  my-auto text-center">
+                    <p>'.date_format(date_create($rows['arrival_date']), "m/d/Y").'</p>
+                </div>
+                <div class="col-2  my-auto text-center">
+                    <p>'.date_format(date_create($rows['departure_date']), "m/d/Y").'</p>
+                </div>
+                <div class="col-2  my-auto text-center">
+                    <p>'.$rows['confirm_code'].'</p>
+                </div>
+                <div class="col-2 my-auto text-center">
+                    <p class="status-text"><b>'.strtoupper($rows['status_description']).'</b></p>
+                </div>';
+            if (strtoupper($rows['status_description']) == "CONFIRMED") {
+                $reservation_data .= '
+                    <div class="col-1 my-auto text-center" id="reserve-btn">
+                        <button class="btn-cancel btn btn-sm mt-3">CANCEL</button>
+                    </div>
+                </div>
+                <hr class="thin">'; 
+            } else {
+                $reservation_data .= '
+                    <div class="col-1 my-auto text-center" id="reserve-btn">
+                        
+                    </div>
+                </div>
+                <hr class="thin">'; 
+            }
+            #<button class="btn-cancel btn btn-sm mt-3" style="pointer-events: none;" disabled>CANCEL</button>
+            #<button class="btn btn-sm mt-1">&nbsp;PRINT&nbsp;</button>
+        }
+    }
+} else {
+    echo $conn->error;  // display error for selecting data into database
+}
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -22,8 +103,11 @@
                         <div class="card-body pt-4">
                             <card>
                                 <div class="row text-center">
+                                    <div class="col-1">
+                                        <h6>Transact ID</h6>
+                                    </div>
                                     <div class="col-2">
-                                        <h6>Room</h6>
+                                        <h6>Rooms</h6>
                                     </div>
                                     <div class="col-2">
                                         <h6>Check-in Date</h6>
@@ -32,37 +116,24 @@
                                         <h6>Check-out Date</h6>
                                     </div>
                                     <div class="col-2">
-                                        <h6>Amount</h6>
+                                        <h6>Confirmation Code</h6>
                                     </div>
                                     <div class="col-2">
                                         <h6>Status</h6>
                                     </div>
-                                    <div class="col-2">
+                                    <div class="col-1">
                                         <h6>Action</h6>
                                     </div>
                                 </div>
                                 <hr class="solid">
-                                <div class="row text-center">
-                                    <div class="col-2 my-auto">
-                                        <p>Cozy Room</p>
-                                    </div>
-                                    <div class="col-2 my-auto text-center">
-                                        <p>12/25/2021</p>
-                                    </div>
-                                    <div class="col-2  my-auto text-center">
-                                        <p>12/28/2021</p>
-                                    </div>
-                                    <div class="col-2  my-auto text-center">
-                                        <p>P 21500.00</p>
-                                    </div>
-                                    <div class="col-2 my-auto text-center">
-                                        <p class="status-text"><b>CONFIRMED</b></p>
-                                    </div>
-                                    <div class="col-2 my-auto text-center" id="reserve-btn">
-                                        <button class="btn-cancel btn btn-md mt-3">CANCEL</button>
-                                    </div>
-                                </div>
-                                <hr class="thin">
+                                <?php if (!empty($reservation_data)) {
+                                    echo $reservation_data;
+                                } else { ?>
+                                        <div class="alert alert-secondary text-center" role="alert">
+                                            You don't have any reservations made yet!
+                                        </div>
+                                <?php } ?>
+                                <!--
                                 <div class="row text-center">
                                     <div class="col-2 my-auto">
                                         <p>Cozy Room</p>
@@ -105,13 +176,13 @@
                                     </div>
                                 </div>
                                 <hr class="thin">
+-->
                             </card>
                         </div>
                         <div class="card-body pb-4 mr-2" id="reserve-btn">
                             <card>
                                 <div class="row d-flex justify-content-end">
                                     <button class=" btn btn-md mt-5 mx-2">PRINT TRANSACTIONS</button>
-
                                 </div>
                             </card>
                         </div>
@@ -131,7 +202,6 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
     <script>
         $(document).ready(function() {
-
             $('.status-text').each(function() {
                 var el = $(this);
                 if (el.text() === 'CONFIRMED') {
@@ -139,17 +209,13 @@
                         'color': 'orange'
 
                     });
-
                 } else {
                     el.css({
                         'color': 'green'
 
                     });
-
-
                 }
             });
-
         });
     </script>
 </body>

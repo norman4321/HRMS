@@ -94,21 +94,17 @@
             <div class="details">
                 <div class="room-manage">
                     <div class="card-header">
-                        <h2>Room Management</h2>
+                        <div class="head">
+                            <h2>Room Management</h2>
+                            <input type="date" id="RoomDate" name="room_date">
+                        </div> 
                         <a href="add_room.php"><button class="btn btn-primary">Add Room</button></a>
                     </div>
                     <table id="roomPage" class="table">
                         <thead align="center">
                             <tr>
                                 <th scope="col">Room No.</th>
-                                <th scope="col">Image</th>
-                                <th scope="col">Name</th>
                                 <th scope="col">Type</th>
-                                <th scope="col">Capacity</th>
-                                <th scope="col">Description</th>
-                                <th scope="col">Size</th>
-                                <th scope="col">Amenities</th>
-                                <th scope="col">Price</th>
                                 <th scope="col">Status</th>
                                 <th scope="col">Action</th>
                             </tr>
@@ -116,17 +112,8 @@
                         <tbody align="center">
                             <tr>
                                 <td>1</td>
-                                <td>
-                                    <img src="../../public/images/room_sample.jpg" width="200px" height="120px">
-                                </td>
-                                <td>Hospisyo</td>
                                 <td>Deluxe Type</td>
-                                <td>12pax</td>
-                                <td>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries</td>
-                                <td>24sqm</td>
-                                <td>Toiletries, Free WIFI, Entertainment, Jacuzzi</td>
-                                <td>PHP 11,000</td>
-                                <td>Booked</td>
+                                <td><span class="status Booked">Booked</span></td>
                                 <td>
                                     <button class="btn btn-success"><a href="edit_room.php" class="text-light">Edit</a></button>
                                     <button class="btn btn-danger"><a href="#" class="text-light">Delete</a></button>
@@ -134,17 +121,8 @@
                             </tr>
                             <tr>
                                 <td>1</td>
-                                <td>
-                                    <img src="../../public/images/room_sample.jpg">
-                                </td>
-                                <td>Otto</td>
                                 <td>@mdo</td>
-                                <td>Otto</td>
-                                <td>Otto</td>
-                                <td>Otto</td>
-                                <td>Otto</td>
-                                <td>Otto</td>
-                                <td>Occupied</td>
+                                <td><span class="status Maintenance">Maintenance</span></td>
                                 <td>
                                     <button class="btn btn-success"><a href="edit_room.php" class="text-light">Edit</a></button>
                                     <button class="btn btn-danger"><a href="#" class="text-light">Delete</a></button>
@@ -152,17 +130,8 @@
                             </tr>
                             <tr>
                                 <td>1</td>
-                                <td>
-                                    <img src="../../public/images/room_sample.jpg" width="200px" height="120px">
-                                </td>
-                                <td>Otto</td>
                                 <td>@mdo</td>
-                                <td>Otto</td>
-                                <td>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries</td>
-                                <td>Otto</td>
-                                <td>Otto</td>
-                                <td>Otto</td>
-                                <td>Booked</td>
+                                <td><span class="status Occupied">Occupied</span></td>
                                 <td>
                                     <button class="btn btn-success"><a href="edit_room.php" class="text-light">Edit</a></button>
                                     <button class="btn btn-danger"><a href="#" class="text-light">Delete</a></button>
@@ -170,17 +139,8 @@
                             </tr>
                             <tr>
                                 <td>1</t>
-                                <td>
-                                    <img src="../../public/images/room_sample.jpg" width="200px" height="120px">
-                                </td>
-                                <td>Otto</td>
                                 <td>@mdo</td>
-                                <td>Otto</td>
-                                <td>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries</td>
-                                <td>Otto</td>
-                                <td>Otto</td>
-                                <td>Otto</td>
-                                <td>Vacant</td>
+                                <td><span class="status Available">Available</span></td>
                                 <td>
                                     <button class="btn btn-success"><a href="edit_room.php" class="text-light">Edit</a></button>
                                     <button class="btn btn-danger"><a href="#" class="text-light">Delete</a></button>
@@ -203,7 +163,6 @@
         </div>
 
     </div>
-
 
 
 

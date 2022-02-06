@@ -1,6 +1,6 @@
 <?php
 
-/******************************** For Accomodation | Cart Pages *********************************/ 
+/******************************** For Accomodation | Cart Pages *********************************/
 
 // Function to create view of rooms list query
 function createRoomsListView($roomtype, $numpersons, $roomstat)
@@ -51,7 +51,7 @@ function createRoomsDataDisplay($rows, $filled = true, $datein, $dateout, $numpe
                     <p class="card-text">' . $rows['room_description'] . '</p>
                     <hr>
                     <div class="book-now">
-                        <p class="card-text">Php ' . $rows['room_price'] . '</p>
+                        <p class="card-text">₱ ' .  number_format($rows['room_price'], 2) . '</p>
                         <form action="./cart_page.php" method="POST">
                             <input type="hidden" name="typeid" value="' . $rows['type_id'] . '">
                             <input type="hidden" name="image" value="' . $rows['room_image'] . '">
@@ -76,7 +76,7 @@ function createRoomsDataDisplay($rows, $filled = true, $datein, $dateout, $numpe
                     <p class="card-text">' . $rows['room_description'] . '</p>
                     <hr>
                     <div class="book-now">
-                        <p class="card-text">Php ' . number_format($rows['room_price'],2) . '</p>
+                        <p class="card-text">₱ ' . number_format($rows['room_price'], 2) . '</p>
                         <button type="button" class="btn" onclick="location.href=\'' . 'accomodation_page.php?check=rooms' . '\'">
                             BOOK NOW
                         </button>
@@ -87,7 +87,8 @@ function createRoomsDataDisplay($rows, $filled = true, $datein, $dateout, $numpe
 }
 
 // Function count available rooms for specific room type and date in/out
-function countAvailableRooms ($conn, $typeid, $numpersons, $roomstat, $datein, $dateout) {
+function countAvailableRooms($conn, $typeid, $numpersons, $roomstat, $datein, $dateout)
+{
     createRoomsListView($typeid, $numpersons, $roomstat);
     createRoomsAvailableView($datein, $dateout);
     $sql = "SELECT COUNT(room_id) AS count FROM rooms_available WHERE type_id=$typeid";
@@ -100,6 +101,7 @@ function countAvailableRooms ($conn, $typeid, $numpersons, $roomstat, $datein, $
     }
 }
 
+// Function to check if there's conflicting schedule in the cart that can affect availablity of rooms
 function scanCartForConflictingSchedule($array_keys, $typeid, $datein, $dateout)
 {
     $count = 0;
@@ -124,7 +126,69 @@ function scanCartForConflictingSchedule($array_keys, $typeid, $datein, $dateout)
     return $count;
 }
 
-/******************************** For All Pages *********************************/ 
+/******************************** For Submission Page *********************************/
+
+// Function to generate confirmation code
+function generateConfirmationCode($length = 8)
+{
+    $characters = 'abcdefghijklmnopqrstuvwxyz0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+    $code = '';
+    for ($i = 0; $i < $length; $i++) {
+        $code .= $characters[random_int(0, strlen($characters) - 1)];
+    }
+    return $code;
+}
+
+function isCodeExist($conn, $code)
+{
+    $status = false;
+    $sql = "SELECT confirm_code FROM HRMS_reservation WHERE confirm_code='$code' LIMIT 1";
+    if ($rs = $conn->query($sql)) {
+        if ($rs->num_rows > 0) {
+            $status = true;
+        }
+    } else {
+        echo $conn->error;  // display error for selecting data into database
+    }
+    return $status;
+}
+
+// Function to check if confirmation code already exist
+function isSameProfile($conn, $sql)
+{
+    if ($rs = $conn->query($sql)) {
+        if ($rs->num_rows > 0) {
+            $profile_data = $rs->fetch_assoc();
+            return (int) $profile_data['profile_id'];
+        }
+    } else {
+        echo $conn->error;  // display error for selecting data into database
+        return 0;
+    }
+}
+
+// Function to get available room for specific room type and date in/out
+function getAvailableRoom($conn, $typeid, $numpersons, $roomstat, $datein, $dateout)
+{
+    createRoomsListView($typeid, $numpersons, $roomstat);
+    createRoomsAvailableView($datein, $dateout);
+    $sql = "SELECT room_id FROM rooms_available WHERE type_id=$typeid";
+    if ($rs = $conn->query($sql)) {
+        if ($rs->num_rows > 0) {
+            $room_data = $rs->fetch_assoc();
+            
+
+            
+        } else {
+            echo 'No user found!';
+        }
+    } else {
+        echo $conn->error;  // display error for selecting count data into database
+        return 0;
+    }
+}
+
+/******************************** For All Pages *********************************/
 
 // Function to count item/s in the cart
 function countCartItems()
@@ -146,7 +210,7 @@ function countCartItemsAvailable()
             if ($_SESSION['cart'][$key]['availability']) {
                 $count++;
             }
-        }   
+        }
     }
     return $count;
 }

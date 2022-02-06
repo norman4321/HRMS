@@ -79,12 +79,7 @@ if (isset($_POST['submit'])) {
                             <form action="" method="POST">
                                 
                                 <!---- error message ---->
-                                <?php if (!empty($error_message)): ?>
-                                <div class="alert alert-danger alert-dismissible mb-3">
-                                    <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-                                    <strong>Error! </strong> <?php echo $error_message; ?>
-                                </div>
-                                <?php endif; ?>
+                                <?php include "./partials/error_message.php" ?>
 
                                 <div class="row">
                                     <div class="col-md-12 mb-4">

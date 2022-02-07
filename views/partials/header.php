@@ -20,7 +20,7 @@
                     <li><a href="#" class="nav-link" id="user-access"><i class="fas fa-user"></i></a></li>
                     <ul class="user-log">
                         <li><a href="../views/profile_page.php">Profile</a></li>
-                        <li><a href="../views/reservation_page.php">Reservations</a></li>
+                        <li><a href="../views/transaction_page.php">Transactions</a></li>
                         <li><a href="logout.php">Logout</a></li>
                     </ul>
                 <?php else : // without logged in account ?>

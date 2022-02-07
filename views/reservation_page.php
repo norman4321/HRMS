@@ -7,76 +7,86 @@ $cart_count = countCartItems(); // Count cart item/s
 // Check if user is not logged in, then redirects to signin page
 if (!isset($_SESSION['user_id'])) {
     header('Location: signin_page.php');
+    die;
 }
 
-// Alert message if Booking is Successful from submission_page
-if (isset($_SESSION['message'])) {
-    echo '<script type="text/javascript"> alert("' . $_SESSION['message'] . '"); </script>';
-    unset($_SESSION['message']);
-}
 
-// Display Record
-$user_id = $_SESSION['user_id'];
-$sql = "SELECT ts.transaction_id, ts.total_amount, ts.client_id, rs.reservation_id, rs.confirm_code, rs.arrival_date, rs.departure_date, rs.arrival_time, rsst.status_description, rr.room_id, r.room_number, rt.type_name
-    FROM HRMS_transaction ts 
-    JOIN HRMS_reservation rs 
-    ON ts.transaction_id=rs.transaction_id
-    JOIN HRMS_reservation_status rsst
-    ON rs.reservation_status=rsst.status_id
-    JOIN HRMS_rooms_reserved rr
-    ON rs.reservation_id=rr.reservation_id
-    JOIN HRMS_room r
-    ON rr.room_id=r.room_id
-    JOIN HRMS_room_type rt
-    ON r.room_type=rt.type_id
-    WHERE ts.client_id = $user_id";
-#echo $sql.'<br>';
-if ($rs = $conn->query($sql)) {
-    if ($rs->num_rows > 0) {
-        $reservation_data = '';
-        while ($rows = $rs->fetch_assoc()) {
-            $reservation_data .= 
-            '<div class="row text-center">
-                <div class="col-1 my-auto">
-                    <p>'.$rows['transaction_id'].'</p>
-                </div>
-                <div class="col-2 my-auto text-center">
-                    <p>'.$rows['type_name'].'<br>RN-'.$rows['room_number'].'</p>
-                </div>
-                <div class="col-2  my-auto text-center">
-                    <p>'.date_format(date_create($rows['arrival_date']), "m/d/Y").'</p>
-                </div>
-                <div class="col-2  my-auto text-center">
-                    <p>'.date_format(date_create($rows['departure_date']), "m/d/Y").'</p>
-                </div>
-                <div class="col-2  my-auto text-center">
-                    <p>'.$rows['confirm_code'].'</p>
-                </div>
-                <div class="col-2 my-auto text-center">
-                    <p class="status-text"><b>'.strtoupper($rows['status_description']).'</b></p>
-                </div>';
-            if (strtoupper($rows['status_description']) == "CONFIRMED") {
-                $reservation_data .= '
-                    <div class="col-1 my-auto text-center" id="reserve-btn">
-                        <button class="btn-cancel btn btn-sm mt-3">CANCEL</button>
-                    </div>
-                </div>
-                <hr class="thin">'; 
-            } else {
-                $reservation_data .= '
-                    <div class="col-1 my-auto text-center" id="reserve-btn">
-                        
-                    </div>
-                </div>
-                <hr class="thin">'; 
+// Check if action and transaction number is set
+if (isset($_GET['action']) && isset($_GET['transaction']) && $_GET['action'] == 'view') {
+    
+    // Get transaction details
+    $transaction_id = $_GET['transaction'];
+    $user_id = $_SESSION['user_id'];
+    $transaction = getTransactionRecord($conn, $user_id, $transaction_id);
+    if (!empty($transaction)) {
+        #print_r($transaction);
+        $transaction_date = date_format(date_create($transaction['transaction_date']), "M j, Y");
+        $transaction_status = $transaction['transaction_status'];
+        $total_amount = $transaction['total_amount'];
+
+        // Get reservation details
+        $reservation = getReservationRecord($conn, $user_id, $transaction_id);
+        if (!empty($reservation)) {
+            #print_r($reservation);
+            $reservation_record = '';
+            $reservation_status = array();
+            foreach ($reservation as $rows) {
+                $room_numbers = '';
+                $reservation_status[$rows['reservation_id']] = $rows['reservation_status'];
+                $nights = date_create($rows['arrival_date'])->diff(date_create($rows['departure_date']))->format("%a");
+                $subtotal = $rows['quantity'] * $rows['price'] * $nights;
+
+                // Check if room quantity is greater than 1, then get all room numbers; Else, set room number as what is on rows
+                if ($rows['quantity'] > 1) {
+                    // Get room numbers
+                    $reservation_id = $rows['reservation_id'];
+                    $room_nums = getRoomNumbers($conn, $reservation_id);
+                    if (!empty($room_nums)) {
+                        foreach ($room_nums as $room_num) {
+                            $room_numbers .= $room_num . '<br>';
+                        }
+                    }
+                } else {
+                    $room_numbers = $rows['room_number'];
+                }
+
+                // Display reservation record
+                $reservation_record .= '
+                <tr>
+                    <td>' . $rows['type_name'] . '</td>
+                    <td>' . $room_numbers . '</td>
+                    <td>' . date_format(date_create($rows['arrival_time']), "g:i A") . '</td>
+                    <td>' . date_format(date_create($rows['arrival_date']), "m/d/Y") . '</td>
+                    <td>' . date_format(date_create($rows['departure_date']), "m/d/Y") . '</td>
+                    <td>' . $nights . '</td>
+                    <td>₱ ' . number_format($rows['price'], 2) . '</td>
+                    <td class="status-text">' . $rows['reservation_status'] . '</td>
+                    <td>' . $rows['confirm_code'] . '</td>
+                    <td class="text-right">₱ ' . number_format($subtotal, 2) . '</td>
+                </tr>';
             }
-            #<button class="btn-cancel btn btn-sm mt-3" style="pointer-events: none;" disabled>CANCEL</button>
-            #<button class="btn btn-sm mt-1">&nbsp;PRINT&nbsp;</button>
+            $reservation_record .= '
+            <tr class="text-left">
+                <td colspan="10"><b>Total Amount:</b> ₱ ' . number_format($total_amount, 2) . '</td>
+            </tr>';
+        } else {
+            $error_message = "No reservation record has been found.";
         }
+    } else {
+        $error_message = "No transaction record has been found.";
     }
+
+} elseif (isset($_GET['action']) && isset($_GET['transaction']) && $_GET['action'] == 'print') {
+    // Print transaction receipt - redirect to receipt page
+    $_SESSION['transaction'] = $_GET['transaction'];
+    header("Location: receipt.php");
+    die;
 } else {
-    echo $conn->error;  // display error for selecting data into database
+    header("Location: transaction_page.php");
+    die;
 }
+
+
 ?>
 
 <!DOCTYPE html>
@@ -94,7 +104,7 @@ if ($rs = $conn->query($sql)) {
     <!-----landing----->
     <section class="reservation-history">
         <div class="container-fluid py-2 px-5" id="cart-header">
-            <h1 class="ml-3 ">Reservation History</h1>
+            <h1 class="ml-3 ">Reservations</h1>
         </div>
         <div class="container-fluid d-flex justify-content-center">
             <div class="row">
@@ -102,91 +112,49 @@ if ($rs = $conn->query($sql)) {
                     <div class="card mx-auto" style="padding: 0; border-radius: 10px; width: 85rem; margin-bottom: 200px">
                         <div class="card-body pt-4">
                             <card>
-                                <div class="row text-center">
-                                    <div class="col-1">
-                                        <h6>Transact ID</h6>
+                                <!-- Error Message -->
+                                <?php if (!empty($error_message)) { ?>
+                                    <div class="alert alert-danger mb-3 text-center">
+                                        <strong>Error! </strong> <?php echo $error_message; ?>
                                     </div>
-                                    <div class="col-2">
-                                        <h6>Rooms</h6>
-                                    </div>
-                                    <div class="col-2">
-                                        <h6>Check-in Date</h6>
-                                    </div>
-                                    <div class="col-2">
-                                        <h6>Check-out Date</h6>
-                                    </div>
-                                    <div class="col-2">
-                                        <h6>Confirmation Code</h6>
-                                    </div>
-                                    <div class="col-2">
-                                        <h6>Status</h6>
-                                    </div>
-                                    <div class="col-1">
-                                        <h6>Action</h6>
-                                    </div>
-                                </div>
-                                <hr class="solid">
-                                <?php if (!empty($reservation_data)) {
-                                    echo $reservation_data;
-                                } else { ?>
-                                        <div class="alert alert-secondary text-center" role="alert">
-                                            You don't have any reservations made yet!
-                                        </div>
-                                <?php } ?>
-                                <!--
-                                <div class="row text-center">
-                                    <div class="col-2 my-auto">
-                                        <p>Cozy Room</p>
-                                    </div>
-                                    <div class="col-2 my-auto text-center">
-                                        <p>12/25/2021</p>
-                                    </div>
-                                    <div class="col-2  my-auto text-center">
-                                        <p>12/28/2021</p>
-                                    </div>
-                                    <div class="col-2  my-auto text-center">
-                                        <p>P 21500.00</p>
-                                    </div>
-                                    <div class="col-2 my-auto text-center">
-                                        <p class="status-text"><b>SUCCESSFUL</b></p>
-                                    </div>
-                                    <div class="col-2 my-auto text-center" id="reserve-btn">
-                                        <button class="btn-cancel btn btn-md mt-3 disabled"></button>
-                                    </div>
-                                </div>
-                                <hr class="thin">
-                                <div class="row text-center">
-                                    <div class="col-2 my-auto">
-                                        <p>Cozy Room</p>
-                                    </div>
-                                    <div class="col-2 my-auto text-center">
-                                        <p>12/25/2021</p>
-                                    </div>
-                                    <div class="col-2  my-auto text-center">
-                                        <p>12/28/2021</p>
-                                    </div>
-                                    <div class="col-2  my-auto text-center">
-                                        <p>P 21500.00</p>
-                                    </div>
-                                    <div class="col-2 my-auto text-center">
-                                        <p class="status-text"><b>SUCCESSFUL</b></p>
-                                    </div>
-                                    <div class="col-2 my-auto text-center" id="reserve-btn">
-                                        <button class="btn-cancel btn btn-md mt-3 disabled"></button>
-                                    </div>
-                                </div>
-                                <hr class="thin">
--->
-                            </card>
-                        </div>
-                        <div class="card-body pb-4 mr-2" id="reserve-btn">
-                            <card>
-                                <div class="row d-flex justify-content-end">
-                                    <button class=" btn btn-md mt-5 mx-2">PRINT TRANSACTIONS</button>
-                                </div>
-                            </card>
-                        </div>
+                                <?php die; } ?>
 
+                                <div class="pb-2">
+                                    <h6>Transaction No.: <?= $transaction_id ?></h6>
+                                    <h6>Transaction Date: <?= $transaction_date ?></h6>
+                                    <h6>Status: <span class="status-text"><?= $transaction_status ?></span></h6>
+                                </div>
+                                <table class="table reservation text-center">
+                                    <thead>
+                                        <tr>
+                                            <th scope="col">Room Name</th>
+                                            <th scope="col">Room No.</th>
+                                            <th scope="col">Arrival Time</th>
+                                            <th scope="col">Arrival Date</th>
+                                            <th scope="col">Departure Date</th>
+                                            <th scope="col">Nights</th>
+                                            <th scope="col">Price (P/N)</th>
+                                            <th scope="col">Status</th>
+                                            <th scope="col">Confirmation Code</th>
+                                            <th scope="col">Subtotal</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <?php echo $reservation_record; ?>
+                                    </tbody>
+                                </table>
+                            </card>
+                        </div>
+                        <div class="pb-4 mr-5" id="reserve-btn">
+                            <div class="row d-flex justify-content-end">
+
+                                <?php if (in_array("Confirmed", $reservation_status)) : ?>
+                                    <button class="btn btn-md mt-5 mx-2 cancel" data-token="<?= $transaction_id ?>">CANCEL</button>
+                                <?php endif; ?>
+                                
+                                <button class="btn btn-md mt-5 mx-2 print" data-transaction="<?= $transaction_id ?>">PRINT</button>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -202,18 +170,35 @@ if ($rs = $conn->query($sql)) {
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
     <script>
         $(document).ready(function() {
+            // setting text color of status
             $('.status-text').each(function() {
                 var el = $(this);
-                if (el.text() === 'CONFIRMED') {
+                if (el.text() === 'Canceled') {
+                    el.css({
+                        'color': 'red'
+                    });
+                } else if (el.text() === 'Pending' || el.text() === 'Confirmed') {
                     el.css({
                         'color': 'orange'
-
                     });
                 } else {
                     el.css({
                         'color': 'green'
-
                     });
+                }
+            });
+
+            // when print is clicked
+            $('.print').click(function (e) {
+                var transaction = $(this).attr('data-transaction');
+                window.location.href="reservation_page.php?action=print&transaction="+transaction;
+            });
+
+            // when cancel transaction is clicked
+            $('.cancel').click(function (e) {
+                var token = $(this).attr('data-token');
+                if (confirm('All reservations you made under this transaction would be canceled. Incase your reservation(s) is beyond 72 hours before the check-in date, It would be subjected to cancel cancellation policy of the Cozy Home. Are you sure to cancel this transaction?')) {
+                    window.location.href="cancellation.php?token="+token;
                 }
             });
         });

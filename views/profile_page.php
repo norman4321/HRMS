@@ -7,6 +7,7 @@ $cart_count = countCartItems(); // Count cart item/s
 // Check if user is not logged in, then redirects to signin page
 if (!isset($_SESSION['user_id'])) {
     header('Location: signin_page.php');
+    die;
 }
 
 $error_message = '';

@@ -112,7 +112,7 @@ if (isset($_POST['firstname']) && isset($_SESSION['cart']) && !empty($_SESSION['
     $date = date('Y-m-d H:i:s');
 
     // Insert transaction into database
-    $sql = "INSERT INTO HRMS_transaction SET transaction_date='$date', total_amount=$total_amount, payment_method_id=$method, client_id=$client_id";
+    $sql = "INSERT INTO HRMS_transaction SET transaction_date='$date', total_amount=$total_amount, payment_method=$method, client_id=$client_id, transaction_status=1"; // 1=PAID
     #echo $sql.'<br>';
     if ($conn->query($sql)) {
         $transaction_id = $conn->insert_id;
@@ -150,7 +150,7 @@ if (isset($_POST['firstname']) && isset($_SESSION['cart']) && !empty($_SESSION['
                     } while (isCodeExist($conn, $code));
                     
                     // Insert reservation into database
-                    $sql = "INSERT INTO HRMS_reservation SET transaction_id=$transaction_id, confirm_code='$code', arrival_date='".$item['datein']."', departure_date='".$item['dateout']."', arrival_time='$time', reservation_status=$status";
+                    $sql = "INSERT INTO HRMS_reservation SET transaction_id=$transaction_id, confirm_code='$code', arrival_date='".$item['datein']."', departure_date='".$item['dateout']."', arrival_time='$time', quantity=$rs->num_rows, price=".$item['price'].", reservation_status=$status";
                     echo $sql.'<br>';
                     if ($conn->query($sql)) {
                         $reservation_id = $conn->insert_id;
@@ -213,10 +213,10 @@ if (isset($_POST['firstname']) && isset($_SESSION['cart']) && !empty($_SESSION['
     // When the booking is successful
     // Check if registered
     if ($registered) {
-        // Redirect to Reservation History and Display Success Message for Successful Booking
+        // Redirect to Transaction History and Display Success Message for Successful Booking
         removeAvailableItemsInCart();
         $_SESSION['message'] = "Success! You have successfully booked your room(s).";
-        header("Location: reservation_page.php");
+        header("Location: transaction_page.php");
         die;
     } else {
         // Send email as receipt or booking confirmation to client's email

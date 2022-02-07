@@ -107,7 +107,7 @@
                         <thead align="center">
                             <tr>
                                 <th scope="col">Guest Name</th>
-                                <th scope="col">Room Name</th>
+                                <th scope="col">Room Number</th>
                                 <th scope="col">Price</th>
                                 <th scope="col">Arrival Date/Time</th>
                                 <th scope="col">Departure Date/Time</th>
@@ -115,21 +115,14 @@
                             </tr>
                         </thead>
                         <tbody align="center">
-                            <tr>
-                                <td>1</td>
-                                <td>Sample</td>
-                                <td>Hospisyo</td>
-                                <td>Deluxe Type</td>
-                                <td>otto</td>
-                                <td>24sqm</td>
-                            </tr>
+
+                          <?php include "../../config/report_view.php";
+                            ReportList();
+                          ?>
 
                         </tbody>
                     </table>
-                    <div class="card-footer">
-                        <h4>Total Amount</h4>
-                        <span>Total Amount: $$$$ </span>
-                    </div>
+                  
                     <div class="card-btn">
                         <button class="gen-btn btn-primary">Generate Print</button>
                     </div>

@@ -2,11 +2,24 @@
 <html lang="en">
 
 <head>
-    <?php include "../partials/admin-head.html" ?>
+    <?php include "../partials/admin-head.html";
+
+
+function DashboardData($id){
+    include "../../config/database.php";
+
+
+  $sql = "SELECT COUNT(1) AS total FROM HRMS_room WHERE room_status =" . $id;
+  $result=mysqli_query($conn,$sql);
+  $data=mysqli_fetch_assoc($result);
+  echo $data['total'];
+  }
+
+
+
+
+   ?>
 </head>
-
-
-
 <body>
 
     <!-- header -->
@@ -82,11 +95,11 @@
         <div class="admin-main">
 
 
-            <!--Vacant, Occupied and Booked Cards-->
+            <!--Vacant (1), Occupied(4) and Booked (3)Cards-->
             <div class="card-box">
                 <div class="card">
                     <div>
-                        <div class="card-numbers">30</div>
+                        <div class="card-numbers"><?php echo DashboardData(1)?></div>
                         <div class="card-name">Vacants</div>
                     </div>
                     <div class="iconBx">
@@ -95,7 +108,7 @@
                 </div>
                 <div class="card">
                     <div>
-                        <div class="card-numbers">50</div>
+                        <div class="card-numbers"><?php echo DashboardData(4)?></div>
                         <div class="card-name">Occupied</div>
                     </div>
                     <div class="iconBx">
@@ -104,7 +117,7 @@
                 </div>
                 <div class="card">
                     <div>
-                        <div class="card-numbers">40</div>
+                        <div class="card-numbers"><?php echo DashboardData(3)?></div>
                         <div class="card-name">Booked</div>
                     </div>
                     <div class="iconBx">
@@ -132,79 +145,14 @@
                         <thead>
                             <tr>
                                 <td>Room No.</td>
-                                <td>Room Name</td>
                                 <td>Room Type</td>
                                 <td>Status</td>
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td>1</td>
-                                <td>Sun and Moon</td>
-                                <td>2nd Class</td>
-                                <td><span class="status Vacant">Vacant</span></td>
-                            </tr>
-                            <tr>
-                                <td>1</td>
-                                <td>Stars</td>
-                                <td>3rd Class</td>
-                                <td><span class="status Vacant">Vacant</span></td>
-                            </tr>
-                            <tr>
-                                <td>1</td>
-                                <td>Stars</td>
-                                <td>3rd Class</td>
-                                <td><span class="status Occupied">Occupied</span></td>
-                            </tr>
-                            <tr>
-                                <td>1</td>
-                                <td>Sun and Moon</td>
-                                <td>2nd Class</td>
-                                <td><span class="status Occupied">Occupied</span></td>
-                            </tr>
-                            <tr>
-                                <td>1</td>
-                                <td>Earth</td>
-                                <td>1st Class</td>
-                                <td><span class="status Booked">Booked</span></td>
-                            </tr>
-                            <tr>
-                                <td>1</td>
-                                <td>Earth</td>
-                                <td>1st Class</td>
-                                <td><span class="status Booked">Booked</span></td>
-                            </tr>
-                            <tr>
-                                <td>1</td>
-                                <td>Earth</td>
-                                <td>1st Class</td>
-                                <td><span class="status Booked">Booked</span></td>
-                            </tr>
-                            <tr>
-                                <td>1</td>
-                                <td>Earth</td>
-                                <td>1st Class</td>
-                                <td><span class="status Booked">Booked</span></td>
-                            </tr>
-                            <tr>
-                                <td>1</td>
-                                <td>Earth</td>
-                                <td>1st Class</td>
-                                <td><span class="status Booked">Booked</span></td>
-                            </tr>
-                            <tr>
-                                <td>1</td>
-                                <td>Earth</td>
-                                <td>1st Class</td>
-                                <td><span class="status Booked">Booked</span></td>
-                            </tr>
-                            <tr>
-                                <td>1</td>
-                                <td>Earth</td>
-                                <td>1st Class</td>
-                                <td><span class="status Booked">Booked</span></td>
-                            </tr>
-
+                          <?php include "../../config/dashboard_view.php";
+                              DashboardList();
+                          ?>
 
                         </tbody>
                     </table>

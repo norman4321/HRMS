@@ -97,7 +97,7 @@
                         <div class="head">
                             <h2>Room Management</h2>
                             <input type="date" id="RoomDate" name="room_date">
-                        </div> 
+                        </div>
                         <a href="add_room.php"><button class="btn btn-primary">Add Room</button></a>
                     </div>
                     <table id="roomPage" class="table">
@@ -110,42 +110,10 @@
                             </tr>
                         </thead>
                         <tbody align="center">
-                            <tr>
-                                <td>1</td>
-                                <td>Deluxe Type</td>
-                                <td><span class="status Booked">Booked</span></td>
-                                <td>
-                                    <button class="btn btn-success"><a href="edit_room.php" class="text-light">Edit</a></button>
-                                    <button class="btn btn-danger"><a href="#" class="text-light">Delete</a></button>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>1</td>
-                                <td>@mdo</td>
-                                <td><span class="status Maintenance">Maintenance</span></td>
-                                <td>
-                                    <button class="btn btn-success"><a href="edit_room.php" class="text-light">Edit</a></button>
-                                    <button class="btn btn-danger"><a href="#" class="text-light">Delete</a></button>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>1</td>
-                                <td>@mdo</td>
-                                <td><span class="status Occupied">Occupied</span></td>
-                                <td>
-                                    <button class="btn btn-success"><a href="edit_room.php" class="text-light">Edit</a></button>
-                                    <button class="btn btn-danger"><a href="#" class="text-light">Delete</a></button>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>1</t>
-                                <td>@mdo</td>
-                                <td><span class="status Available">Available</span></td>
-                                <td>
-                                    <button class="btn btn-success"><a href="edit_room.php" class="text-light">Edit</a></button>
-                                    <button class="btn btn-danger"><a href="#" class="text-light">Delete</a></button>
-                                </td>
-                            </tr>
+
+                          <?php include "../../config/room_view.php";
+                              RoomList();
+                          ?>
                         </tbody>
                     </table>
                     <nav aria-label="Page navigation example">

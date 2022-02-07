@@ -1018,13 +1018,14 @@ form .add-room-type-details .input-box-area {
   font-size: 15px;
 }
 .status.Confirmed {
+  padding: 5px 10px;
   background: #1795ce;
   color: var(--white);
   border-radius: 4px;
   font-size: 13px;
   font-weight: 600;
 }
-.status.Cancelled {
+.status.Canceled {
   padding: 5px 10px;
   background: red;
   color: var(--white);
@@ -1046,14 +1047,6 @@ form .add-room-type-details .input-box-area {
   color: var(--white);
   border-radius: 4px;
   font-size: 13px;
-  font-weight: 600;
-}
-.status.Pending {
-  padding: 5px 10px;
-  background: #f7cb73;
-  color: var(--white);
-  border-radius: 4px;
-  font-size: 14px;
   font-weight: 600;
 }
 .details .reservation-manage .table tbody tr td {

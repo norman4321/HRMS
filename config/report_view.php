@@ -13,7 +13,16 @@ function ReportList(){
     echo "<td>" . $row['price'] . "</td>";
     echo "<td>" . $row['arrival_date'] . "</td>";
     echo "<td>" . $row['departure_date'] . "</td>";
-    $total= $total + $row['price'];
+
+    $A_date=strtotime($row['arrival_date']);
+    $D_date=strtotime($row['departure_date']);
+    $diff=$D_date-$A_date;
+    $days=round($diff / 86400);
+    $subtotal=$row['price']*$days;
+    echo "<td>" . $subtotal . "</td>";
+
+
+    $total= $total + $subtotal;
     echo "</tr>";
 
     }

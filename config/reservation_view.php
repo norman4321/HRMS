@@ -11,15 +11,15 @@ function ReservationList(){
     echo "<td>" . $row['reservation_id'] . "</td>";
     echo "<td>" . $row['profile_firstname'] . "</td>";
     echo "<td>" . $row['profile_address'] . "</td>";
-    echo "<td>" . $row['arrival_date'] . "</td>";
+    echo "<td>" . $row['transaction_date'] . "</td>";
     echo "<td>" . $row['confirm_code'] . "</td>";
     echo "<td>" . $row['quantity'] . "</td>";
-    echo "<td>" . ($row['price']*$row['quantity']) . "</td>";
+    echo "<td>" . $row['total_amount'] . "</td>";
     echo "<td>" ."<span class='status $row[status_description]'>". $row['status_description']."</span>"."</td>";
 
 
     echo  "<td>";
-    echo  "<button type='button' class='btn btn-primary' data-bs-toggle='modal' data-bs-target='#ReserveViewModal'>View</button>";
+    echo  "<button type='button' class='btn btn-primary' data-bs-toggle='modal' data-bs-target='#ReserveViewModal$row[transaction_id]'>View</button>";
     echo  "<button class='btn btn-info'><a href=# class='text-light'>Confirm</a></button>";
     echo  "<button class='btn btn-danger'><a href=# class='text-light'>Cancel</a></button>";
     echo  "<button class='btn btn-info'><a href=# class='text-light'>Check-in</a></button>";

@@ -19,110 +19,21 @@ function ReservationList(){
 
 
     echo  "<td>";
-    echo  "<button type='button' class='btn btn-primary' data-bs-toggle='modal' data-bs-target='#ReserveViewModal$row[transaction_id]'>View</button>";
+    echo  "<button type='button' class='btn btn-primary' data-bs-toggle='modal' data-bs-target='#ReserveViewModal$row[transaction_id]' >View</button>";
     echo  "<button class='btn btn-info'><a href=# class='text-light'>Confirm</a></button>";
     echo  "<button class='btn btn-danger'><a href=# class='text-light'>Cancel</a></button>";
     echo  "<button class='btn btn-info'><a href=# class='text-light'>Check-in</a></button>";
     echo  "<button class='btn btn-danger'><a href=# class='text-light'>Check-out</a></button>";
-    echo  "<button type='button' class='btn btn-success' data-bs-toggle='modal' data-bs-target=''#ReserveEditModal'>Edit </button>";
+    echo  "<button type='button' class='btn btn-success' data-bs-toggle='modal' data-bs-target='#ReserveEditModal'>Edit </button>";
     echo  "</td>";
 
+  echo "</tr>";
 
 
 
-    echo "</tr>";
     }
+
+
 
   }
   ?>
-
-  <!--
-  <tr>
-      <td>1</td>
-      <td>Sample</td>
-      <td>Hospisyo</td>
-      <td>Deluxe Type</td>
-      <td>otto</td>
-      <td>24sqm</td>
-      <td>PHP 11,000</td>
-      <td><span class="status Check-Out">Check-Out</span></td>
-      <td>
-          <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#ReserveViewModal">
-              View
-          </button>
-          <button class="btn btn-info"><a href="#" class="text-light">Confirm</a></button>
-          <button class="btn btn-danger"><a href="#" class="text-light">Cancel</a></button>
-          <button class="btn btn-info"><a href="#" class="text-light">Check-in</a></button>
-          <button class="btn btn-danger"><a href="#" class="text-light">Check-out</a></button>
-          <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#ReserveEditModal">
-              Edit
-          </button>
-      </td>
-  </tr>
-
-  <td>1</td>
-  <td>Sample</td>
-  <td>Otto</td>
-  <td>@mdo</td>
-  <td>Otto</td>
-  <td>Otto</td>
-  <td>PHP 11,000</td>
-  <td><span class="status Check-In">Check-In</span></td>
-  <td>
-      <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#ReserveViewModal">
-          View
-      </button>
-      <button class="btn btn-info"><a href="#" class="text-light">Confirm</a></button>
-      <button class="btn btn-danger"><a href="#" class="text-light">Cancel</a></button>
-      <button class="btn btn-info"><a href="#" class="text-light">Check-in</a></button>
-      <button class="btn btn-danger"><a href="#" class="text-light">Check-out</a></button>
-      <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#ReserveEditModal">
-          Edit
-      </button>
-  </td>
-</tr>
-<tr>
-  <td>1</td>
-  <td>Sample</td>
-  <td>Otto</td>
-  <td>@mdo</td>
-  <td>otto</td>
-  <td>Otto</td>
-  <td>PHP 11,000</td>
-  <td><span class="status Cancelled">Cancelled</span></td>
-  <td>
-      <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#ReserveViewModal">
-          View
-      </button>
-      <button class="btn btn-info"><a href="#" class="text-light">Confirm</a></button>
-      <button class="btn btn-danger"><a href="#" class="text-light">Cancel</a></button>
-      <button class="btn btn-info"><a href="#" class="text-light">Check-in</a></button>
-      <button class="btn btn-danger"><a href="#" class="text-light">Check-out</a></button>
-      <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#ReserveEditModal">
-          Edit
-      </button>
-  </td>
-</tr>
-<tr>
-  <td>1</td>
-  <td>Sample</td>
-  <td>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.</td>
-  <td>@mdo</td>
-  <td>otto</td>
-  <td>Otto</td>
-  <td>PHP 11,000</td>
-  <td><span class="status Pending">Pending</span></td>
-  <td>
-      <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#ReserveViewModal">
-          View
-      </button>
-      <button class="btn btn-info"><a href="#" class="text-light">Confirm</a></button>
-      <button class="btn btn-danger"><a href="#" class="text-light">Cancel</a></button>
-      <button class="btn btn-info"><a href="#" class="text-light">Check-in</a></button>
-      <button class="btn btn-danger"><a href="#" class="text-light">Check-out</a></button>
-      <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#ReserveEditModal">
-          Edit
-      </button>
-  </td>
-</tr>
--->

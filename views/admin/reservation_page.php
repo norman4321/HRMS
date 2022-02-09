@@ -108,7 +108,7 @@
                               <?php include "../../config/reservation_view.php";
                                 ReservationList();
                               ?>
-                              
+
                         </tbody>
                     </table>
                     <nav aria-label="Page navigation example">
@@ -128,91 +128,10 @@
         </div>
     </div>
     <!--VIEW MODAL-->
-    <div class="modal fade" id="ReserveViewModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="ViewModal" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-scrollable modal-xl">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="ViewModal">Booked Details</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <table id="reservationPage" class="table">
-                        <thead align="center">
-                            <tr>
-                                <th scope="col">Room No.</th>
-                                <th scope="col">Room Name</th>
-                                <th scope="col">Room Image</th>
-                                <th scope="col">Arrival Date&Time</th>
-                                <th scope="col">Departure Date&Time</th>
-                                <th scope="col">Price/Rate</th>
-                            </tr>
-                        </thead>
-                        <tbody align="center">
-                            <tr>
-                                <td>1</td>
-                                <td>Sample</td>
-                                <td><img src="../../public/images/room_sample.jpg"></td>
-                                <td>02/25/25 11:00:00</td>
-                                <td>02/25/25 11:00:00</td>
-                                <td>PHP 11,000</td>
-                            </tr>
-                            <tr>
-                                <td>1</td>
-                                <td>Sample</td>
-                                <td><img src="../../public/images/room_sample.jpg"></td>
-                                <td>02/25/25 11:00:00</td>
-                                <td>02/25/25 11:00:00</td>
-                                <td>PHP 11,000</td>
-                            </tr>
-                            <tr>
-                                <td>1</td>
-                                <td>Sample</td>
-                                <td><img src="../../public/images/room_sample.jpg"></td>
-                                <td>02/25/25 11:00:00</td>
-                                <td>02/25/25 11:00:00</td>
-                                <td>PHP 11,000</td>
-                            </tr>
-                            <tr>
-                                <td>1</td>
-                                <td>Sample</td>
-                                <td><img src="../../public/images/room_sample.jpg"></td>
-                                <td>02/25/25 11:00:00</td>
-                                <td>02/25/25 11:00:00</td>
-                                <td>PHP 11,000</td>
-                            </tr>
-                            <tr>
-                                <td>1</td>
-                                <td>Sample</td>
-                                <td><img src="../../public/images/room_sample.jpg"></td>
-                                <td>02/25/25 11:00:00</td>
-                                <td>02/25/25 11:00:00</td>
-                                <td>PHP 11,000</td>
-                            </tr>
-                            <tr>
-                                <td>1</td>
-                                <td>Sample</td>
-                                <td><img src="../../public/images/room_sample.jpg"></td>
-                                <td>02/25/25 11:00:00</td>
-                                <td>02/25/25 11:00:00</td>
-                                <td>PHP 11,000</td>
-                            </tr>
-                            <tr>
-                                <td>1</td>
-                                <td>Sample</td>
-                                <td><img src="../../public/images/room_sample.jpg"></td>
-                                <td>02/25/25 11:00:00</td>
-                                <td>02/25/25 11:00:00</td>
-                                <td>PHP 11,000</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                </div>
-            </div>
-        </div>
-    </div>
+    <?php include "../../config/reservation_modal_view.php";
+      ReservationModalView();
+    ?>
+    
     <!--EDIT MODAL-->
     <div class="modal fade" id="ReserveEditModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="EditModal" aria-hidden="true">
         <div class="modal-dialog modal-dialog-scrollable modal-xl">

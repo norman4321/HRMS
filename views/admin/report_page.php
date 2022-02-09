@@ -120,9 +120,8 @@
                             ReportList();
                           ?>
 
-                        </tbody>
-                    </table>
-                  
+                
+
                     <div class="card-btn">
                         <button class="gen-btn btn-primary">Generate Print</button>
                     </div>

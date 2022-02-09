@@ -6,7 +6,7 @@ function ReservationModalView(){
 
 
   //  $sql = "SELECT * FROM HRMS_rooms_reserved A INNER JOIN HRMS_reservation B ON A.reservation_id=B.reservation_id INNER JOIN HRMS_transaction T ON B.transaction_id=T.transaction_id INNER JOIN HRMS_user_profile ON T.client_id=profile_id INNER JOIN HRMS_room D ON A.room_id=D.room_id " ;
-$sql = "SELECT transaction_id FROM HRMS_transaction";
+$sql = "SELECT DISTINCT transaction_id FROM HRMS_transaction";
     $result = mysqli_query($conn,$sql);
 
     while($row = mysqli_fetch_array($result))

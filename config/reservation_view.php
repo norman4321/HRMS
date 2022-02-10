@@ -33,7 +33,5 @@ function ReservationList(){
 
     }
 
-
-
   }
   ?>

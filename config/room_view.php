@@ -17,7 +17,7 @@ function RoomList(){
 
 
     echo "<td>". "<button class='btn btn-success'><a href='edit_room.php?id=$row[room_id]' class='text-light'>Edit</a></button>" ;
-    echo "<button class='btn btn-danger'><a href='#' class='text-light'>Delete</a></button>";
+    //echo "<button class='btn btn-danger'><a href='#' class='text-light' onclick='return confirm(Are you sure to delete this room?')';>Delete</a></button>";
     echo "</td>";
     echo "</tr>";
     }

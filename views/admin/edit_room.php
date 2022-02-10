@@ -62,6 +62,10 @@
 
       }
 
+      function Call(){
+        echo "hi";
+      }
+
        ?>
 
 
@@ -152,32 +156,33 @@
                     <div class="card-header">
                         <h2>EDIT ROOM</h2>
                     </div>
-                    <form action="room_page.php" method="POST">
+                    <form method="POST" action="../../config/update_room.php">
 
                         <div class="add-details">
                             <div class="input-box">
                                 <span class="form-details">Room Number: </span>
-                                <input type="text" name="room_name" placeholder="Room Number" maxlength="50" required value="<?php echo $room_data['room_number'] ?>">
+                                <input type="text" name="room_number" placeholder="Room Number" maxlength="50" required value="<?php echo $room_data['room_number'] ?>">
                             </div>
                             <div class="input-box">
                                 <span class="form-details">Room Type: </span>
 
-                                <select id="CreateRoomType" class="form-control">
+                                <select name="room_type" class="form-control">
                               <?php  FetchRoomType($room_data['room_type']); ?>
                                 </select>
 
                             </div>
                             <div class="input-box">
                                 <span class="form-details">Status: </span>
-                                <select id="EditRoom" class="form-control">
+                                <select name="room_status" class="form-control">
                                     <?php  FetchRoomStatus($room_data['room_status']); ?>
                                 </select>
                             </div>
                         </div>
 
                     <div class="add-button">
-                        <button class="btn btn-primary">Confirm</button>
-                          <button class="btn btn-danger" href="room_page.php">Cancel</button>
+                        <button class="btn btn-primary" type="submit" onclick="return confirm('Confirm?')">Confirm</button>
+
+                        <button class="btn btn-danger" href="room_page.php">Cancel</button>
                     </div>
 
                 </form>
@@ -188,6 +193,9 @@
         </div>
 
     </div>
+    <?php if (isset($_POST['submit'])) : ?>
+   <p>Thank you for subscribing!</p>
+<?php endif; ?>
     <?php endif; ?>
 
 

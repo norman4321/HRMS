@@ -129,19 +129,19 @@
 
                             <div class="input-box">
                                 <span class="form-details">Room Name: </span>
-                                <input type="text" name="room_type_name" placeholder="<?php echo $room_type_data['type_name'] ?>" maxlength="50" required>
+                                <input type="text" name="room_type_name" value="<?php echo $room_type_data['type_name'] ?>" maxlength="50" required>
                             </div>
                             <div class="input-box">
                                 <span class="form-details">Capacity: </span>
-                                <input type="text" name="room_capacity" placeholder="<?php echo $room_type_data['room_capacity'] ?>" required>
+                                <input type="text" name="room_capacity" value="<?php echo $room_type_data['room_capacity'] ?>" required>
                             </div>
                             <div class="input-box">
                                 <span class="form-details">Price (per night): </span>
-                                <input type="text" name="room_price" placeholder="<?php echo $room_type_data['room_price'] ?>" required>
+                                <input type="text" name="room_price" value="<?php echo $room_type_data['room_price'] ?>" required>
                             </div>
                             <div class="input-box-area">
                                 <span class="form-details">Description: </span>
-                                <textarea class="description" name="room_description" placeholder="<?php echo $room_type_data['room_description'] ?>" required maxlength="500"></textarea>
+                                <textarea class="description" name="room_description" <?php echo $room_type_data['room_description'] ?> required maxlength="500"><?php echo $room_type_data['room_description'] ?></textarea>
                             </div>
                         </div>
                         <div class="add-predetails">

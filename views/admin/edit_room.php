@@ -3,7 +3,66 @@
 
 
 <head>
-    <?php include "../partials/admin-head.html" ?>
+    <?php include "../partials/admin-head.html";
+
+    function FetchRoomData($id){
+        include "../../config/database.php";
+
+
+
+
+      $sql = "SELECT room_number,room_type,room_status FROM HRMS_room INNER JOIN HRMS_room_type ON room_type=type_id WHERE room_id=$id";
+        if ($rs = $conn->query($sql)) {
+            if ($rs->num_rows > 0) {
+                $room_data = $rs->fetch_assoc();
+
+            } else {
+                echo 'No such room found!';
+            }
+        } else {
+            echo $conn->error;  // display error for selecting data into database
+        }
+
+
+
+          return $room_data;
+      }
+
+  function FetchRoomType($room_type){
+    include "../../config/database.php";
+
+    $sql = "SELECT type_id,type_name FROM HRMS_room_type " ;
+    $result = mysqli_query($conn,$sql);
+
+    while($row = mysqli_fetch_array($result))
+      {
+        if($room_type==$row['type_id'])
+        echo "<option value=$row[type_id] selected>$row[type_name]</option>";
+        else
+        echo "<option value=$row[type_id]>$row[type_name]</option>";
+      }
+
+
+    }
+
+    function FetchRoomStatus($room_status){
+      include "../../config/database.php";
+
+      $sql = "SELECT status_id,status_description FROM HRMS_room_status " ;
+      $result = mysqli_query($conn,$sql);
+
+      while($row = mysqli_fetch_array($result))
+        {
+          if($room_status==$row['status_id'])
+          echo "<option value=$row[status_id] selected>$row[status_description]</option>";
+          else
+          echo "<option value=$row[status_id]>$row[status_description]</option>";
+        }
+
+
+      }
+
+       ?>
 
 
 </head>
@@ -87,52 +146,50 @@
 
 
             <!--Room Management-->
+            <?php if (isset($_GET['id'])): $room_data=FetchRoomData($_GET['id'])?>
             <div class="details">
                 <div class="add-room">
                     <div class="card-header">
                         <h2>EDIT ROOM</h2>
                     </div>
-                    <form action="#">
-                        
+                    <form action="room_page.php" method="POST">
+
                         <div class="add-details">
                             <div class="input-box">
                                 <span class="form-details">Room Number: </span>
-                                <input type="text" name="room_name" placeholder="Room Number" maxlength="50" required>
+                                <input type="text" name="room_name" placeholder="Room Number" maxlength="50" required value="<?php echo $room_data['room_number'] ?>">
                             </div>
                             <div class="input-box">
                                 <span class="form-details">Room Type: </span>
+
                                 <select id="CreateRoomType" class="form-control">
-                                    <option value="Cozy Room">Cozy Room</option>
-                                    <option value="Cozy Junior Suite">Cozy Junior Suite</option>
-                                    <option value="Cozy Executive Room">Cozy Executive Room</option>
-                                    <option value="Cozy Fort Suite">Cozy Fort Suite</option>
-                                    <option value="Cozy Commerce Suite">Cozy Commerce Suite</option>
-                                    <option value="Cozy Home Suite">Cozy Home Suite</option>
+                              <?php  FetchRoomType($room_data['room_type']); ?>
                                 </select>
+
                             </div>
                             <div class="input-box">
                                 <span class="form-details">Status: </span>
                                 <select id="EditRoom" class="form-control">
-                                    <option value="Available">Available</option>
-                                    <option value="Occupied">Occupied</option>
-                                    <option value="Booked">Booked</option>
-                                    <option value="Maintenance">Maintenance</option>
-                                    <option value="Inactive">Inactive</option>
+                                    <?php  FetchRoomStatus($room_data['room_status']); ?>
                                 </select>
                             </div>
                         </div>
-                    </form>
+
                     <div class="add-button">
                         <button class="btn btn-primary">Confirm</button>
-                        <button class="btn btn-danger">Cancel</button>
+                          <button class="btn btn-danger" href="room_page.php">Cancel</button>
                     </div>
+
+                </form>
+
                 </div>
             </div>
 
         </div>
 
     </div>
-    
+    <?php endif; ?>
+
 
 
     <script>

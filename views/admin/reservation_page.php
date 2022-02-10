@@ -130,8 +130,9 @@
     <!--VIEW MODAL-->
     <?php include "../../config/reservation_modal_view.php";
       ReservationModalView();
+      ReservationModalEdit();
     ?>
-    
+
     <!--EDIT MODAL-->
     <div class="modal fade" id="ReserveEditModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="EditModal" aria-hidden="true">
         <div class="modal-dialog modal-dialog-scrollable modal-xl">

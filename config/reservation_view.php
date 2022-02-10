@@ -24,7 +24,7 @@ function ReservationList(){
     echo  "<button class='btn btn-danger'><a href=# class='text-light'>Cancel</a></button>";
     echo  "<button class='btn btn-info'><a href=# class='text-light'>Check-in</a></button>";
     echo  "<button class='btn btn-danger'><a href=# class='text-light'>Check-out</a></button>";
-    echo  "<button type='button' class='btn btn-success' data-bs-toggle='modal' data-bs-target='#ReserveEditModal'>Edit </button>";
+    echo  "<button type='button' class='btn btn-success' data-bs-toggle='modal' data-bs-target='#ReserveEditModal$row[transaction_id]'>Edit </button>";
     echo  "</td>";
 
   echo "</tr>";

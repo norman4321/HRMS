@@ -154,7 +154,7 @@
                         </div>
                         <div class="add-button">
                             <button class="btn btn-primary">Confirm</button>
-                            <a class="btn btn-danger" href="room_type_page">Cancel</a>
+                            <a class="btn btn-danger" href="room_type_page.php">Cancel</a>
                         </div>
                     </form>
 

@@ -27,7 +27,7 @@ function FetchUserData($id){
 
 
 
-  $sql = "SELECT P.profile_firstname, P.profile_lastname, P.profile_address, P.profile_birthdate, P.profile_nationality, P.profile_contact, A.user_email, A.user_password , A.user_type, A.user_status FROM hrms_user_profile P INNER JOIN hrms_user_account A ON P.profile_id=A.user_id WHERE P.profile_id=" . $id;
+  $sql = "SELECT P.profile_id,P.profile_firstname, P.profile_lastname, P.profile_address, P.profile_birthdate, P.profile_nationality, P.profile_contact, A.user_email, A.user_password , A.user_type, A.user_status FROM hrms_user_profile P INNER JOIN hrms_user_account A ON P.profile_id=A.user_id WHERE P.profile_id=" . $id;
     if ($rs = $conn->query($sql)) {
         if ($rs->num_rows > 0) {
             $profile_data = $rs->fetch_assoc();
@@ -143,14 +143,15 @@ function FetchUserData($id){
                     <div class="card-header">
                         <h2>EDIT USER</h2>
                     </div>
-                    <form action="../../config/update_user.php" method="post">
+                      <?php if (isset($_GET['id'])): $profile_data=FetchUserData($_GET['id'])?>
+                    <form action="../../config/update_user.php?id=<?php echo $profile_data['profile_id'] ?>" method="post">
                         <div class="input-box">
                             <h5>USER ID:</h5>
                             <label><?php echo GetID() ?></label>
                         </div>
                         <div class="user-details">
 
-                          <?php if (isset($_GET['id'])): $profile_data=FetchUserData($_GET['id'])?>
+
                           <div class="input-box">
                                 <span class="form-details">First Name: </span>
                                 <input type="text" name="profile_firstname" value="<?php echo $profile_data['profile_firstname'] ?>" maxlength="50" required="true">
@@ -193,14 +194,14 @@ function FetchUserData($id){
 
                             <div class="input-box">
                                 <span class="form-details">Role: </span>
-                                <select id="CreateUserRole" class="form-control" >
+                                <select name="CreateUserRole" class="form-control" >
                                     <option value="Admin" <?php if ($profile_data['user_type']==1) echo "selected"; ?> >Admin</option>
                                     <option value="Receptionist" <?php if ($profile_data['user_type']==2) echo "selected";?>>Receptionist</option>
                                 </select>
                             </div>
                             <div class="input-box">
                                 <span class="form-details">Status: </span>
-                                <select id="CreateUserStatus" class="form-control" style="width: 90px;">
+                                <select name="CreateUserStatus" class="form-control" style="width: 90px;">
                                     <option value="Active" <?php if ($profile_data['user_status']==1) echo "selected"; ?>>Active</option>
                                     <option value="Inactive" <?php if ($profile_data['user_status']==2) echo "selected"; ?>>Inactive</option>
                                 </select>

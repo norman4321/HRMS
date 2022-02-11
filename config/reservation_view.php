@@ -11,10 +11,10 @@ function ReservationList(){
     echo "<td>" . $row['reservation_id'] . "</td>";
     echo "<td>" . $row['profile_firstname'] . "</td>";
     echo "<td>" . $row['profile_address'] . "</td>";
-    echo "<td>" . $row['transaction_date'] . "</td>";
+
     echo "<td>" . $row['confirm_code'] . "</td>";
     echo "<td>" . $row['quantity'] . "</td>";
-    echo "<td>" . $row['total_amount'] . "</td>";
+  
     echo "<td>" ."<span class='status $row[status_description]'>". $row['status_description']."</span>"."</td>";
 
 

@@ -94,10 +94,10 @@
                                 <th scope="col">Reservation No.</th>
                                 <th scope="col">Guest Name</th>
                                 <th scope="col">Address</th>
-                                <th scope="col">Transaction Date</th>
+
                                 <th scope="col">Confirmation Code</th>
                                 <th scope="col">Total Rooms</th>
-                                <th scope="col">Total Amount</th>
+                          
                                 <th scope="col">Status</th>
                                 <th scope="col">Action</th>
                             </tr>

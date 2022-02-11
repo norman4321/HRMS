@@ -27,6 +27,7 @@ if ($row['status_id']==1)
     echo  "<button class='btn btn-info'><a href='../../config/reservation_action.php?id=$row[reservation_id]&act=2' class='text-light'>Check-in</a></button>";
 if ($row['status_id']==2)
     echo  "<button class='btn btn-danger'><a href='../../config/reservation_action.php?id=$row[reservation_id]&act=3' class='text-light'>Check-out</a></button>";
+if ($row['status_id']!=4)
     echo  "<button class='btn btn-danger'><a href='../../config/reservation_action.php?id=$row[reservation_id]&act=4' class='text-light'>Cancel</a></button>";
     echo  "<button type='button' class='btn btn-success' data-bs-toggle='modal' data-bs-target='#ReserveEditModal$row[transaction_id]'>Edit </button>";
     echo  "</td>";

@@ -3,7 +3,7 @@
 function RoomTypeList(){
     include "../../config/database.php";
 
-    $sql = "SELECT * FROM HRMS_room_type";
+    $sql = "SELECT * FROM hrms_room_type";
     $result = mysqli_query($conn,$sql);
 
     while($row = mysqli_fetch_array($result))

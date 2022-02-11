@@ -10,7 +10,7 @@
     $r_status=$_POST['room_status'];
 
 
-    $sql = "UPDATE HRMS_room SET room_number = $r_num , room_type=$r_type, room_status=$r_status WHERE room_number=$r_num";
+    $sql = "UPDATE hrms_room SET room_number = $r_num , room_type=$r_type, room_status=$r_status WHERE room_number=$r_num";
 
 
     if ($conn->query($sql) === TRUE) {

@@ -6,18 +6,18 @@
 function createRoomsListView($roomtype, $numpersons, $roomstat)
 {
     if ($roomtype != 0) {
-        $query = "CREATE OR REPLACE VIEW rooms_list AS 
-                SELECT r.room_id, r.room_number, r.room_status, rt.*, rr.reservation_id FROM HRMS_room r 
-                JOIN HRMS_room_type rt ON r.room_type = rt.type_id 
-                LEFT JOIN HRMS_rooms_reserved rr ON rr.room_id=r.room_id
-                WHERE (rt.type_id=" . $roomtype . ") AND (rt.room_capacity >= " . $numpersons . ") AND (r.room_status=" . $roomstat . ") 
+        $query = "CREATE OR REPLACE VIEW rooms_list AS
+                SELECT r.room_id, r.room_number, r.room_status, rt.*, rr.reservation_id FROM hrms_room r
+                JOIN hrms_room_type rt ON r.room_type = rt.type_id
+                LEFT JOIN hrms_rooms_reserved rr ON rr.room_id=r.room_id
+                WHERE (rt.type_id=" . $roomtype . ") AND (rt.room_capacity >= " . $numpersons . ") AND (r.room_status=" . $roomstat . ")
                 ORDER BY rt.type_id, r.room_id";
     } else {
-        $query = "CREATE OR REPLACE VIEW rooms_list AS 
-                SELECT r.room_id, r.room_number, r.room_status, rt.*, rr.reservation_id FROM HRMS_room r 
-                JOIN HRMS_room_type rt ON r.room_type = rt.type_id 
-                LEFT JOIN HRMS_rooms_reserved rr ON rr.room_id=r.room_id
-                WHERE (rt.room_capacity >= " . $numpersons . ") AND (r.room_status=" . $roomstat . ") 
+        $query = "CREATE OR REPLACE VIEW rooms_list AS
+                SELECT r.room_id, r.room_number, r.room_status, rt.*, rr.reservation_id FROM hrms_room r
+                JOIN hrms_room_type rt ON r.room_type = rt.type_id
+                LEFT JOIN hrms_rooms_reserved rr ON rr.room_id=r.room_id
+                WHERE (rt.room_capacity >= " . $numpersons . ") AND (r.room_status=" . $roomstat . ")
                 ORDER BY rt.type_id, r.room_id";
     }
     return $query;
@@ -27,19 +27,19 @@ function createRoomsListView($roomtype, $numpersons, $roomstat)
 function createRoomsAvailableView($datein, $dateout)
 {
     $today = date('Y/m/d');
-    $query = "CREATE OR REPLACE VIEW rooms_available AS 
+    $query = "CREATE OR REPLACE VIEW rooms_available AS
             SELECT rl.*, rs.arrival_date, rs.departure_date, rs.reservation_status FROM rooms_list rl
-            LEFT JOIN HRMS_reservation rs ON rl.reservation_id=rs.reservation_id
-            WHERE (rs.arrival_date IS NULL) 
-            OR (rs.reservation_status = 3 AND rs.departure_date >='$today') 
+            LEFT JOIN hrms_reservation rs ON rl.reservation_id=rs.reservation_id
+            WHERE (rs.arrival_date IS NULL)
+            OR (rs.reservation_status = 3 AND rs.departure_date >='$today')
             OR (rs.reservation_status = 4)
-            OR (('$datein' < rs.arrival_date) AND ('$dateout' < rs.arrival_date)) 
+            OR (('$datein' < rs.arrival_date) AND ('$dateout' < rs.arrival_date))
             OR (('$datein' > rs.departure_date) AND ('$dateout' > rs.departure_date))
             ORDER BY rl.type_id, rl.room_id";
     return $query;
 }
 
-// Function to create room data display 
+// Function to create room data display
 function createRoomsDataDisplay($rows, $filled = true, $datein, $dateout, $numpersons)
 {
     if ($filled) {
@@ -142,7 +142,7 @@ function generateConfirmationCode($length = 8)
 function isCodeExist($conn, $code)
 {
     $status = false;
-    $sql = "SELECT confirm_code FROM HRMS_reservation WHERE confirm_code='$code' LIMIT 1";
+    $sql = "SELECT confirm_code FROM hrms_reservation WHERE confirm_code='$code' LIMIT 1";
     if ($rs = $conn->query($sql)) {
         if ($rs->num_rows > 0) {
             $status = true;
@@ -176,9 +176,9 @@ function getAvailableRoom($conn, $typeid, $numpersons, $roomstat, $datein, $date
     if ($rs = $conn->query($sql)) {
         if ($rs->num_rows > 0) {
             $room_data = $rs->fetch_assoc();
-            
 
-            
+
+
         } else {
             echo 'No user found!';
         }
@@ -200,7 +200,7 @@ function countCartItems()
     }
 }
 
-// Function to count ONLY AVAILABLE item/s in the cart 
+// Function to count ONLY AVAILABLE item/s in the cart
 function countCartItemsAvailable()
 {
     $count = 0;
@@ -220,7 +220,7 @@ function countCartItemsAvailable()
 retrieveCart($user_data['user_id']);
 function retrieveCart($conn, $userid)
 {
-    $sql = "SELECT * FROM HRMS_cart WHERE user_id='$userid'";
+    $sql = "SELECT * FROM hrms_cart WHERE user_id='$userid'";
     if ($rs = $conn->query($sql)) {
         $data = $rs->fetch_assoc();
         return (int) $data['count'];

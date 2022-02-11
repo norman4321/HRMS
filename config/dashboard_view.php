@@ -2,7 +2,7 @@
 function DashboardList(){
     include "../../config/database.php";
 
-    $sql = "SELECT * FROM HRMS_room INNER JOIN HRMS_room_type ON room_type=type_id  INNER JOIN HRMS_room_status ON room_status=status_id ORDER BY room_number";
+    $sql = "SELECT * FROM hrms_room INNER JOIN hrms_room_type ON room_type=type_id  INNER JOIN hrms_room_status ON room_status=status_id ORDER BY room_number";
     $result = mysqli_query($conn,$sql);
 
     while($row = mysqli_fetch_array($result))

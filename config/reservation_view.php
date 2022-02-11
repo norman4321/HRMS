@@ -2,7 +2,7 @@
 function ReservationList(){
     include "../../config/database.php";
 
-    $sql = "SELECT reservation_id,profile_firstname,profile_address,confirm_code,quantity,status_description,status_id,A.transaction_id FROM HRMS_reservation A INNER JOIN HRMS_reservation_status ON reservation_status=status_id INNER JOIN HRMS_transaction T ON A.transaction_id=T.transaction_id INNER JOIN HRMS_user_profile ON T.client_id=profile_id" ;
+    $sql = "SELECT reservation_id,profile_firstname,profile_address,confirm_code,quantity,status_description,status_id,A.transaction_id FROM hrms_reservation A INNER JOIN hrms_reservation_status ON reservation_status=status_id INNER JOIN hrms_transaction T ON A.transaction_id=T.transaction_id INNER JOIN hrms_user_profile ON T.client_id=profile_id" ;
     $result = mysqli_query($conn,$sql);
 
     while($row = mysqli_fetch_array($result))

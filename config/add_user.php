@@ -44,18 +44,18 @@ $hashed = password_hash($password, PASSWORD_DEFAULT);
 
 
 
-$sql = "SELECT user_email FROM HRMS_user_account WHERE user_email='$email'";
+$sql = "SELECT user_email FROM hrms_user_account WHERE user_email='$email'";
 if ($rs=$conn->query($sql)) {
     if ($rs->num_rows<1) {
 
         // Insert data to  user_profile table
-        $sql = "INSERT INTO HRMS_user_profile SET profile_firstname='$firstname', profile_lastname='$lastname', profile_address='$address', profile_birthdate='$birthdate', profile_nationality='$nationality', profile_contact='$contact', profile_email='$email'";
+        $sql = "INSERT INTO hrms_user_profile SET profile_firstname='$firstname', profile_lastname='$lastname', profile_address='$address', profile_birthdate='$birthdate', profile_nationality='$nationality', profile_contact='$contact', profile_email='$email'";
         #echo $sql.'<br>';
         if ($conn->query($sql)) {
             #echo '<br> Data Inserted in user_profile table <br>';
 
             // Get profile_id from user_profile table
-            $sql = "SELECT profile_id FROM HRMS_user_profile WHERE profile_email='$email' limit 1";
+            $sql = "SELECT profile_id FROM hrms_user_profile WHERE profile_email='$email' limit 1";
             #echo $sql.'<br>';
             if ($rs=$conn->query($sql)) {
                 if ($rs->num_rows>0) {
@@ -64,7 +64,7 @@ if ($rs=$conn->query($sql)) {
                     #echo '<br> profile_id is Retrieved in user_profile table <br>';
 
                     // Insert data to user_account table
-                    $sql = "INSERT INTO HRMS_user_account SET user_id=".$profile_id.", user_email='$email', user_password='$hashed', user_type=".$typeid.", user_status=".$statusid.", user_signup_date='$date'";
+                    $sql = "INSERT INTO hrms_user_account SET user_id=".$profile_id.", user_email='$email', user_password='$hashed', user_type=".$typeid.", user_status=".$statusid.", user_signup_date='$date'";
                     #echo $sql.'<br>';
                     if ($conn->query($sql)) {
                         #echo '<br>  Data Inserted in in user_account table <br>';

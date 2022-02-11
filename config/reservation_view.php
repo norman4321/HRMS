@@ -14,7 +14,7 @@ function ReservationList(){
 
     echo "<td>" . $row['confirm_code'] . "</td>";
     echo "<td>" . $row['quantity'] . "</td>";
-  
+
     echo "<td>" ."<span class='status $row[status_description]'>". $row['status_description']."</span>"."</td>";
 
 
@@ -24,10 +24,10 @@ function ReservationList(){
 
 
 if ($row['status_id']==1)
-    echo  "<button class='btn btn-info'><a href=# class='text-light'>Check-in</a></button>";
+    echo  "<button class='btn btn-info'><a href='../../config/reservation_action.php?id=$row[reservation_id]&act=2' class='text-light'>Check-in</a></button>";
 if ($row['status_id']==2)
-    echo  "<button class='btn btn-danger'><a href=# class='text-light'>Check-out</a></button>";
-    echo  "<button class='btn btn-danger'><a href=# class='text-light'>Cancel</a></button>";
+    echo  "<button class='btn btn-danger'><a href='../../config/reservation_action.php?id=$row[reservation_id]&act=3' class='text-light'>Check-out</a></button>";
+    echo  "<button class='btn btn-danger'><a href='../../config/reservation_action.php?id=$row[reservation_id]&act=4' class='text-light'>Cancel</a></button>";
     echo  "<button type='button' class='btn btn-success' data-bs-toggle='modal' data-bs-target='#ReserveEditModal$row[transaction_id]'>Edit </button>";
     echo  "</td>";
 

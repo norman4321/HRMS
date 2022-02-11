@@ -208,10 +208,11 @@ function FetchUserData($id){
                         </div>
 
 
-                    <div class="add-button">
-                        <button type="submit" class="btn btn-primary">Confirm</button>
-                        <button class="btn btn-danger">Cancel</button>
-                    </div>
+                        <div class="add-button">
+                            <button class="btn btn-primary" type="submit" onclick="return confirm('Confirm?')">Confirm</button>
+
+                            <a class="btn btn-danger" href="user_page.php">Cancel</a>
+                        </div>
                       </form>
                         <?php endif; ?>
 

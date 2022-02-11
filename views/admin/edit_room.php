@@ -185,7 +185,7 @@
                     <div class="add-button">
                         <button class="btn btn-primary" type="submit" onclick="return confirm('Confirm?')">Confirm</button>
 
-                        <button class="btn btn-danger" href="room_page.php">Cancel</button>
+                        <a class="btn btn-danger" href="room_page.php">Cancel</a>
                     </div>
 
                 </form>

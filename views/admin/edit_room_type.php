@@ -154,7 +154,7 @@
                         </div>
                         <div class="add-button">
                             <button class="btn btn-primary">Confirm</button>
-                            <button class="btn btn-danger">Cancel</button>
+                            <a class="btn btn-danger" href="room_type_page">Cancel</a>
                         </div>
                     </form>
 

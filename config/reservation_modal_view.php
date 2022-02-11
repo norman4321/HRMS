@@ -110,7 +110,7 @@ function ReservationModalEdit(){
         echo         " <div class='modal-content'>";
 
         echo              "<div class='modal-header'>";
-        echo                 "<h5 class='modal-title' id='EditModal'>Booked Details</h5>";
+        echo                 "<h5 class='modal-title' id='EditModal'>Edit Guest Information</h5>";
 
 
         // already have a button
@@ -124,33 +124,25 @@ function ReservationModalEdit(){
         echo             "<button type='button' class='btn-close' data-bs-dismiss='modal' aria-label='Close'></button>";
         echo              "</div>";
         echo              " <div class='modal-body'>";
-        echo                    "<table id='reservationPage' class='table'>";
-        echo                        "<thead align='center'>";
-        echo                            "<tr>";
-        echo                                "<th scope='col'>Room No.</th>";
-        echo                                "<th scope='col'>Room Name</th>";
-        echo                                "<th scope='col'>Room Image</th>";
-        echo                                "<th scope='col'>Arrival Date&Time</th>";
-        echo                                "<th scope='col'>Departure Date&Time</th>";
-        echo                                "<th scope='col'>Price/Rate</th>";
-          echo                              "<th scope='col'>Operation</th>";
-        echo                            "</tr>";
-        echo                        "</thead>";
-        echo                        "<tbody align='center'>";
-
-
-
-        echo                      EditModalContents($row['transaction_id']);
-
-
-
-        echo                        "</tbody>";
-        echo                    "</table>";
-        echo                "</div>";
+        echo    "<form action=>";
+        echo        "<div class='add-details'>";
+        echo            "<div class='input-box-reserve'>";
+        echo                "<span class='form-details'>Guest Information Name: </span>";
+        echo                "<input type='text' name='reservation_guest_name' placeholder='Guest Name' maxlength='50' required>";
+        echo            "</div>";
+        echo            "<div class='input-box-reserve-area'>";
+        echo                "<span class='form-details'>Address: </span>";
+        echo               " <textarea class='description' name='reservation_guest_address' placeholder='Address' required maxlength='500'></textarea>";
+        echo            "</div>";
+        echo        "</div>";
         echo                "<div class='modal-footer'>";
         echo                    "<button type='button' class='btn btn-secondary' data-bs-dismiss='modal'>Close</button>";
         echo                        "<button type='button' class='btn btn-primary' data-bs-dismiss='modal'>Save</button>";
         echo                "</div>";
+        echo    "</form>";
+        echo "</div>";
+        echo                "</div>";
+
         echo            "</div>";
         echo      "</div>";
         echo  "</div>";

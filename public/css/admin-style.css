@@ -1035,7 +1035,7 @@ form .add-room-type-details .input-box-area {
   font-size: 14px;
   font-weight: 600;
 }
-.status.Checked-In {
+.status.Checked.in {
   padding: 5px 10px;
   background: #077e8c;
   color: var(--white);
@@ -1044,7 +1044,7 @@ form .add-room-type-details .input-box-area {
   font-weight: 600;
   white-space: nowrap;
 }
-.status.Checked-Out {
+.status.Checked.out {
   padding: 5px 10px;
   background: #d9512c;
   color: var(--white);

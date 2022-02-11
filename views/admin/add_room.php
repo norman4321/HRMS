@@ -2,7 +2,8 @@
 <html lang="en">
 
 <head>
-    <?php include "../partials/admin-head.html" ?>
+  <?php include "../partials/admin_head.html" ?>
+<?php include "../partials/admin_header.php" ?>
 
 
 </head>
@@ -87,7 +88,7 @@
                         <h2>ADD A ROOM</h2>
                     </div>
                     <form action="#">
-                        
+
                         <div class="add-details">
 
                             <div class="input-box">
@@ -116,7 +117,7 @@
                                 </select>
                             </div>
                         </div>
-                        
+
                     </form>
                     <div class="add-button">
                         <button class="btn btn-primary">Confirm</button>

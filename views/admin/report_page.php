@@ -2,7 +2,8 @@
 <html lang="en">
 
 <head>
-    <?php include "../partials/admin-head.html" ?>
+  <?php include "../partials/admin_head.html" ?>
+<?php include "../partials/admin_header.php" ?>
 
 
 </head>
@@ -120,7 +121,7 @@
                             ReportList();
                           ?>
 
-                
+
 
                     <div class="card-btn">
                         <button class="gen-btn btn-primary">Generate Print</button>

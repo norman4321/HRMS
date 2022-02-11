@@ -3,7 +3,10 @@
 
 
 <head>
-    <?php include "../partials/admin-head.html";
+
+  <?php include "../partials/admin_head.html" ?>
+<?php include "../partials/admin_header.php" ?>
+    <?php
 
     function FetchRoomData($id){
         include "../../config/database.php";

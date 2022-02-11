@@ -2,7 +2,8 @@
 <html lang="en">
 
 <head>
-    <?php include "../partials/admin-head.html" ?>
+  <?php include "../partials/admin_head.html" ?>
+<?php include "../partials/admin_header.php" ?>
 
 
 </head>

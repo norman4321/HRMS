@@ -3,7 +3,44 @@
 
 
 <head>
-    <?php include "../partials/admin-head.html" ?>
+    <?php include "../partials/admin-head.html";
+
+    function RoomList(){
+        include "../../config/database.php";
+
+      if (isset($_GET['date'])){
+
+        $date = $_POST['room_date'];
+        $sql = "SELECT * FROM HRMS_room INNER JOIN HRMS_room_type ON room_type=type_id  INNER JOIN HRMS_room_status ON room_status=status_id ORDER BY room_number";
+        echo "sorting " . $date;
+      }
+      else
+        $sql = "SELECT * FROM HRMS_room INNER JOIN HRMS_room_type ON room_type=type_id  INNER JOIN HRMS_room_status ON room_status=status_id ORDER BY room_number";
+
+
+
+
+        $result = mysqli_query($conn,$sql);
+
+        while($row = mysqli_fetch_array($result))
+        {
+        echo "<tr>";
+        echo "<td>" . $row['room_number'] . "</td>";
+
+        echo "<td>" . $row['type_name'] . "</td>";
+        echo "<td>" ."<span class='status $row[status_description]'>". $row['status_description']."</span>"."</td>";
+
+
+
+        echo "<td>". "<button class='btn btn-success'><a href='edit_room.php?id=$row[room_id]' class='text-light'>Edit</a></button>" ;
+        //echo "<button class='btn btn-danger'><a href='#' class='text-light' onclick='return confirm(Are you sure to delete this room?')';>Delete</a></button>";
+        echo "</td>";
+        echo "</tr>";
+        }
+
+      }
+
+     ?>
 
 
 </head>
@@ -91,12 +128,16 @@
                 </div> -->
 
             <!--Room Management-->
+
             <div class="details">
                 <div class="room-manage">
                     <div class="card-header">
                         <div class="head">
                             <h2>Room Management</h2>
-                            <input type="date" id="RoomDate" name="room_date">
+                              <form method="POST" action="?date=1">
+                                <input type="date" id="RoomDate" name="room_date" required>
+                              <button class="btn btn-primary">Sort</button>
+                            </form>
                         </div>
                         <a href="add_room.php"><button class="btn btn-primary">Add Room</button></a>
                     </div>
@@ -111,11 +152,15 @@
                         </thead>
                         <tbody align="center">
 
-                          <?php include "../../config/room_view.php";
-                              RoomList();
+                          <?php
+
+
+                                RoomList();
                           ?>
                         </tbody>
                     </table>
+
+
                     <nav aria-label="Page navigation example">
                         <ul class="pagination">
                             <li class="page-item"><a class="page-link" href="#">Previous</a></li>

@@ -88,7 +88,7 @@
                     <div class="card-header">
                         <h2>ADD ROOM TYPE</h2>
                     </div>
-                    <form action="#">
+                  <form action="../../config/insert_room_type.php" method="post" enctype="multipart/form-data">
                         <div class="add-room-type-details">
                             <div class="input-box">
                                 <span class="form-details">Room Name: </span>
@@ -106,7 +106,7 @@
                                 <span class="form-details">Description: </span>
                                 <textarea class="description" name="room_description" placeholder="Description" required maxlength="500"></textarea>
                             </div>
-                            
+
                         </div>
                         <div class="add-predetails">
                             <div class="input-box">
@@ -116,11 +116,12 @@
 
                         </div>
 
-                    </form>
+
                     <div class="add-button">
-                        <button class="btn btn-primary">Confirm</button>
+                        <button class="btn btn-primary" type="submit">Confirm</button>
                         <button class="btn btn-danger">Cancel</button>
                     </div>
+                      </form>
                 </div>
             </div>
 

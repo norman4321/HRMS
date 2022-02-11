@@ -124,7 +124,7 @@
                         <h2>EDIT ROOM TYPE</h2>
                     </div>
                       <?php if (isset($_GET['id'])): $room_type_data=FetchRoomTypeData($_GET['id'])?>
-                    <form action="#">
+                    <form action="../../config/update_room_type.php" method="post" enctype="multipart/form-data">
                         <div class="add-room-type-details">
 
                             <div class="input-box">
@@ -147,7 +147,7 @@
                         <div class="add-predetails">
                             <div class="input-box">
                                 <div id="img-preview"><img src="../../public/images/upload-logo.png" onclick="triggerClick()" id="roomDisplay"></div>
-                                <input type="file" accept="image/*" id="roomImage" name="room_image" onchange="displayImage(this)" required>
+                                <input type="file" accept="image/*" id="roomImage" name="room_image" onchange="displayImage(this)" >
                             </div>
                         </div>
                         <div class="add-button">

@@ -20,10 +20,14 @@ function ReservationList(){
 
     echo  "<td>";
     echo  "<button type='button' class='btn btn-primary' data-bs-toggle='modal' data-bs-target='#ReserveViewModal$row[transaction_id]' >View</button>";
-    echo  "<button class='btn btn-info'><a href=# class='text-light'>Confirm</a></button>";
-    echo  "<button class='btn btn-danger'><a href=# class='text-light'>Cancel</a></button>";
+
+
+
+if ($row['status_id']==1)
     echo  "<button class='btn btn-info'><a href=# class='text-light'>Check-in</a></button>";
+if ($row['status_id']==2)
     echo  "<button class='btn btn-danger'><a href=# class='text-light'>Check-out</a></button>";
+    echo  "<button class='btn btn-danger'><a href=# class='text-light'>Cancel</a></button>";
     echo  "<button type='button' class='btn btn-success' data-bs-toggle='modal' data-bs-target='#ReserveEditModal$row[transaction_id]'>Edit </button>";
     echo  "</td>";
 

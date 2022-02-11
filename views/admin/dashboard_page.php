@@ -4,14 +4,14 @@
 <head>
   <?php include "../partials/admin_head.html" ?>
 <?php include "../partials/admin_header.php" ?>
-    <?php 
+    <?php
 
 
 function DashboardData($id){
     include "../../config/database.php";
 
 
-  $sql = "SELECT COUNT(1) AS total FROM HRMS_room WHERE room_status =" . $id;
+  $sql = "SELECT COUNT(1) AS total FROM hrms_room WHERE room_status =" . $id;
   $result=mysqli_query($conn,$sql);
   $data=mysqli_fetch_assoc($result);
   echo $data['total'];

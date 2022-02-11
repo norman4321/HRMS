@@ -20,7 +20,7 @@
 
 
 
-      $sql = "SELECT type_id, type_name, room_description, room_capacity, room_price, room_image FROM HRMS_room_type WHERE type_id =" . $id;
+      $sql = "SELECT type_id, type_name, room_description, room_capacity, room_price, room_image FROM hrms_room_type WHERE type_id =" . $id;
         if ($rs = $conn->query($sql)) {
             if ($rs->num_rows > 0) {
                 $room_type_data = $rs->fetch_assoc();

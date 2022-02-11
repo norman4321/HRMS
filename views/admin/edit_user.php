@@ -27,7 +27,7 @@ function FetchUserData($id){
 
 
 
-  $sql = "SELECT P.profile_firstname, P.profile_lastname, P.profile_address, P.profile_birthdate, P.profile_nationality, P.profile_contact, A.user_email, A.user_password , A.user_type, A.user_status FROM HRMS_user_profile P INNER JOIN HRMS_user_account A ON P.profile_id=A.user_id WHERE P.profile_id=" . $id;
+  $sql = "SELECT P.profile_firstname, P.profile_lastname, P.profile_address, P.profile_birthdate, P.profile_nationality, P.profile_contact, A.user_email, A.user_password , A.user_type, A.user_status FROM hrms_user_profile P INNER JOIN hrms_user_account A ON P.profile_id=A.user_id WHERE P.profile_id=" . $id;
     if ($rs = $conn->query($sql)) {
         if ($rs->num_rows > 0) {
             $profile_data = $rs->fetch_assoc();

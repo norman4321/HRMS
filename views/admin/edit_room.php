@@ -14,7 +14,7 @@
 
 
 
-      $sql = "SELECT room_number,room_type,room_status FROM HRMS_room INNER JOIN HRMS_room_type ON room_type=type_id WHERE room_id=$id";
+      $sql = "SELECT room_number,room_type,room_status FROM hrms_room INNER JOIN hrms_room_type ON room_type=type_id WHERE room_id=$id";
         if ($rs = $conn->query($sql)) {
             if ($rs->num_rows > 0) {
                 $room_data = $rs->fetch_assoc();
@@ -34,7 +34,7 @@
   function FetchRoomType($room_type){
     include "../../config/database.php";
 
-    $sql = "SELECT type_id,type_name FROM HRMS_room_type " ;
+    $sql = "SELECT type_id,type_name FROM hrms_room_type " ;
     $result = mysqli_query($conn,$sql);
 
     while($row = mysqli_fetch_array($result))
@@ -51,7 +51,7 @@
     function FetchRoomStatus($room_status){
       include "../../config/database.php";
 
-      $sql = "SELECT status_id,status_description FROM HRMS_room_status " ;
+      $sql = "SELECT status_id,status_description FROM hrms_room_status " ;
       $result = mysqli_query($conn,$sql);
 
       while($row = mysqli_fetch_array($result))

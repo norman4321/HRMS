@@ -21,7 +21,7 @@ function RoomTypeList(){
     echo "<td>". $row['room_price'] ."</td> ";
 
     echo "<td>". "<button class='btn btn-success'><a href='edit_room_type.php?id=$row[type_id]' class='text-light'>Edit</a></button>" ;
-    echo "<button class='btn btn-danger'><a href='#' class='text-light'>Delete</a></button>";
+
     echo "</td>";
     echo "</tr>";
     }

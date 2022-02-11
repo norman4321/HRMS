@@ -149,28 +149,28 @@ function FetchUserData($id){
                           <?php if (isset($_GET['id'])): $profile_data=FetchUserData($_GET['id'])?>
                           <div class="input-box">
                                 <span class="form-details">First Name: </span>
-                                <input type="text" name="profile_firstname" placeholder="<?php echo $profile_data['profile_firstname'] ?>" maxlength="50" required="true">
+                                <input type="text" name="profile_firstname" value="<?php echo $profile_data['profile_firstname'] ?>" maxlength="50" required="true">
                           </div>
 
                             <div class="input-box">
                                 <span class="form-details">Last Name: </span>
-                                <input type="text" name="profile_lastname" placeholder="<?php echo $profile_data['profile_lastname'] ?>" maxlength="50" required>
+                                <input type="text" name="profile_lastname" value="<?php echo $profile_data['profile_lastname'] ?>" maxlength="50" required>
                             </div>
                             <div class="input-box">
                                 <span class="form-details">Password: </span>
-                                <input type="password" name="profile_password" placeholder="<?php echo $profile_data['user_password'] ?>" maxlength="20" required>
+                                <input type="password" name="profile_password" value="<?php echo $profile_data['user_password'] ?>" maxlength="20" required>
                             </div>
                             <div class="input-box">
                                 <span class="form-details">Verify Password: </span>
-                                <input type="password" name="profile_verifypassword" placeholder="Verify Password" maxlength="20" required>
+                                <input type="password" name="profile_verifypassword" value="Verify Password" maxlength="20" required>
                             </div>
                             <div class="input-box">
                                 <span class="form-details">Email: </span>
-                                <input type="text" name="profile_email" placeholder="<?php echo $profile_data['user_email'] ?>" maxlength="50" required>
+                                <input type="text" name="profile_email" value="<?php echo $profile_data['user_email'] ?>" maxlength="50" required>
                             </div>
                             <div class="input-box">
                                 <span class="form-details">Address: </span>
-                                <input type="text" name="profile_address" placeholder="<?php echo $profile_data['profile_address'] ?>" maxlength="100" required>
+                                <input type="text" name="profile_address" value="<?php echo $profile_data['profile_address'] ?>" maxlength="100" required>
                             </div>
                             <div class="input-box">
                                 <span class="form-details">Birthdate: </span>
@@ -178,11 +178,11 @@ function FetchUserData($id){
                             </div>
                             <div class="input-box">
                                 <span class="form-details">Nationality: </span>
-                                <input type="text" name="profile_nationality" placeholder="<?php echo $profile_data['profile_nationality'] ?>" maxlength="20" required>
+                                <input type="text" name="profile_nationality" value="<?php echo $profile_data['profile_nationality'] ?>" maxlength="20" required>
                             </div>
                             <div class="input-box">
                                 <span class="form-details">Contact No.: </span>
-                                <input type="text" name="profile_contact" placeholder="<?php echo $profile_data['profile_contact'] ?>" maxlength="15" required>
+                                <input type="text" name="profile_contact" value="<?php echo $profile_data['profile_contact'] ?>" maxlength="15" required>
                             </div>
 
 

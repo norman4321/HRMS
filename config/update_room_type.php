@@ -25,7 +25,7 @@ if(isset($_POST['room_type_name']))
                $sql="UPDATE hrms_room_type SET room_image='$file_to_upload', type_name='$type', room_description='$description',room_capacity='$capacity',room_price='$price' WHERE type_name='$type'";
                if($conn->query($sql)){
                  echo "Record updated successfully redirecting you back";
-                 header("refresh:3; ../views/admin/room_type_page.php");
+                 header("refresh:1; ../views/admin/room_type_page.php");
                }else{
                  echo $conn->error;
                }
@@ -45,7 +45,7 @@ if(isset($_POST['room_type_name']))
   $sql="UPDATE hrms_room_type SET type_name='$type', room_description='$description',room_capacity='$capacity',room_price='$price' WHERE type_name='$type'";
      if($conn->query($sql)){
         echo "Record updated successfully redirecting you back";
-        header("refresh:3; ../views/admin/room_type_page.php");
+        header("refresh:1; ../views/admin/room_type_page.php");
      }else{
        echo $conn->error;
      }

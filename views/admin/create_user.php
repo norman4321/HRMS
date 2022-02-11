@@ -6,7 +6,7 @@
 <?php include "../partials/admin_header.php" ?>
 
 
-
+<?php
 function LastId(){
     include "../../config/database.php";
     $query = "SELECT profile_id FROM hrms_user_profile ORDER BY profile_id DESC LIMIT 1 ";

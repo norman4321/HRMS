@@ -6,7 +6,7 @@
 
     <?php include "../partials/admin_head.html" ?>
     <?php include "../partials/admin_header.php" ?>
-    <?php include 
+    <?php
 
 
     require "../../config/database.php";

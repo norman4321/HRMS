@@ -3,7 +3,7 @@
 
 
 <head>
-    <?php include "../partials/admin-head.html";
+    <?php include "../partials/admin_head.html";
 
     function RoomList(){
         include "../../config/database.php";
@@ -134,10 +134,11 @@
                     <div class="card-header">
                         <div class="head">
                             <h2>Room Management</h2>
+                            <!--
                               <form method="POST" action="?date=1">
                                 <input type="date" id="RoomDate" name="room_date" required>
                               <button class="btn btn-primary">Sort</button>
-                            </form>
+                            </form>-->
                         </div>
                         <a href="add_room.php"><button class="btn btn-primary">Add Room</button></a>
                     </div>

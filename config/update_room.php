@@ -15,7 +15,7 @@
 
     if ($conn->query($sql) === TRUE) {
       echo "Record updated successfully redirecting you back";
-      header("refresh:5; ../views/admin/room_page.php");
+      header("refresh:1; ../views/admin/room_page.php");
     } else {
       echo "Error updating record: " . $conn->error;
     }

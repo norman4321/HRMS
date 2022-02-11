@@ -3,7 +3,7 @@
 function UserList(){
     include "../../config/database.php";
 
-    $sql = "SELECT * FROM HRMS_user_profile INNER JOIN HRMS_user_account ON user_id=profile_id INNER JOIN HRMS_user_type ON user_type=role_id INNER JOIN HRMS_user_status ON user_status=status_id";
+    $sql = "SELECT profile_id,profile_firstname,profile_lastname,role_description,status_description FROM HRMS_user_profile INNER JOIN HRMS_user_account ON user_id=profile_id INNER JOIN HRMS_user_type ON user_type=role_id INNER JOIN HRMS_user_status ON user_status=status_id";
     $result = mysqli_query($conn,$sql);
 
     while($row = mysqli_fetch_array($result))

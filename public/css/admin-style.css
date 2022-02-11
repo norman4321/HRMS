@@ -5,7 +5,7 @@
   padding: 0;
   box-sizing: border-box;
   font-family: "Source Sans Pro", sans-serif;
-  
+
 }
 :root {
   --blue: #070707;
@@ -473,7 +473,9 @@ a {
   justify-content: space-between;
 }
 form .add-details .input-box,
-form .add-details .input-box-area {
+form .add-details .input-box-area,
+form .add-details .input-box-reserve,
+form .add-details .input-box-reserve-area {
   margin: 20px 0 12px 0px;
   width: 30%;
 }
@@ -1033,21 +1035,23 @@ form .add-room-type-details .input-box-area {
   font-size: 14px;
   font-weight: 600;
 }
-.status.Check-In {
+.status.Checked-In {
   padding: 5px 10px;
   background: #077e8c;
   color: var(--white);
   border-radius: 4px;
   font-size: 13px;
   font-weight: 600;
+  white-space: nowrap;
 }
-.status.Check-Out {
+.status.Checked-Out {
   padding: 5px 10px;
   background: #d9512c;
   color: var(--white);
   border-radius: 4px;
   font-size: 13px;
   font-weight: 600;
+  white-space: nowrap;
 }
 .details .reservation-manage .table tbody tr td {
   padding: 20px;
@@ -1166,47 +1170,45 @@ form .add-room-type-details .input-box-area {
   border-radius: 10px;
 }
 
-/*.details .user-manage .table tbody tr td
-{
-    padding: 20px;
-}*/
-
-/* responsive menu 
-@media (max-width: 991px)
-{
-    .admin-navigation
-    {
-        left: -300px;
-    }
-    .admin-navigation.active
-    {
-        width: 300px;
-        left: 0;
-    }
-    .admin-main
-    {
-        width: 100%;
-        left: 0;
-    }
-    .admin-main.active
-    {
-        left: 300px;
-    }
-    .card-box
-    {
-        grid-template-columns: repeat(2,1fr);
-    }
+.input-box [type="text"]{
+  padding: 10px;
 }
-@media (max-width: 768px)
+.input-box-reserve [type="text"]{
+  padding: 10px;
+  margin-top: 5px;
+}
+.card-header-sort input{
+  padding: 20px;
+}
+.input-box-area textarea{
+  padding: 10px;
+}
+#RoomDate{
+  padding: 10px;
+}
+.input-box-reserve-area textarea{
+  padding: 10px;
+  margin-top: 5px;
+}
+.modal-body form .add-details .input-box-reserve input,
+.modal-body form .add-details .input-box-reserve-area textarea{
+  margin: 10px;
+  width: 430px;
+}
+.modal-body form .add-details .input-box-reserve span,
+.modal-body form .add-details .input-box-reserve-area span{
+  margin: 10px;
+  white-space: nowrap;
+}
+#EditModal{
+  font-weight: 700;
+}
+
+
+@media (max-width: 1000px)
 {
-    .details
+    .card-box
     {
         grid-template-columns: repeat(1,1fr);
     }
-    .recent-update
-    {
-        overflow-x: auto;
-    }
-
 }
-*/
